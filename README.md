@@ -1,16 +1,25 @@
-# GMIH Eben Haezer Ternate
+# GMIH Eben Haezer Ternate — Website GitHub Pages
 
-Portal jemaat statis untuk GitHub Pages. Termasuk renungan harian otomatis berdasarkan tanggal, Doa Kristen, tautan Alkitab online, video YouTube gereja, galeri foto, dan PWA agar dapat dipasang sebagai aplikasi dari Chrome Android.
+Versi dashboard modern dengan foto dan logo utama **ditanam langsung (embedded) ke `index.html`** agar tidak hilang ketika folder aset tidak ikut termuat.
+
+## Fitur
+- Dashboard biru-putih responsif untuk HP/desktop.
+- Foto gedung, interior, kegiatan, logo GMIH, QRIS, dan foto pelayan pendeta tertanam di halaman utama.
+- Profil pelayanan **Pdt. Yofter N. Taliwunan, S.Si Teol.** dan **Pdt. Adewenti Min Radja, M.Th** dengan foto.
+- Renungan harian panjang yang ditulis ulang secara orisinal dan berganti berdasarkan tanggal perangkat.
+- Tautan pendalaman ke SABDA e-Santapan Harian dan e-Renungan Harian.
+- Alkitab online SABDA.
+- Doa Kristen / Doa Bapa Kami di `doa.html`.
+- QRIS resmi jemaat: NMID **ID2026504955850**. Selalu periksa nama penerima pada aplikasi pembayaran sebelum membayar.
+- Video YouTube dan galeri foto.
+- PWA / dapat dipasang sebagai aplikasi web di Android.
 
 ## Upload ke GitHub Pages
-Upload semua isi folder ini ke root repository `GMIHTERNATE`, termasuk folder `assets`. Tidak perlu mengunggah folder Android Studio.
+1. Ekstrak ZIP.
+2. Upload **semua isi folder ini** ke root repository `GMIHTERNATE`.
+3. Pastikan `index.html` berada langsung di root repository.
+4. Commit perubahan.
+5. Tunggu beberapa menit sampai GitHub Pages memperbarui situs.
 
-## Alkitab
-Tombol Alkitab mengarah ke Alkitab SABDA: https://alkitab.sabda.org/home.php?lang=id
-
-## YouTube
-Channel gereja: https://www.youtube.com/@gmihebenhaezerternate3440
-
-
-## Versi foto tertanam
-File `index.html` dan `doa.html` pada paket ini sudah menanamkan foto sebagai data sehingga halaman utama tetap menampilkan foto meskipun folder `assets` tidak ikut ter-upload. Folder `assets` tetap disertakan sebagai cadangan. Upload isi folder ini ke root repository GitHub Pages.
+## Catatan renungan
+Konten renungan panjang di halaman dibuat orisinal untuk website jemaat. SABDA disediakan sebagai sumber pendalaman melalui tautan; materi e-RH tertentu memiliki ketentuan hak cipta dan tidak disalin penuh ke website.
