@@ -10,3 +10,7 @@ Tombol Alkitab mengarah ke Alkitab SABDA: https://alkitab.sabda.org/home.php?lan
 
 ## YouTube
 Channel gereja: https://www.youtube.com/@gmihebenhaezerternate3440
+
+
+## Versi foto tertanam
+File `index.html` dan `doa.html` pada paket ini sudah menanamkan foto sebagai data sehingga halaman utama tetap menampilkan foto meskipun folder `assets` tidak ikut ter-upload. Folder `assets` tetap disertakan sebagai cadangan. Upload isi folder ini ke root repository GitHub Pages.
