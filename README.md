@@ -1,31 +1,23 @@
-# GMIH Eben Haezer Ternate — Website
+# GMIH Eben Haezer Ternate — Website & Aplikasi Android
 
-Website statis responsif untuk GMIH Eben Haezer Ternate, dibuat dengan HTML, CSS, dan JavaScript tanpa framework sehingga siap dipasang di GitHub Pages.
+Website statis responsif untuk GMIH Eben Haezer Ternate, siap dipasang di GitHub Pages.
 
-## Struktur
+## Fitur baru
+- Halaman **Ruang Doa** dengan doa syukur, pergumulan, permohonan, keluarga, kesehatan, pekerjaan/usaha, gereja, dan perlindungan.
+- **Catatan Pokok Doa** yang disimpan lokal di perangkat/browser pengguna; tidak dikirim ke server.
+- Halaman **Pengakuan Iman Rasuli**.
+- Halaman **Pengakuan Iman Nicea-Konstantinopel**.
+- PWA (Progressive Web App): dapat dipasang sebagai aplikasi di Android dari Chrome melalui menu instalasi / tombol **Pasang Aplikasi**.
+- Service worker untuk cache dan akses lebih cepat saat koneksi tidak stabil.
+- Manifest dan ikon aplikasi.
 
-- `index.html` — halaman utama
-- `style.css` — desain biru, responsive, animasi
-- `script.js` — menu mobile, scroll reveal, tahun otomatis
-- `assets/` — logo dan gambar yang diberikan
-- `.nojekyll` — memastikan GitHub Pages menyajikan file statis tanpa pemrosesan Jekyll
+## GitHub Pages
+1. Upload seluruh isi folder ini ke root repository GitHub.
+2. Pastikan `index.html`, `doa.html`, `pengakuan-iman.html`, `style.css`, `script.js`, `pwa.js`, `sw.js`, dan `manifest.webmanifest` ada di root.
+3. Pastikan folder `assets/` ikut di-upload.
+4. Settings → Pages → Deploy from a branch → `main` → `/ (root)`.
 
-## Publikasi ke GitHub Pages
+## Menjadikan aplikasi Android
+Versi website ini sudah menjadi **PWA**, sehingga Android/Chrome dapat memasangnya seperti aplikasi tanpa Play Store. Buka website → menu browser → **Install app / Tambahkan ke layar utama**.
 
-1. Buat repository baru di GitHub, misalnya `gmih-ebenhaezer-ternate`.
-2. Upload seluruh isi folder ini ke repository.
-3. Buka **Settings → Pages**.
-4. Pada **Build and deployment**, pilih:
-   - Source: **Deploy from a branch**
-   - Branch: **main**
-   - Folder: **/ (root)**
-5. Klik **Save**.
-6. Setelah proses selesai, GitHub akan memberikan alamat:
-   `https://USERNAME.github.io/gmih-ebenhaezer-ternate/`
-
-## Catatan
-
-- Tautan Facebook, Instagram, dan YouTube menggunakan URL yang diberikan oleh pemilik informasi.
-- Data kontak menggunakan informasi yang diberikan pengguna.
-- QRIS ditampilkan dari gambar yang diberikan. Sebelum dipublikasikan sebagai kanal donasi resmi, pastikan nama penerima dan detail pembayaran sudah diverifikasi.
-- Situs ini menggunakan Google Fonts melalui CDN. Jika ingin benar-benar tanpa dependensi eksternal, font dapat diganti dengan system fonts.
+Folder `android-app/` berisi proyek Android Studio WebView sederhana sebagai alternatif jika ingin dibuat menjadi APK.

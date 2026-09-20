@@ -221,3 +221,34 @@ footer p{font-size:10px;margin:0}
   .footer-inner{display:block}
   footer p{margin-top:15px}
 }
+
+/* Halaman Doa, Pengakuan Iman, dan aplikasi */
+.nav a.active{color:var(--blue-700)}
+.page-hero{padding:105px 0 80px;background:linear-gradient(135deg,#eef7ff,#fff);border-bottom:1px solid var(--line)}
+.page-hero h1{font:800 clamp(42px,6vw,72px)/1.02 Manrope;color:var(--blue-950);max-width:850px;margin:18px 0}
+.page-hero h1 em{font-style:normal;color:var(--blue-600)}
+.page-hero p{max-width:720px;color:var(--muted);font-size:16px;line-height:1.8}
+.prayer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.prayer-card{padding:30px;border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:0 10px 30px rgba(7,48,91,.04)}
+.prayer-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);transition:.25s}
+.prayer-icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:var(--sky);color:var(--blue-700);font-size:20px;font-weight:800;margin-bottom:22px}
+.prayer-card>span,.creed-label{font-size:9px;letter-spacing:.15em;color:var(--blue-600);font-weight:800}
+.prayer-card h2{font:800 25px Manrope;color:var(--blue-950);margin:7px 0 12px}
+.prayer-card p{font-size:14px;line-height:1.8;color:var(--muted);margin:0}
+.prayer-section{background:#fbfdff}
+.prayer-notes{background:#f4f9ff}
+.muted{color:var(--muted);line-height:1.7}
+.prayer-note-box{background:#fff;border:1px solid var(--line);border-radius:22px;padding:25px;box-shadow:var(--shadow)}
+.prayer-note-box label{display:block;font:800 13px Manrope;color:var(--blue-950);margin-bottom:10px}
+.prayer-note-box textarea{width:100%;border:1px solid #cbddec;border-radius:14px;padding:14px;font:14px/1.6 'DM Sans',sans-serif;resize:vertical;outline:none}
+.prayer-note-box textarea:focus{border-color:var(--blue-500);box-shadow:0 0 0 4px rgba(30,117,205,.08)}
+.note-actions{display:flex;gap:10px;margin-top:12px}.note-actions .btn{border:0;cursor:pointer}.prayer-note-box small{display:block;color:var(--blue-700);margin-top:12px;min-height:18px}
+.creed-section{background:#f7fbff}
+.creed-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.creed-card{border:1px solid var(--line);border-radius:24px;background:#fff;padding:36px;box-shadow:0 10px 35px rgba(7,48,91,.05)}
+.featured-creed{background:var(--blue-950);border-color:var(--blue-950);color:#fff}.featured-creed h2{color:#fff}.featured-creed .creed-label{color:#9bc7f2}.featured-creed .creed-text{color:#d8e8f7}
+.creed-card h2{font:800 29px Manrope;color:var(--blue-950);margin:10px 0 25px}.creed-text{font:15px/1.9 Georgia,serif;color:#52677f}.creed-text p{margin:0 0 15px}
+.scripture-note{padding-top:40px}.scripture-note .quote{max-width:850px;margin:auto}
+.app-strip{background:#eaf5ff;border-bottom:1px solid var(--line)}.app-strip-inner{min-height:90px;display:flex;align-items:center;gap:15px}.app-strip-inner>div{margin-right:auto}.app-strip-inner strong{display:block;font:800 15px Manrope;color:var(--blue-950)}.app-strip-inner span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.app-strip-inner .btn{white-space:nowrap}
+@media(max-width:900px){.prayer-grid,.creed-grid{grid-template-columns:1fr}.app-strip-inner{flex-wrap:wrap;padding:20px 0}.app-strip-inner>div{width:100%}}
+@media(max-width:700px){.page-hero{padding:75px 0 55px}.page-hero h1{font-size:43px}.prayer-card,.creed-card{padding:25px}.app-strip-inner .btn{width:100%;text-align:center}}
