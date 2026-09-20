@@ -222,7 +222,7 @@ footer p{font-size:10px;margin:0}
   footer p{margin-top:15px}
 }
 
-/* Halaman Doa, Pengakuan Iman, dan aplikasi */
+/* Halaman Doa dan aplikasi */
 .nav a.active{color:var(--blue-700)}
 .page-hero{padding:105px 0 80px;background:linear-gradient(135deg,#eef7ff,#fff);border-bottom:1px solid var(--line)}
 .page-hero h1{font:800 clamp(42px,6vw,72px)/1.02 Manrope;color:var(--blue-950);max-width:850px;margin:18px 0}

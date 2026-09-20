@@ -1,6 +1,6 @@
-const CACHE = 'gmih-ternate-v2';
+const CACHE = 'gmih-ternate-v3';
 const ASSETS = [
-  './','./index.html','./doa.html','./pengakuan-iman.html','./style.css','./script.js','./pwa.js','./manifest.webmanifest',
+  './','./index.html','./doa.html','./style.css','./script.js','./pwa.js','./manifest.webmanifest',
   './assets/logo-gereja.png','./assets/dokumentasi.jpg','./assets/tema.jpg','./assets/hero-sinode.png','./assets/donasi.jpg','./assets/icon-192.png','./assets/icon-512.png'
 ];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())));
