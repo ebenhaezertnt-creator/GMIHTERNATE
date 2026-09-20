@@ -1,16 +1,1 @@
-{
-  "name": "GMIH Eben Haezer Ternate",
-  "short_name": "GMIH Ternate",
-  "description": "Website dan aplikasi digital GMIH Eben Haezer Ternate.",
-  "lang": "id-ID",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0a4f9c",
-  "orientation": "portrait-primary",
-  "icons": [
-    {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
-    {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
-  ]
-}
+{"name":"GMIH Eben Haezer Ternate","short_name":"GMIH Ternate","start_url":"./","display":"standalone","background_color":"#f5f9fd","theme_color":"#0b4f91","icons":[{"src":"assets/logo.jpg","sizes":"192x192","type":"image/jpeg"},{"src":"assets/logo.jpg","sizes":"512x512","type":"image/jpeg"}]}

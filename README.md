@@ -1,21 +1,12 @@
-# GMIH Eben Haezer Ternate — Website & Aplikasi Android
+# GMIH Eben Haezer Ternate
 
-Website statis responsif untuk GMIH Eben Haezer Ternate, siap dipasang di GitHub Pages.
+Portal jemaat statis untuk GitHub Pages. Termasuk renungan harian otomatis berdasarkan tanggal, Doa Kristen, tautan Alkitab online, video YouTube gereja, galeri foto, dan PWA agar dapat dipasang sebagai aplikasi dari Chrome Android.
 
-## Fitur baru
-- Halaman **Ruang Doa** dengan doa syukur, pergumulan, permohonan, keluarga, kesehatan, pekerjaan/usaha, gereja, dan perlindungan.
-- **Catatan Pokok Doa** yang disimpan lokal di perangkat/browser pengguna; tidak dikirim ke server.
-- PWA (Progressive Web App): dapat dipasang sebagai aplikasi di Android dari Chrome melalui menu instalasi / tombol **Pasang Aplikasi**.
-- Service worker untuk cache dan akses lebih cepat saat koneksi tidak stabil.
-- Manifest dan ikon aplikasi.
+## Upload ke GitHub Pages
+Upload semua isi folder ini ke root repository `GMIHTERNATE`, termasuk folder `assets`. Tidak perlu mengunggah folder Android Studio.
 
-## GitHub Pages
-1. Upload seluruh isi folder ini ke root repository GitHub.
-2. Pastikan `index.html`, `doa.html`, `style.css`, `script.js`, `pwa.js`, `sw.js`, dan `manifest.webmanifest` ada di root.
-3. Pastikan folder `assets/` ikut di-upload.
-4. Settings → Pages → Deploy from a branch → `main` → `/ (root)`.
+## Alkitab
+Tombol Alkitab mengarah ke Alkitab SABDA: https://alkitab.sabda.org/home.php?lang=id
 
-## Menjadikan aplikasi Android
-Versi website ini sudah menjadi **PWA**, sehingga Android/Chrome dapat memasangnya seperti aplikasi tanpa Play Store. Buka website → menu browser → **Install app / Tambahkan ke layar utama**.
-
-Folder `android-app/` berisi proyek Android Studio WebView sederhana sebagai alternatif jika ingin dibuat menjadi APK.
+## YouTube
+Channel gereja: https://www.youtube.com/@gmihebenhaezerternate3440
