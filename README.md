@@ -5,7 +5,7 @@ Website ini mempertahankan seluruh isi versi sebelumnya dan **menambahkan** fitu
 ## Fitur baru
 - Ebenhaezer AI: chatbot pengetahuan pelayanan yang berjalan lokal di browser, tanpa API key.
 - Ayat Hafalan Setiap Hari di beranda, berganti berdasarkan tanggal.
-- Musik instrumental bergaya himne original berbasis MIDI; browser mencoba autoplay dan menyediakan tombol play sebagai fallback jika autoplay diblokir.
+- Pemutar lagu rohani pilihan melalui YouTube; browser mencoba autoplay dan menyediakan tombol Putar Lagu sebagai fallback jika autoplay bersuara diblokir.
 - Slideshow gambar rohani tentang Tuhan Yesus.
 - Service worker cache dinaikkan ke `v4-enhanced` agar versi baru tidak tertahan cache lama.
 

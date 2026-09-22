@@ -38,34 +38,40 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   document.querySelector('.slide-arrow.prev')?.addEventListener('click',()=>{showSlide(si-1);restart()}); document.querySelector('.slide-arrow.next')?.addEventListener('click',()=>{showSlide(si+1);restart()});
   function restart(){clearInterval(timer);timer=setInterval(()=>showSlide(si+1),6000)} showSlide(0);restart();
 
-  // Simple original MIDI-style hymn synthesizer. No copyrighted song is used.
-  const melody=[
-    [60,0.5],[64,0.5],[67,1],[67,.5],[69,.5],[67,1],[64,1],
-    [62,.5],[65,.5],[69,1],[69,.5],[71,.5],[69,1],[65,1],
-    [64,.5],[67,.5],[72,1],[71,.5],[69,.5],[67,1],[64,1],
-    [60,.5],[62,.5],[64,1],[67,1],[64,1],[60,2]
-  ];
-  let ctx=null, playing=false, stopTimer=null, stepIndex=0, nextAt=0;
-  function noteHz(n){return 440*Math.pow(2,(n-69)/12)}
-  function scheduleNote(freq,start,dur){const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(0.0001,start);g.gain.exponentialRampToValueAtTime(0.13,start+.025);g.gain.exponentialRampToValueAtTime(0.0001,start+dur-.035);o.connect(g);g.connect(ctx.destination);o.start(start);o.stop(start+dur)}
-  function playLoop(){if(!ctx||!playing)return;const beat=.34;while(nextAt<ctx.currentTime+.18){const [n,d]=melody[stepIndex];scheduleNote(noteHz(n),nextAt,d*beat*.92);nextAt+=d*beat;stepIndex=(stepIndex+1)%melody.length;if(stepIndex===0)nextAt+=.35;}stopTimer=requestAnimationFrame(playLoop)}
-  function setMusicButtons(){document.querySelectorAll('#musicToggle,#musicFab').forEach(b=>{b.classList.toggle('playing',playing);if(b.id==='musicToggle')b.textContent=playing?'⏸ Jeda Musik':'▶ Putar Musik';});}
-  async function toggleMusic(force){
-    if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();
-    if(force===false||playing){playing=false;cancelAnimationFrame(stopTimer);await ctx.suspend();}else{playing=true;await ctx.resume();nextAt=ctx.currentTime+.05;stepIndex=0;playLoop();}
-    setMusicButtons();
+  // Pemutar lagu rohani YouTube — tidak mengunduh atau menyalin audio berhak cipta.
+  const worshipPlayer=document.getElementById('worshipPlayer');
+  let songPlaying=false;
+  function ytCommand(func,args=[]){
+    if(!worshipPlayer?.contentWindow)return;
+    worshipPlayer.contentWindow.postMessage(JSON.stringify({event:'command',func,args}), '*');
   }
-  document.getElementById('musicToggle')?.addEventListener('click',()=>toggleMusic());document.getElementById('musicFab')?.addEventListener('click',()=>toggleMusic());
-  // Autoplay is attempted; modern browsers may block it until user interaction.
-  window.addEventListener('load',()=>setTimeout(()=>toggleMusic().catch(()=>{}),700),{once:true});
-  ['pointerdown','touchstart','keydown'].forEach(ev=>window.addEventListener(ev,()=>{if(ctx&&ctx.state==='suspended'&&!playing){}},{once:true,passive:true}));
+  function setMusicButtons(){
+    document.querySelectorAll('#musicToggle,#musicFab').forEach(b=>{
+      b.classList.toggle('playing',songPlaying);
+      if(b.id==='musicToggle')b.textContent=songPlaying?'⏸ Jeda Lagu':'▶ Putar Lagu';
+    });
+  }
+  function startSong(withSound=true){
+    if(withSound)ytCommand('unMute');
+    ytCommand('playVideo');
+    songPlaying=true;setMusicButtons();
+  }
+  function pauseSong(){ytCommand('pauseVideo');songPlaying=false;setMusicButtons();}
+  document.getElementById('musicToggle')?.addEventListener('click',()=>songPlaying?pauseSong():startSong(true));
+  document.getElementById('musicFab')?.addEventListener('click',()=>songPlaying?pauseSong():startSong(true));
+  // Autoplay dicoba saat halaman dimuat. Browser dapat menolak autoplay bersuara; tombol Putar Lagu tetap tersedia.
+  window.addEventListener('load',()=>setTimeout(()=>{startSong(true)},900),{once:true});
+  if(worshipPlayer){worshipPlayer.addEventListener('load',()=>{ytCommand('setVolume',[70]);});}
 
   // Ebenhaezer AI - local knowledge assistant, safe for GitHub Pages (no API key in browser).
   const qa=[
+    {keys:['lagu','musik','rohani'],ans:'Website menyediakan pemutar lagu rohani melalui YouTube. Jika suara tidak otomatis berjalan, tekan tombol Putar Lagu.'},
+    {keys:['gmih','sinode','kegiatan gmih'],ans:'Galeri GMIH menampilkan dokumentasi kegiatan dari sumber publik seperti Sinode GMIH, PGI, pemerintah daerah, dan sumber berita terkait. Kartu galeri mencantumkan sumber masing-masing.'},
+    
     {keys:['alamat','lokasi','dimana','di mana'],ans:'GMIH Eben Haezer Ternate berada di Jl. Arnold Mononutu No. 10, Tanah Raja, Ternate Tengah, Kota Ternate, Maluku Utara.'},
     {keys:['sekretariat','telepon','nomor','hubungi','kontak'],ans:'Sekretariat: 0813 6988 9893. Kontak Pdt.: 0813 5662 9868. Silakan hubungi untuk informasi pelayanan jemaat.'},
     {keys:['pelayanan','komisi','bidang','melayani'],ans:'Pelayanan jemaat mencakup ibadah, pembinaan iman, persekutuan, pelayanan anak/remaja/pemuda, musik/kantoria, kunjungan dan kesaksian. Untuk jadwal atau bidang tertentu, silakan hubungi sekretariat.'},
-    {keys:['ibadah','minggu','jadwal'],ans:'Website memuat informasi ibadah dan kegiatan yang tersedia. Karena jadwal dapat berubah, periksa bagian Kegiatan atau hubungi sekretariat sebelum datang.'},
+    {keys:['ibadah','minggu','jadwal'],ans:'Jadwal rutin: Ibadah Minggu pukul 09.00 dan 19.00 WIT; Sekolah Minggu & Remaja Minggu pukul 09.00; Rabu Gembira Rabu pukul 17.00; Pemuda setiap Senin; Lingpel setiap Selasa; Lansia setelah ibadah Minggu; PKB & WKI Minggu ke-2 setiap bulan; USBUH setiap Jumat. Jadwal dapat menyesuaikan agenda gereja.'},
     {keys:['doa','berdoa'],ans:'Anda dapat membuka halaman Doa Kristen dari menu/quick links untuk Doa Bapa Kami dan doa-doa lainnya.'},
     {keys:['alkitab','ayat','firman'],ans:'Gunakan tombol Alkitab pada website untuk membaca dan mencari ayat secara online melalui Alkitab SABDA.'},
     {keys:['qris','persembahan','donasi'],ans:'Informasi QRIS persembahan tersedia di bagian Persembahan. Pastikan memeriksa nama penerima sebelum melakukan transaksi.'},
