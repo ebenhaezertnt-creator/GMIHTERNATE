@@ -133,7 +133,7 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 .donation-top{margin-top:14px;margin-bottom:14px}
 .donation-top + .shortcuts{margin-top:0}
 @media(max-width:700px){.donation-body{grid-template-columns:1fr}.qris-wrap img{max-width:230px}.donation-top{margin-top:10px;margin-bottom:10px}}
-</style>
+.top-memory{display:block!important}.memory-verse-card{display:flex;align-items:flex-start;gap:14px}.memory-verse-panel{display:block!important}</style>
 <style>
 /* Galeri & dokumentasi foto terbaru */
 .gallery-new{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
@@ -303,7 +303,7 @@ const devotions=[
 ['Menjadi Berkat di Mana Pun','Kesaksian tidak selalu dimulai dari mimbar. Sering kali kesaksian dimulai dari rumah, tempat kerja, sekolah, lingkungan, dan percakapan sederhana. Ketika kita memilih jujur, mengampuni, menolong, menghormati, dan berbicara dengan kasih, orang lain dapat melihat sesuatu tentang Kristus melalui kehidupan kita. Gereja yang missioner bukan hanya gereja yang memiliki banyak kegiatan, tetapi gereja yang mengutus jemaat membawa kasih Tuhan ke tengah dunia. Hari ini jangan menunggu kesempatan besar. Jadilah berkat melalui tindakan kecil yang nyata. Sebuah pesan penguatan, pertolongan kepada tetangga, kesediaan mendengar, atau pengampunan dapat menjadi kesaksian yang kuat.','Matius 5:16']
 ];
 const d=new Date();const start=new Date(2026,0,1);const idx=Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-start)/86400000)%devotions.length;const v=devotions[(idx+devotions.length)%devotions.length];
-const date=d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});for(const id of ['devDate','fullDevDate'])document.getElementById(id).textContent=date;document.getElementById('devTitle').textContent=v[0];document.getElementById('devText').textContent=v[1];document.getElementById('devRef').textContent=v[2];document.getElementById('fullDevTitle').textContent=v[0];document.getElementById('fullDevText').textContent=v[1];document.getElementById('fullDevRef').textContent=v[2];document.getElementById('year').textContent=d.getFullYear();
+const date=d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});const fd=document.getElementById('fullDevDate');if(fd)fd.textContent=date;const ft=document.getElementById('fullDevTitle');if(ft)ft.textContent=v[0];const fx=document.getElementById('fullDevText');if(fx)fx.textContent=v[1];const fr=document.getElementById('fullDevRef');if(fr)fr.textContent=v[2];const yr=document.getElementById('year');if(yr)yr.textContent=d.getFullYear();
 document.querySelector('.menu-btn')?.addEventListener('click',()=>document.querySelector('.navlinks').classList.toggle('open'));
 
 /* ===== Fitur baru ===== */
