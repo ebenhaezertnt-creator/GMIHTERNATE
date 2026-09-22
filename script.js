@@ -59,52 +59,20 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   // Autoplay dicoba setelah iframe siap; Chrome/Android dapat tetap memblokir autoplay bersuara.
   window.addEventListener('load',()=>setTimeout(startSong,1200),{once:true});
 
+  // DOM chatbot — deklarasi eksplisit agar tombol Buka Chatbot dan FAB bekerja di Android/Chrome.
+  const widget=document.getElementById('aiWidget');
+  const fab=document.getElementById('aiFab');
+  const opener=document.getElementById('openAi');
+  const closer=document.getElementById('closeAi');
+  const form=document.getElementById('aiForm');
+  const input=document.getElementById('aiInput');
+  const messages=document.getElementById('aiMessages');
   // ===== Ebenhaezer AI: pencarian isi website + basis pengetahuan GMIH eksternal =====
-  // ===== Basis pengetahuan Alkitab =====
-  // Ringkasan dan navigasi Alkitab (66 kitab) tanpa menyalin teks Alkitab berhak cipta secara massal.
-  const bibleBooks = {
-    'perjanjian lama':['Kejadian','Keluaran','Imamat','Bilangan','Ulangan','Yosua','Hakim-hakim','Rut','1 Samuel','2 Samuel','1 Raja-raja','2 Raja-raja','1 Tawarikh','2 Tawarikh','Ezra','Nehemia','Ester','Ayub','Mazmur','Amsal','Pengkhotbah','Kidung Agung','Yesaya','Yeremia','Ratapan','Yehezkiel','Daniel','Hosea','Yoel','Amos','Obaja','Yunus','Mikha','Nahum','Habakuk','Zefanya','Hagai','Zakharia','Maleakhi'],
-    'perjanjian baru':['Matius','Markus','Lukas','Yohanes','Kisah Para Rasul','Roma','1 Korintus','2 Korintus','Galatia','Efesus','Filipi','Kolose','1 Tesalonika','2 Tesalonika','1 Timotius','2 Timotius','Titus','Filemon','Ibrani','Yakobus','1 Petrus','2 Petrus','1 Yohanes','2 Yohanes','3 Yohanes','Yudas','Wahyu']
-  };
-  const bibleTopicAnswers=[
-    {keys:['keselamatan','diselamatkan','keselamatan kristen'],ans:'Dalam iman Kristen, keselamatan berpusat pada kasih karunia Allah dan karya Yesus Kristus. Beberapa rujukan untuk dipelajari: Yohanes 3:16, Efesus 2:8–9, Roma 3:23–24, dan Roma 10:9–10.'},
-    {keys:['kasih','mengasihi','kasih allah'],ans:'Alkitab menempatkan kasih sebagai bagian penting kehidupan umat percaya. Pelajari Yohanes 3:16, 1 Korintus 13:1–13, 1 Yohanes 4:7–12, dan Yohanes 13:34–35.'},
-    {keys:['doa','berdoa','cara berdoa'],ans:'Alkitab mengajarkan umat percaya untuk berdoa dengan tekun, membawa permohonan kepada Allah dan tetap bersyukur. Rujukan: Matius 6:5–13, Filipi 4:6–7, 1 Tesalonika 5:17–18, dan Lukas 11:1–4.'},
-    {keys:['iman','percaya kepada tuhan'],ans:'Iman dalam Alkitab berkaitan dengan percaya dan hidup dalam kesetiaan kepada Allah. Rujukan: Ibrani 11:1–6, Roma 10:17, dan 2 Korintus 5:7.'},
-    {keys:['pengampunan','mengampuni'],ans:'Alkitab mengajarkan pengampunan dan menghubungkannya dengan kasih serta rekonsiliasi. Rujukan: Matius 6:14–15, Efesus 4:32, Kolose 3:13, dan Matius 18:21–35.'},
-    {keys:['roh kudus','roh kudus itu siapa'],ans:'Roh Kudus hadir dalam kesaksian Perjanjian Baru sebagai Roh yang menolong, mengajar, mengingatkan, dan memimpin umat percaya. Rujukan: Yohanes 14:16–17, Yohanes 14:26, Kisah Para Rasul 1:8, dan Galatia 5:22–23.'},
-    {keys:['yesus','siapa yesus','yesus kristus'],ans:'Dalam Perjanjian Baru, Yesus Kristus adalah pusat pemberitaan Injil: kehidupan, pelayanan, kematian, kebangkitan, dan ajaran-Nya menjadi dasar iman Kristen. Rujukan: Injil Matius, Markus, Lukas, Yohanes; juga Filipi 2:5–11.'},
-    {keys:['perjanjian lama','kitab perjanjian lama'],ans:'Perjanjian Lama terdiri dari 39 kitab dalam susunan Alkitab Protestan, dari Kejadian sampai Maleakhi.'},
-    {keys:['perjanjian baru','kitab perjanjian baru'],ans:'Perjanjian Baru terdiri dari 27 kitab dalam Alkitab Protestan, dari Matius sampai Wahyu.'},
-    {keys:['berapa kitab alkitab','jumlah kitab','66 kitab'],ans:'Alkitab Protestan terdiri dari 66 kitab: 39 kitab Perjanjian Lama dan 27 kitab Perjanjian Baru.'},
-    {keys:['mazmur','kitab mazmur'],ans:'Mazmur adalah kumpulan doa, pujian, ratapan, syukur, dan pengakuan iman. Untuk mulai membaca, lihat Mazmur 23, 46, 91, 119, dan 121.'},
-    {keys:['amsal','kitab amsal'],ans:'Amsal berisi banyak pengajaran tentang hikmat, perkataan, pekerjaan, hubungan, disiplin, dan takut akan Tuhan. Rujukan awal: Amsal 1:7 dan 3:5–6.'},
-    {keys:['injil','empat injil'],ans:'Empat Injil dalam Perjanjian Baru adalah Matius, Markus, Lukas, dan Yohanes. Keempatnya memberitakan Yesus Kristus dari sudut pandang dan susunan narasi yang berbeda.'},
-    {keys:['buah roh','buah-buah roh'],ans:'Galatia 5:22–23 menyebut buah Roh: kasih, sukacita, damai sejahtera, kesabaran, kemurahan, kebaikan, kesetiaan, kelemahlembutan, dan penguasaan diri.'},
-    {keys:['doa bapa kami','bapa kami'],ans:'Doa Bapa Kami diajarkan Yesus dalam Matius 6:9–13 dan Lukas 11:2–4. Isinya mencakup pengudusan nama Allah, kerajaan dan kehendak-Nya, kebutuhan sehari-hari, pengampunan, dan permohonan agar dilepaskan dari pencobaan.'},
-    {keys:['kasih karunia','anugerah'],ans:'Kasih karunia menunjuk pada kebaikan dan pemberian Allah yang tidak diperoleh karena jasa manusia. Rujukan penting: Efesus 2:8–9, Roma 3:23–24, dan Titus 2:11–12.'},
-    {keys:['kebangkitan','kebangkitan yesus'],ans:'Kebangkitan Yesus merupakan bagian sentral pemberitaan para rasul dalam Perjanjian Baru. Rujukan: Matius 28, Markus 16, Lukas 24, Yohanes 20–21, dan 1 Korintus 15.'}
-  ];
-  const bibleReferenceNotes={
-    'yohanes 3:16':'Yohanes 3:16 menekankan kasih Allah kepada dunia dan hubungan kasih itu dengan pemberian Anak-Nya serta kehidupan kekal bagi orang yang percaya.',
-    'filipi 4:13':'Filipi 4:13 berbicara tentang kemampuan Paulus menghadapi berbagai keadaan melalui kekuatan yang ia terima dalam Kristus; ayat ini sebaiknya dibaca bersama konteks Filipi 4:10–13.',
-    'mazmur 23:1':'Mazmur 23:1 memakai gambaran Tuhan sebagai gembala untuk menyatakan pemeliharaan dan kecukupan bagi umat-Nya.',
-    'yohanes 14:6':'Yohanes 14:6 menempatkan Yesus sebagai jalan, kebenaran, dan hidup serta menghubungkannya dengan datang kepada Bapa.',
-    'roma 12:12':'Roma 12:12 menghubungkan sukacita dalam pengharapan, kesabaran dalam kesesakan, dan ketekunan dalam doa.',
-    'efesus 2:8-9':'Efesus 2:8–9 menekankan keselamatan sebagai anugerah melalui iman, bukan hasil usaha manusia untuk membanggakan diri.'
-  };
-  const bibleSearchUrl=(q)=>'https://alkitab.sabda.org/search.php?search='+encodeURIComponent(q);
-  const bibleBookNames=[...bibleBooks['perjanjian lama'],...bibleBooks['perjanjian baru']];
-  function bibleReference(q){
-    const clean=q.toLowerCase().replace(/[–—]/g,'-').replace(/\s+/g,' ').trim();
-    const hit=Object.keys(bibleReferenceNotes).find(k=>clean.includes(k));
-    if(hit)return bibleReferenceNotes[hit]+'\n\nBaca teks dan konteksnya di Alkitab SABDA: '+bibleSearchUrl(hit);
-    const ref=clean.match(/(?:1|2|3)?\s*[a-zà-ÿ]+(?:\s+(?:para|rasul))?\s+\d+(?::\d+(?:-\d+)?)?/i);
-    if(ref && bibleBookNames.some(b=>clean.includes(b.toLowerCase()))) return 'Saya mengenali rujukan Alkitab “'+ref[0]+'”. Saya dapat membantu menjelaskan konteks dan tema ayat tersebut. Untuk membaca teks lengkap, buka Alkitab SABDA: '+bibleSearchUrl(ref[0]);
-    return null;
-  }
-
   const qa=[
+    {keys:['kitab alkitab','berapa kitab','jumlah kitab','66 kitab','perjanjian lama','perjanjian baru'],ans:'Alkitab Kristen terdiri dari 66 kitab dalam kanon Protestan: 39 kitab Perjanjian Lama dan 27 kitab Perjanjian Baru. Saya dapat membantu menjelaskan kitab, tokoh, tema, dan referensi ayat. Untuk membaca teks lengkap, gunakan Alkitab SABDA.'},
+    {keys:['yohanes 3:16','yohanes 3 16'],ans:'Yohanes 3:16 menjelaskan kasih Allah kepada dunia dan keselamatan melalui Anak-Nya. Jika Anda ingin membaca teks ayat dan konteks lengkapnya, buka Alkitab SABDA dari menu Alkitab.'},
+    {keys:['mazmur 23','mazmur dua puluh tiga'],ans:'Mazmur 23 menggambarkan TUHAN sebagai Gembala yang memelihara, menuntun, menyertai, dan memberi rasa aman kepada umat-Nya.'},
+    {keys:['buah roh','galatia 5:22','galatia 5 22'],ans:'Buah Roh dalam Galatia 5:22–23 mencakup kasih, sukacita, damai sejahtera, kesabaran, kemurahan, kebaikan, kesetiaan, kelemahlembutan, dan penguasaan diri.'},
     {keys:['lagu','musik','rohani','apa yang dapat memisahkanku','tak satupun'],ans:'Lagu rohani pilihan website adalah “Apa yang Dapat Memisahkanku dari Kasih-Mu Tuhan — Tak Satupun”. Pemutar lagu menggunakan video YouTube “Tak Satupun” — Herlin Pirena. Autoplay bersuara tetap dapat diblokir browser; tekan Putar Lagu jika perlu.'},
     {keys:['alamat','lokasi','dimana','di mana'],ans:'GMIH Eben Haezer Ternate berada di Jl. Arnold Mononutu No. 10, Tanah Raja, Ternate Tengah, Kota Ternate, Maluku Utara.'},
     {keys:['sekretariat','telepon','nomor','hubungi','kontak'],ans:'Sekretariat: 0813 6988 9893. Kontak Pdt.: 0813 5662 9868.'},
@@ -150,16 +118,12 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
       const url=webSearchUrl(q.replace(/cari web|terbaru|hari ini|berita terbaru/gi,''));
       return 'Untuk informasi eksternal terbaru, gunakan pencarian web berikut: '+url+'\n\nUntuk informasi resmi GMIH, saya menggunakan basis Sinode GMIH dan PGI yang sudah dimuat di website.';
     }
-    if(t.includes('shalom')||t.includes('halo')||t.includes('hai'))return 'Shalom! Tuhan memberkati. Saya dapat membantu tentang isi website, GMIH, dan Alkitab.';
-    const bref=bibleReference(t);
-    if(bref)return bref;
-    const btopic=bibleTopicAnswers.find(x=>x.keys.some(k=>t.includes(k)));
-    if(btopic)return btopic.ans+'\n\nJika ingin membaca teks lengkap, gunakan Alkitab SABDA: '+bibleSearchUrl(t);
+    if(t.includes('shalom')||t.includes('halo')||t.includes('hai'))return 'Shalom! Tuhan memberkati. Saya dapat menjawab isi website ini dan informasi dasar GMIH dari sumber resmi yang sudah dicantumkan.';
     const hit=qa.find(x=>x.keys.some(k=>t.includes(k)));
     if(hit)return hit.ans;
     const ext=findExternal(t); if(ext)return ext.title+': '+ext.text+'\nSumber: '+ext.url;
     const sec=findPage(t); if(sec)return 'Dari isi website: '+sec.text.slice(0,700)+(sec.text.length>700?'…':'');
-    return 'Saya belum menemukan jawaban yang cukup pasti. Coba tanyakan tentang jadwal, pelayanan, pendeta, galeri, kontak, Alkitab, nama kitab, ayat (misalnya Yohanes 3:16), tema Alkitab seperti iman/kasih/doa, sejarah GMIH, wilayah pelayanan GMIH, atau berita terbaru. Untuk pencarian eksternal langsung, ketik “Cari Web + pertanyaan”.';
+    return 'Saya belum menemukan jawaban yang cukup pasti. Coba sebutkan topik seperti jadwal, pelayanan, pendeta, galeri, kontak, Alkitab, sejarah GMIH, wilayah pelayanan GMIH, atau berita terbaru. Untuk pencarian eksternal langsung, ketik “Cari Web + pertanyaan”.';
   }
   function openAI(){widget?.classList.add('open');widget?.setAttribute('aria-hidden','false');setTimeout(()=>input?.focus(),100)} function closeAI(){widget?.classList.remove('open');widget?.setAttribute('aria-hidden','true')}
   fab?.addEventListener('click',openAI);opener?.addEventListener('click',openAI);closer?.addEventListener('click',closeAI);

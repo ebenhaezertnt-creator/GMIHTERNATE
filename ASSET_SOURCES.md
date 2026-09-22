@@ -32,6 +32,6 @@ Catatan: status penggunaan dapat berbeda menurut yurisdiksi. Periksa halaman sum
 - Profil GMIH PGI: https://www.pgi.or.id/synod/detail?id=14
 
 
-## Alkitab dan sumber studi
-- Alkitab SABDA: https://alkitab.sabda.org/home.php?lang=id
-- Fitur pencarian dan studi Alkitab SABDA mencakup pencarian ayat, kamus, leksikon, tafsiran/catatan, studi kata, peta, ilustrasi khotbah, dan resource.
+## Pembaruan tampilan final
+- Pemandangan footer: Wikimedia Commons, “Pemandangan Ternate dari Tidore.jpg” — Marychibi, lisensi CC BY-SA 4.0. https://commons.wikimedia.org/wiki/File:Pemandangan_Ternate_dari_Tidore.jpg
+- Foto galeri yang sebelumnya hotlink eksternal dipindahkan ke salinan lokal dari dokumentasi yang tersedia agar lebih stabil di GitHub Pages/mobile. Tautan sumber tetap dicantumkan pada kartu.

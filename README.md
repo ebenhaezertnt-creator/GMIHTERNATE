@@ -42,7 +42,3 @@ Setelah upload, lakukan hard refresh di HP atau buka URL dengan `?v=6` sekali un
 
 
 Pembaruan v6: lagu "Tak Satupun" (Herlin Pirena) diputar melalui embed YouTube; profil pendeta menggunakan object-fit contain agar wajah/tubuh tidak terpotong; Ebenhaezer AI mengindeks teks halaman dan memiliki basis sumber resmi Sinode GMIH/PGI serta pencarian web untuk informasi terbaru.
-
-
-## Basis pengetahuan Alkitab
-Ebenhaezer AI kini mengenali 66 kitab Alkitab (39 Perjanjian Lama + 27 Perjanjian Baru), pertanyaan berdasarkan tema seperti iman, kasih, doa, keselamatan, pengampunan, Roh Kudus, buah Roh, serta referensi ayat umum. Untuk teks lengkap dan studi lanjutan, chatbot mengarahkan ke Alkitab SABDA.
