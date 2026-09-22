@@ -1,27 +1,48 @@
-# GMIH Eben Haezer Ternate — versi Enhanced
+# GMIH Eben Haezer Ternate — Mobile + Ebenhaezer AI
 
-Website ini mempertahankan seluruh isi versi sebelumnya dan **menambahkan** fitur baru.
+Versi ini mempertahankan isi/fungsi website sebelumnya dan menambahkan perbaikan mobile, galeri, profil pendeta, chatbot, serta pemutar audio lokal.
 
-## Fitur baru
-- Ebenhaezer AI: chatbot pengetahuan pelayanan yang berjalan lokal di browser, tanpa API key.
-- Ayat Hafalan Setiap Hari di beranda, berganti berdasarkan tanggal.
-- Pemutar lagu rohani pilihan melalui YouTube; browser mencoba autoplay dan menyediakan tombol Putar Lagu sebagai fallback jika autoplay bersuara diblokir.
-- Slideshow gambar rohani tentang Tuhan Yesus.
-- Service worker cache dinaikkan ke `v4-enhanced` agar versi baru tidak tertahan cache lama.
+## Pembaruan utama
+- **Mobile-first:** layout, galeri, jadwal, menu, chatbot, tombol dan gambar dioptimalkan untuk HP.
+- **Galeri diperbaiki:** grid memakai `minmax(0,1fr)`, ukuran gambar terkunci agar foto tidak membesar memenuhi layar, dan galeri jemaat menampilkan lebih banyak dokumentasi.
+- **Foto pendeta:** memakai crop khusus untuk kartu agar wajah Pdt. Yofter N. Taliwunan dan Pdt. Adewenti Min Radja tampil utuh/tidak terpotong.
+- **Ebenhaezer AI:** dapat mencari isi teks yang tampil di seluruh halaman, lalu mencocokkannya dengan basis pengetahuan GMIH eksternal yang sudah dicantumkan sumbernya.
+- **Sumber eksternal GMIH:** basis pengetahuan mencakup Sinode GMIH, PGI, dan berita terkait yang relevan. Untuk berita yang benar-benar terbaru, chatbot menyediakan pencarian web.
+- **Lagu rohani:** pemutar sekarang menggunakan `<audio>` lokal, bukan YouTube.
 
-## Fitur lama dipertahankan
-- Renungan harian dan tautan SABDA.
-- Doa Kristen / Doa Bapa Kami (`doa.html`).
-- Alkitab SABDA.
-- Profil Pdt. Yofter N. Taliwunan, S.Si Teol. dan Pdt. Adewenti Min Radja, M.Th.
-- QRIS persembahan.
-- Galeri dan dokumentasi kegiatan.
-- YouTube, Facebook, Instagram.
-- PWA / service worker.
-- Semua foto/aset lama tetap disertakan.
+## Audio lagu
+Judul yang disiapkan:
+**“Apa yang Dapat Memisahkanku dari Kasih-Mu Tuhan — Tak Satupun”**.
 
-## Deploy GitHub Pages
-Upload **isi folder ini ke root branch `main`** repository GitHub Pages. Jangan membuat folder bersarang seperti `gmih-enhanced/index.html` jika Pages diarahkan ke root.
+Untuk memakai rekaman lagu tersebut, letakkan file audio yang Anda miliki/berhak gunakan di:
+`assets/apa-yang-dapat-memisahkanku.mp3`
 
-## Catatan chatbot
-Karena GitHub Pages adalah hosting statis, chatbot di paket ini menggunakan basis pengetahuan lokal. Jangan menaruh API key OpenAI/layanan AI di `script.js`. Jika nanti ingin AI generatif sungguhan, gunakan backend/serverless endpoint yang menyimpan API key di server.
+Alternatif: `assets/apa-yang-dapat-memisahkanku.m4a`.
+
+Browser akan mencoba autoplay saat halaman dibuka. Autoplay dengan suara dapat diblokir browser, sehingga tombol **Putar Lagu** tetap tersedia.
+
+> Jangan mengunggah rekaman berhak cipta kecuali Anda memiliki izin/hak penggunaannya.
+
+## Chatbot dan informasi eksternal
+GitHub Pages bersifat statis, jadi chatbot ini **tidak menyimpan API key** dan tidak berpura-pura memiliki akses internet real-time. Ia memakai dua lapisan:
+1. indeks isi halaman website yang dibaca langsung dari DOM;
+2. basis pengetahuan eksternal GMIH yang sudah dicantumkan dengan sumber resmi/tepercaya.
+
+Untuk pertanyaan seperti “berita GMIH terbaru”, chatbot membuat tautan pencarian web agar pengguna dapat membuka hasil terbaru.
+
+## Deploy
+Upload **isi folder ini langsung ke root** repository GitHub Pages, lalu overwrite file lama. Jangan membuat folder bersarang seperti `gmih_current/index.html` jika Pages diarahkan ke root.
+
+Setelah upload, lakukan hard refresh di HP atau buka URL dengan `?v=6` sekali untuk memaksa browser mengambil CSS/JS/service worker terbaru.
+
+## Catatan kompatibilitas
+- `meta viewport`, responsive breakpoints, safe touch targets, `loading="lazy"`, dan pembatasan lebar gambar sudah diterapkan.
+- PWA/service worker tetap dipertahankan.
+- Aset MIDI lama tetap disimpan secara fisik agar tidak menghapus aset lama, tetapi tidak lagi dipakai sebagai pemutar di halaman.
+
+
+Pembaruan v6: lagu "Tak Satupun" (Herlin Pirena) diputar melalui embed YouTube; profil pendeta menggunakan object-fit contain agar wajah/tubuh tidak terpotong; Ebenhaezer AI mengindeks teks halaman dan memiliki basis sumber resmi Sinode GMIH/PGI serta pencarian web untuk informasi terbaru.
+
+
+## Basis pengetahuan Alkitab
+Ebenhaezer AI kini mengenali 66 kitab Alkitab (39 Perjanjian Lama + 27 Perjanjian Baru), pertanyaan berdasarkan tema seperti iman, kasih, doa, keselamatan, pengampunan, Roh Kudus, buah Roh, serta referensi ayat umum. Untuk teks lengkap dan studi lanjutan, chatbot mengarahkan ke Alkitab SABDA.

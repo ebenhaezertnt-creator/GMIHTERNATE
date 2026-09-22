@@ -35,3 +35,73 @@ body{background:linear-gradient(180deg,#f8fcff 0%,#eef7ff 38%,#f9fcff 100%);colo
 .music-fab button{background:linear-gradient(135deg,#06366c,#0b7ed0)}
 @media(max-width:1000px){.schedule-grid{grid-template-columns:repeat(2,1fr)}.source-gallery-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.schedule-grid,.source-gallery-grid{grid-template-columns:1fr}.schedule-card{min-height:auto}.source-gallery-card img,.international-art{height:210px}.song-player{height:230px}.music-box{padding:16px}.music-controls{width:auto}.music-copy{flex:1 1 220px}.music-controls .btn{font-size:11px}}
+
+/* ===== Mobile-first hardening & gallery fix ===== */
+html,body{max-width:100%;overflow-x:hidden}
+img,video,iframe{max-width:100%}
+.container{width:min(1440px,calc(100% - 32px))}
+.nav-in{position:relative}
+.navlinks{min-width:0}
+.hero,.content-grid,.cards,.pastor-grid,.source-gallery-grid,.schedule-grid{min-width:0}
+.source-gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.source-gallery-card{min-width:0;max-width:100%;overflow:hidden}
+.source-gallery-card img{width:100%;max-width:100%;height:210px;aspect-ratio:16/10;object-fit:cover;object-position:center;display:block}
+.local-gallery-grid .source-gallery-card img{height:190px}
+.pastor-card{min-width:0}
+.pastor-card img{height:340px;object-fit:contain;object-position:center;background:linear-gradient(180deg,#edf7ff,#fff);padding:0}
+.audio-player-wrap{margin-top:14px;background:#062f61;border-radius:18px;padding:14px;box-shadow:0 10px 28px rgba(4,48,94,.12)}
+.audio-missing{margin-top:10px;padding:10px 12px;border-radius:10px;background:#fff3cd;color:#6a5100;font-size:12px}
+.ai-widget{max-width:calc(100vw - 20px);max-height:calc(100dvh - 100px)}
+.ai-messages{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+button,a,input{touch-action:manipulation}
+
+@media(max-width:1000px){
+  .source-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pastor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .container{width:calc(100% - 24px)}
+  .nav-in{gap:10px}
+  .brand{min-width:0;flex:1}
+  .brand b,.brand small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .navlinks.open{top:68px;max-height:calc(100dvh - 72px);overflow:auto}
+  .hero{display:block}
+  .hero-main{height:360px}
+  .shortcuts{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .shortcuts a{min-width:0;padding:10px 3px}
+  .content-grid{display:block}
+  .content-grid>div,.content-grid>aside{display:block}
+  .panel{padding:16px;margin-top:14px}
+  .panel h2{font-size:20px}
+  .schedule-grid,.source-gallery-grid,.pastor-grid{grid-template-columns:1fr}
+  .source-gallery-card img,.local-gallery-grid .source-gallery-card img{height:auto;aspect-ratio:16/10;object-fit:cover}
+  .pastor-card img{height:360px;object-fit:contain}
+  .music-box{gap:12px}
+  .music-copy h2{font-size:18px}
+  .music-controls{width:100%;margin-left:0}
+  .music-controls .btn{width:100%;text-align:center}
+  .song-player{height:220px}
+  .ai-widget{right:10px;left:10px;bottom:72px;width:auto;height:min(70dvh,560px);border-radius:18px}
+  .ai-fab{right:12px;bottom:14px}
+  .music-fab{right:12px;bottom:70px}
+}
+@media(max-width:430px){
+  .shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .shortcuts a{font-size:18px}
+  .hero-main{height:330px}
+  .hero-overlay h1{font-size:30px}
+  .memory-verse-card{align-items:flex-start;gap:12px;padding:15px}
+  .memory-cross{width:48px;height:48px;flex-basis:48px;font-size:23px}
+  .pastor-card img{height:330px}
+  .source-gallery-card img,.local-gallery-grid .source-gallery-card img{aspect-ratio:4/3}
+  .footer-in{font-size:10px}
+}
+
+/* ===== Final portrait + YouTube + AI source hardening ===== */
+.pastor-card img{width:100%;height:auto;max-height:380px;aspect-ratio:4/5;object-fit:contain;object-position:center;background:linear-gradient(180deg,#edf7ff,#fff);display:block;padding:0}
+.youtube-song-wrap{background:#062f61;padding:8px;border-radius:18px;overflow:hidden}
+.song-player{width:100%;height:315px;display:block;border:0;border-radius:12px}
+.ai-source-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #dceafa}
+.ai-source-links a{background:#eef7ff;border:1px solid #d5e9fa;color:#0b5aa9;text-decoration:none;font-size:11px;font-weight:800;border-radius:999px;padding:8px 11px}
+@media(max-width:700px){.pastor-card img{height:auto;min-height:300px;max-height:430px;aspect-ratio:4/5;object-fit:contain}.song-player{height:220px}.ai-source-links{overflow:auto;flex-wrap:nowrap}.ai-source-links a{white-space:nowrap}}
+@media(max-width:430px){.pastor-card img{min-height:280px;max-height:390px;aspect-ratio:4/5}.song-player{height:205px}}

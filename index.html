@@ -92,13 +92,13 @@
 <section class="panel music-panel worship-song" id="lagu-rohani">
   <div class="music-box">
     <div class="music-icon">♪</div>
-    <div class="music-copy"><span class="eyebrow">LAGU ROHANI PILIHAN</span><h2>Kumpulan Lagu Rohani Kristen Terbaru &amp; Populer</h2><p>Musik rohani diputar melalui pemutar YouTube resmi. Website akan mencoba memulai pemutaran saat dikunjungi; bila browser memblokir suara otomatis, tekan tombol <b>Putar Lagu</b>.</p></div>
+    <div class="music-copy"><span class="eyebrow">LAGU ROHANI PILIHAN</span><h2>Apa yang Dapat Memisahkanku dari Kasih-Mu Tuhan — Tak Satupun</h2><p>Diputar melalui YouTube. Website mencoba autoplay saat halaman dibuka; jika browser memblokir autoplay bersuara, tekan <b>Putar Lagu</b>.</p></div>
     <div class="music-controls"><button class="btn music-toggle" id="musicToggle" type="button">▶ Putar Lagu</button></div>
   </div>
-  <div class="song-player-wrap">
-    <iframe id="worshipPlayer" class="song-player" src="https://www.youtube.com/embed/tbPYWGXGtRE?autoplay=1&amp;mute=0&amp;controls=1&amp;rel=0&amp;modestbranding=1" title="Kumpulan Lagu Rohani Kristen Terbaru dan Populer 2026" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  <div class="song-player-wrap youtube-song-wrap">
+    <iframe id="worshipYouTube" class="song-player" src="https://www.youtube.com/embed/_072kCrrPBg?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1" title="Tak Satupun - Herlin Pirena" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen loading="eager"></iframe>
   </div>
-  <p class="muted source-note">Sumber pemutar: video YouTube “Kumpulan Lagu Rohani Kristen Terbaru dan Populer” dari Steven Pakpahan – Lagu Rohani, dipublikasikan 6 Januari 2026.</p>
+  <p class="muted source-note">Lagu: <b>Tak Satupun</b> — Herlin Pirena. Video diputar dari YouTube, bukan diunduh atau disimpan di server website.</p>
 </section>
 
 <!-- PEMBARUAN: Galeri GMIH Provinsi, Nasional & Internasional -->
@@ -118,20 +118,25 @@
 <!-- PEMBARUAN: Galeri Dokumentasi GMIH Eben Haezer Ternate -->
 <section class="panel local-source-gallery" id="galeri-ebenhaezer">
   <div class="panel-head"><div><span class="eyebrow">DOKUMENTASI JEMAAT</span><h2>GMIH Eben Haezer Ternate</h2></div><span class="date-chip">Arsip foto jemaat</span></div>
-  <p class="gallery-intro">Dokumentasi kegiatan jemaat yang telah diberikan/ditampilkan dalam portal ini, ditambah referensi publik yang relevan. Foto diberi keterangan agar sumbernya jelas.</p>
+  <p class="gallery-intro">Dokumentasi kegiatan jemaat ditampilkan sebagai galeri responsif. Foto akan menyesuaikan ukuran layar agar tetap ringan dan mudah dilihat dari HP.</p>
   <div class="source-gallery-grid local-gallery-grid">
-    <figure class="source-gallery-card"><img src="assets/gereja.jpg" alt="Gedung Gereja GMIH Eben Haezer Ternate"><figcaption><span>JEMAAT</span><h3>Gedung Gereja Eben Haezer</h3><p>Dokumentasi jemaat.</p></figcaption></figure>
-    <figure class="source-gallery-card"><img src="assets/interior-gereja.jpg" alt="Interior Gereja GMIH Eben Haezer Ternate"><figcaption><span>JEMAAT</span><h3>Ruang Ibadah</h3><p>Dokumentasi jemaat.</p></figcaption></figure>
-    <figure class="source-gallery-card"><img src="assets/persekutuan.jpg" alt="Persekutuan GMIH Eben Haezer Ternate"><figcaption><span>KEGIATAN</span><h3>Persekutuan Jemaat</h3><p>Dokumentasi kegiatan.</p></figcaption></figure>
-    <figure class="source-gallery-card"><img src="assets/minggu-etnik.jpg" alt="Ibadah Minggu Etnik GMIH Eben Haezer Ternate"><figcaption><span>IBADAH</span><h3>Minggu Etnik</h3><p>Dokumentasi kegiatan jemaat.</p></figcaption></figure>
-    <figure class="source-gallery-card"><img src="assets/perjamuan.jpg" alt="Perjamuan Kudus GMIH Eben Haezer Ternate"><figcaption><span>IBADAH</span><h3>Perjamuan Kudus</h3><p>Dokumentasi kegiatan jemaat.</p></figcaption></figure>
-    <figure class="source-gallery-card"><img src="assets/sidang.jpg" alt="Kegiatan GMIH Eben Haezer Ternate"><figcaption><span>GMIH</span><h3>Sidang &amp; Persekutuan</h3><p>Dokumentasi GMIH.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/gereja.jpg" alt="Gedung Gereja GMIH Eben Haezer Ternate"><figcaption><span>JEMAAT</span><h3>Gedung Gereja Eben Haezer</h3><p>Dokumentasi jemaat.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/interior-gereja.jpg" alt="Interior Gereja GMIH Eben Haezer Ternate"><figcaption><span>JEMAAT</span><h3>Ruang Ibadah</h3><p>Dokumentasi jemaat.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/persekutuan.jpg" alt="Persekutuan GMIH Eben Haezer Ternate"><figcaption><span>KEGIATAN</span><h3>Persekutuan Jemaat</h3><p>Dokumentasi kegiatan.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/minggu-etnik.jpg" alt="Ibadah Minggu Etnik GMIH Eben Haezer Ternate"><figcaption><span>IBADAH</span><h3>Minggu Etnik</h3><p>Dokumentasi kegiatan jemaat.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/perjamuan.jpg" alt="Perjamuan Kudus GMIH Eben Haezer Ternate"><figcaption><span>IBADAH</span><h3>Perjamuan Kudus</h3><p>Dokumentasi kegiatan jemaat.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/sidang.jpg" alt="Kegiatan GMIH Eben Haezer Ternate"><figcaption><span>GMIH</span><h3>Sidang &amp; Persekutuan</h3><p>Dokumentasi GMIH.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/ulang-tahun.jpg" alt="Ulang Tahun GMIH 77 Tahun"><figcaption><span>GMIH</span><h3>HUT GMIH ke-77</h3><p>6 Juni 2026.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/sidang-istimewa.jpg" alt="Sidang Sinode Istimewa GMIH"><figcaption><span>SINODE</span><h3>Sidang Sinode Istimewa</h3><p>Tobelo · 23–26 Juli 2026.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/sinode.jpg" alt="Kegiatan Sinode GMIH"><figcaption><span>SINODE</span><h3>Kegiatan Sinode GMIH</h3><p>Dokumentasi kegiatan gereja.</p></figcaption></figure>
+    <figure class="source-gallery-card"><img loading="lazy" decoding="async" src="assets/gedung-baru.jpg" alt="Gedung GMIH Eben Haezer Ternate"><figcaption><span>JEMAAT</span><h3>Gedung &amp; Pelayanan</h3><p>Dokumentasi jemaat.</p></figcaption></figure>
   </div>
 </section>
 
 <!-- FITUR BARU: Ebenhaezer AI -->
 <section class="panel ai-intro" id="ebenhaezer-ai">
-  <div class="ai-banner"><div class="ai-avatar">EH<span>AI</span></div><div><span class="eyebrow">EBENHAEZER AI</span><h2>Asisten pelayanan jemaat</h2><p>Tanyakan seputar pelayanan, ibadah, doa, kegiatan, Alkitab, kontak jemaat, dan informasi dasar GMIH Eben Haezer Ternate.</p></div><button class="btn" type="button" id="openAi">Buka Chatbot</button></div>
+  <div class="ai-banner"><div class="ai-avatar">EH<span>AI</span></div><div><span class="eyebrow">EBENHAEZER AI</span><h2>Asisten pelayanan jemaat</h2><p>Tanyakan isi seluruh website. Ebenhaezer AI juga memiliki basis informasi GMIH dari sumber resmi Sinode GMIH dan PGI, serta tombol pencarian web untuk informasi yang benar-benar terbaru.</p></div><button class="btn" type="button" id="openAi">Buka Chatbot</button></div>
+  <div class="ai-source-links"><a href="https://gmih.web.id/" target="_blank" rel="noopener">Sinode GMIH ↗</a><a href="https://gmih.web.id/sejarah/" target="_blank" rel="noopener">Sejarah GMIH ↗</a><a href="https://www.pgi.or.id/synod/detail?id=14" target="_blank" rel="noopener">Profil GMIH – PGI ↗</a><a href="https://www.youtube.com/@gmihebenhaezerternate3440" target="_blank" rel="noopener">YouTube Jemaat ↗</a></div>
 </section>
 
 </main>
@@ -140,8 +145,8 @@
 <!-- Floating Ebenhaezer AI Chat -->
 <div class="ai-widget" id="aiWidget" aria-hidden="true">
   <div class="ai-head"><div><b>Ebenhaezer AI</b><small>Asisten pelayanan jemaat</small></div><button id="closeAi" type="button" aria-label="Tutup chatbot">×</button></div>
-  <div class="ai-messages" id="aiMessages"><div class="ai-msg bot">Shalom! Saya Ebenhaezer AI. Saya siap membantu informasi dasar tentang pelayanan GMIH Eben Haezer Ternate. Apa yang ingin Anda tanyakan?</div></div>
-  <div class="ai-suggestions"><button type="button" data-q="Apa saja pelayanan gereja?">Pelayanan</button><button type="button" data-q="Jadwal ibadah bagaimana?">Ibadah</button><button type="button" data-q="Bagaimana cara menghubungi gereja?">Kontak</button><button type="button" data-q="Di mana saya bisa membaca Alkitab?">Alkitab</button></div>
+  <div class="ai-messages" id="aiMessages"><div class="ai-msg bot">Shalom! Saya Ebenhaezer AI. Saya bisa mencari isi halaman ini dan menjawab informasi GMIH dari basis pengetahuan eksternal yang sudah dicantumkan sumbernya. Untuk informasi real-time, gunakan tombol Cari Web.</div></div>
+  <div class="ai-suggestions"><button type="button" data-q="Apa saja pelayanan gereja?">Pelayanan</button><button type="button" data-q="Jadwal ibadah bagaimana?">Ibadah</button><button type="button" data-q="Bagaimana cara menghubungi gereja?">Kontak</button><button type="button" data-q="Berapa jumlah wilayah pelayanan GMIH?">GMIH</button><button type="button" data-q="Di mana saya bisa membaca Alkitab?">Alkitab</button><button type="button" data-q="Apa arti Yohanes 3:16?">Ayat Alkitab</button><button type="button" data-q="Berapa jumlah kitab dalam Alkitab?">Kitab Alkitab</button><button type="button" data-q="Cari informasi terbaru tentang GMIH">Cari Web</button></div>
   <form class="ai-form" id="aiForm"><input id="aiInput" autocomplete="off" placeholder="Ketik pertanyaan..." aria-label="Pertanyaan untuk Ebenhaezer AI"><button type="submit">Kirim</button></form>
 </div>
 <button class="ai-fab" id="aiFab" type="button" aria-label="Buka Ebenhaezer AI">✦<span>Ebenhaezer AI</span></button>

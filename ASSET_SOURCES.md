@@ -17,3 +17,21 @@ Catatan: status penggunaan dapat berbeda menurut yurisdiksi. Periksa halaman sum
 - Galeri GMIH Nasional/Ekumenis: PGI dan WCC Indonesia untuk dokumentasi kegiatan sinode GMIH.
 - Galeri internasional/jejaring: Sinode GMIH dan World Council of Churches/WCRC sebagai rujukan jejaring ekumenis GMIH.
 - Foto Galeri GMIH Eben Haezer Ternate menggunakan dokumentasi/aset yang sebelumnya diberikan dalam proyek website ini.
+
+## Update Mobile + Ebenhaezer AI
+- `pdt-yofter-card.jpg` dan `pdt-adewenti-card.jpg`: crop khusus kartu profil agar wajah tampil utuh.
+- Galeri lokal memakai aset dokumentasi jemaat yang sudah tersedia di paket.
+- Basis pengetahuan GMIH eksternal: `https://gmih.web.id/`, `https://gmih.web.id/sejarah/`, `https://www.pgi.or.id/synod/detail?id=14`, serta berita PGI yang ditautkan di `script.js`.
+- Audio lokal: file yang disiapkan pengguna dengan nama `assets/apa-yang-dapat-memisahkanku.mp3` atau `.m4a`.
+
+
+## v6 — YouTube & AI
+- Lagu YouTube: Tak Satupun — Herlin Pirena: https://www.youtube.com/watch?v=_072kCrrPBg
+- Sinode GMIH: https://gmih.web.id/
+- Sejarah GMIH: https://gmih.web.id/sejarah/
+- Profil GMIH PGI: https://www.pgi.or.id/synod/detail?id=14
+
+
+## Alkitab dan sumber studi
+- Alkitab SABDA: https://alkitab.sabda.org/home.php?lang=id
+- Fitur pencarian dan studi Alkitab SABDA mencakup pencarian ayat, kamus, leksikon, tafsiran/catatan, studi kata, peta, ilustrasi khotbah, dan resource.
