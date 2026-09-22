@@ -47,7 +47,53 @@
 <section class="panel quick"><a href="doa.html"><b>🙏 Doa Kristen</b><span>Berbagai doa untuk kehidupan rohani →</span></a><a href="https://alkitab.sabda.org/home.php?lang=id" target="_blank"><b>✝ Alkitab</b><span>Baca dan cari ayat online →</span></a><a href="#kegiatan"><b>▣ Kegiatan</b><span>Informasi kegiatan jemaat →</span></a><a href="#donasi"><b>❤ Persembahan</b><span>Informasi QRIS gereja →</span></a><a href="https://www.youtube.com/@gmihebenhaezerternate3440" target="_blank" rel="noopener"><b>▶ YouTube Gereja</b><span>Ibadah dan dokumentasi →</span></a><a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F61573176655402%2F%3Flocale%3Did_ID" target="_blank" rel="noopener"><b>f Facebook</b><span>Halaman Facebook jemaat →</span></a><a href="https://www.instagram.com/explore/locations/889777051179222/gmih-eben-haezer-ternate/" target="_blank" rel="noopener"><b>◎ Instagram</b><span>Foto dan kabar jemaat →</span></a></section>
 <section class="panel contact" id="kontak"><span class="eyebrow">KONTAK</span><h2>Hubungi Jemaat</h2><p><b>Sekretariat</b><br><a href="tel:+6281369889893">0813 6988 9893</a></p><p><b>Pdt.</b><br><a href="tel:+6281356629868">0813 5662 9868</a></p><p>Jl. Arnold Mononutu No. 10, Tanah Raja, Ternate Tengah, Kota Ternate, Maluku Utara.</p></section>
 </aside></section>
+
+<!-- FITUR BARU: Ayat Hafalan Harian -->
+<section class="panel memory-verse-panel" id="ayat-hafalan">
+  <div class="panel-head"><div><span class="eyebrow">AYAT HAFALAN SETIAP HARI</span><h2 id="memoryVerseRef">Ayat Hafalan Hari Ini</h2></div><span class="date-chip" id="memoryVerseDate"></span></div>
+  <div class="memory-verse-card"><div class="memory-cross">✝</div><div><p id="memoryVerseText">Memuat ayat hafalan...</p><b id="memoryVerseBook"></b><small>Renungkan, hafalkan, dan hidupi firman Tuhan hari ini.</small></div></div>
+</section>
+
+<!-- FITUR BARU: Slide gambar rohani -->
+<section class="panel jesus-slideshow" id="galeri-rohani">
+  <div class="panel-head"><div><span class="eyebrow">GALERI ROHANI</span><h2>Tuhan Yesus dan kisah iman</h2></div><span class="date-chip">Geser / otomatis</span></div>
+  <div class="jesus-slider" aria-label="Slideshow gambar rohani tentang Tuhan Yesus">
+    <button class="slide-arrow prev" type="button" aria-label="Gambar sebelumnya">‹</button>
+    <div class="slides">
+      <figure class="jesus-slide active"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Jesus_Christ_-_Hofmann.jpg" alt="Yesus Kristus - lukisan Heinrich Hofmann"><figcaption>Kristus, sumber pengharapan dan damai.</figcaption></figure>
+      <figure class="jesus-slide"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Jesus_the_good_shepherd.jpg" alt="Yesus sebagai Gembala yang baik"><figcaption>Yesus Sang Gembala yang baik, yang memelihara umat-Nya.</figcaption></figure>
+      <figure class="jesus-slide"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Jesus-SermonOnTheMount_(cropped).jpg" alt="Yesus berkhotbah di bukit"><figcaption>Firman Kristus mengajar kita hidup dalam kasih dan kebenaran.</figcaption></figure>
+      <figure class="jesus-slide"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/The-last-supper-leonardo-da-vinci.jpg" alt="Perjamuan Terakhir"><figcaption>Persekutuan, pengorbanan, dan kasih Kristus.</figcaption></figure>
+      <figure class="jesus-slide"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/William_Dyce_-_The_Good_Shepherd.jpg" alt="The Good Shepherd oleh William Dyce"><figcaption>Kristus menuntun umat-Nya untuk berjalan dalam iman.</figcaption></figure>
+    </div>
+    <button class="slide-arrow next" type="button" aria-label="Gambar berikutnya">›</button>
+    <div class="slide-dots" role="tablist" aria-label="Pilihan slide"></div>
+  </div>
+  <p class="muted source-note">Gambar seni pada slideshow berasal dari Wikimedia Commons dan dipilih dari karya yang tercatat sebagai domain publik pada halaman sumbernya.</p>
+</section>
+
+<!-- FITUR BARU: Musik MIDI -->
+<section class="panel music-panel" id="musik-rohani">
+  <div class="music-box"><div class="music-icon">♫</div><div><span class="eyebrow">MUSIK ROHANI</span><h2>Irama Rohani Eben Haezer</h2><p>Melodi instrumental bergaya himne yang dibuat khusus untuk halaman ini. Musik akan dicoba diputar saat halaman dibuka; jika browser memblokir autoplay, tekan tombol putar.</p></div><div class="music-controls"><button class="btn music-toggle" id="musicToggle" type="button">▶ Putar Musik</button><a class="music-midi-link" href="assets/rohani-ebenhaezer.mid" download>↓ MIDI</a></div></div>
+</section>
+
+<!-- FITUR BARU: Ebenhaezer AI -->
+<section class="panel ai-intro" id="ebenhaezer-ai">
+  <div class="ai-banner"><div class="ai-avatar">EH<span>AI</span></div><div><span class="eyebrow">EBENHAEZER AI</span><h2>Asisten pelayanan jemaat</h2><p>Tanyakan seputar pelayanan, ibadah, doa, kegiatan, Alkitab, kontak jemaat, dan informasi dasar GMIH Eben Haezer Ternate.</p></div><button class="btn" type="button" id="openAi">Buka Chatbot</button></div>
+</section>
+
 </main>
 <footer><div class="container footer-in"><span>© <span id="year"></span> GMIH Eben Haezer Ternate</span><span>“Menjadi Gereja yang Utuh, Mandiri dan Misioner.”</span><span class="social-links"><a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F61573176655402%2F%3Flocale%3Did_ID" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/explore/locations/889777051179222/gmih-eben-haezer-ternate/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.youtube.com/@gmihebenhaezerternate3440" target="_blank" rel="noopener">YouTube</a></span></div></footer>
+
+<!-- Floating Ebenhaezer AI Chat -->
+<div class="ai-widget" id="aiWidget" aria-hidden="true">
+  <div class="ai-head"><div><b>Ebenhaezer AI</b><small>Asisten pelayanan jemaat</small></div><button id="closeAi" type="button" aria-label="Tutup chatbot">×</button></div>
+  <div class="ai-messages" id="aiMessages"><div class="ai-msg bot">Shalom! Saya Ebenhaezer AI. Saya siap membantu informasi dasar tentang pelayanan GMIH Eben Haezer Ternate. Apa yang ingin Anda tanyakan?</div></div>
+  <div class="ai-suggestions"><button type="button" data-q="Apa saja pelayanan gereja?">Pelayanan</button><button type="button" data-q="Jadwal ibadah bagaimana?">Ibadah</button><button type="button" data-q="Bagaimana cara menghubungi gereja?">Kontak</button><button type="button" data-q="Di mana saya bisa membaca Alkitab?">Alkitab</button></div>
+  <form class="ai-form" id="aiForm"><input id="aiInput" autocomplete="off" placeholder="Ketik pertanyaan..." aria-label="Pertanyaan untuk Ebenhaezer AI"><button type="submit">Kirim</button></form>
+</div>
+<button class="ai-fab" id="aiFab" type="button" aria-label="Buka Ebenhaezer AI">✦<span>Ebenhaezer AI</span></button>
+<div class="music-fab"><button id="musicFab" type="button" aria-label="Putar atau jeda musik">♫</button></div>
+
 <script src="script.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}</script>
 </body></html>

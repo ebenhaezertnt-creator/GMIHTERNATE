@@ -10,3 +10,75 @@ const devotions=[
 const d=new Date();const start=new Date(2026,0,1);const idx=Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-start)/86400000)%devotions.length;const v=devotions[(idx+devotions.length)%devotions.length];
 const date=d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});for(const id of ['devDate','fullDevDate'])document.getElementById(id).textContent=date;document.getElementById('devTitle').textContent=v[0];document.getElementById('devText').textContent=v[1];document.getElementById('devRef').textContent=v[2];document.getElementById('fullDevTitle').textContent=v[0];document.getElementById('fullDevText').textContent=v[1];document.getElementById('fullDevRef').textContent=v[2];document.getElementById('year').textContent=d.getFullYear();
 document.querySelector('.menu-btn')?.addEventListener('click',()=>document.querySelector('.navlinks').classList.toggle('open'));
+
+/* ===== Fitur baru ===== */
+(function(){
+  const verses=[
+    ['Mazmur 119:105','Firman-Mu itu pelita bagi kakiku dan terang bagi jalanku.'],
+    ['Yohanes 14:6','Akulah jalan dan kebenaran dan hidup. Tidak ada seorang pun yang datang kepada Bapa, kalau tidak melalui Aku.'],
+    ['Filipi 4:13','Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku.'],
+    ['Mazmur 23:1','TUHAN adalah gembalaku, takkan kekurangan aku.'],
+    ['Matius 11:28','Marilah kepada-Ku, semua yang letih lesu dan berbeban berat, Aku akan memberi kelegaan kepadamu.'],
+    ['Yesaya 41:10','Janganlah takut, sebab Aku menyertai engkau, janganlah bimbang, sebab Aku ini Allahmu.'],
+    ['Yosua 1:9','Kuatkan dan teguhkanlah hatimu. Janganlah kecut dan tawar hati, sebab TUHAN, Allahmu, menyertai engkau.'],
+    ['Roma 12:12','Bersukacitalah dalam pengharapan, sabarlah dalam kesesakan, dan bertekunlah dalam doa.'],
+    ['1 Korintus 16:14','Lakukanlah segala pekerjaanmu dalam kasih.'],
+    ['Amsal 3:5','Percayalah kepada TUHAN dengan segenap hatimu, dan janganlah bersandar kepada pengertianmu sendiri.']
+  ];
+  const now=new Date(), day=Math.floor(new Date(now.getFullYear(),now.getMonth(),now.getDate())-new Date(2026,0,1))/86400000;
+  const verse=verses[((day%verses.length)+verses.length)%verses.length];
+  const dateText=now.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+  const vr=document.getElementById('memoryVerseRef'), vt=document.getElementById('memoryVerseText'), vb=document.getElementById('memoryVerseBook'), vd=document.getElementById('memoryVerseDate');
+  if(vr){vr.textContent=verse[0];vt.textContent='“'+verse[1]+'”';vb.textContent=verse[0];vd.textContent=dateText;}
+
+  // Slideshow
+  const slides=[...document.querySelectorAll('.jesus-slide')], dots=document.querySelector('.slide-dots'); let si=0, timer;
+  function showSlide(n){if(!slides.length)return;si=(n+slides.length)%slides.length;slides.forEach((x,i)=>x.classList.toggle('active',i===si));if(dots)dots.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('active',i===si));}
+  if(dots){slides.forEach((_,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Slide '+(i+1));b.addEventListener('click',()=>{showSlide(i);restart();});dots.appendChild(b);});}
+  document.querySelector('.slide-arrow.prev')?.addEventListener('click',()=>{showSlide(si-1);restart()}); document.querySelector('.slide-arrow.next')?.addEventListener('click',()=>{showSlide(si+1);restart()});
+  function restart(){clearInterval(timer);timer=setInterval(()=>showSlide(si+1),6000)} showSlide(0);restart();
+
+  // Simple original MIDI-style hymn synthesizer. No copyrighted song is used.
+  const melody=[
+    [60,0.5],[64,0.5],[67,1],[67,.5],[69,.5],[67,1],[64,1],
+    [62,.5],[65,.5],[69,1],[69,.5],[71,.5],[69,1],[65,1],
+    [64,.5],[67,.5],[72,1],[71,.5],[69,.5],[67,1],[64,1],
+    [60,.5],[62,.5],[64,1],[67,1],[64,1],[60,2]
+  ];
+  let ctx=null, playing=false, stopTimer=null, stepIndex=0, nextAt=0;
+  function noteHz(n){return 440*Math.pow(2,(n-69)/12)}
+  function scheduleNote(freq,start,dur){const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(0.0001,start);g.gain.exponentialRampToValueAtTime(0.13,start+.025);g.gain.exponentialRampToValueAtTime(0.0001,start+dur-.035);o.connect(g);g.connect(ctx.destination);o.start(start);o.stop(start+dur)}
+  function playLoop(){if(!ctx||!playing)return;const beat=.34;while(nextAt<ctx.currentTime+.18){const [n,d]=melody[stepIndex];scheduleNote(noteHz(n),nextAt,d*beat*.92);nextAt+=d*beat;stepIndex=(stepIndex+1)%melody.length;if(stepIndex===0)nextAt+=.35;}stopTimer=requestAnimationFrame(playLoop)}
+  function setMusicButtons(){document.querySelectorAll('#musicToggle,#musicFab').forEach(b=>{b.classList.toggle('playing',playing);if(b.id==='musicToggle')b.textContent=playing?'⏸ Jeda Musik':'▶ Putar Musik';});}
+  async function toggleMusic(force){
+    if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();
+    if(force===false||playing){playing=false;cancelAnimationFrame(stopTimer);await ctx.suspend();}else{playing=true;await ctx.resume();nextAt=ctx.currentTime+.05;stepIndex=0;playLoop();}
+    setMusicButtons();
+  }
+  document.getElementById('musicToggle')?.addEventListener('click',()=>toggleMusic());document.getElementById('musicFab')?.addEventListener('click',()=>toggleMusic());
+  // Autoplay is attempted; modern browsers may block it until user interaction.
+  window.addEventListener('load',()=>setTimeout(()=>toggleMusic().catch(()=>{}),700),{once:true});
+  ['pointerdown','touchstart','keydown'].forEach(ev=>window.addEventListener(ev,()=>{if(ctx&&ctx.state==='suspended'&&!playing){}},{once:true,passive:true}));
+
+  // Ebenhaezer AI - local knowledge assistant, safe for GitHub Pages (no API key in browser).
+  const qa=[
+    {keys:['alamat','lokasi','dimana','di mana'],ans:'GMIH Eben Haezer Ternate berada di Jl. Arnold Mononutu No. 10, Tanah Raja, Ternate Tengah, Kota Ternate, Maluku Utara.'},
+    {keys:['sekretariat','telepon','nomor','hubungi','kontak'],ans:'Sekretariat: 0813 6988 9893. Kontak Pdt.: 0813 5662 9868. Silakan hubungi untuk informasi pelayanan jemaat.'},
+    {keys:['pelayanan','komisi','bidang','melayani'],ans:'Pelayanan jemaat mencakup ibadah, pembinaan iman, persekutuan, pelayanan anak/remaja/pemuda, musik/kantoria, kunjungan dan kesaksian. Untuk jadwal atau bidang tertentu, silakan hubungi sekretariat.'},
+    {keys:['ibadah','minggu','jadwal'],ans:'Website memuat informasi ibadah dan kegiatan yang tersedia. Karena jadwal dapat berubah, periksa bagian Kegiatan atau hubungi sekretariat sebelum datang.'},
+    {keys:['doa','berdoa'],ans:'Anda dapat membuka halaman Doa Kristen dari menu/quick links untuk Doa Bapa Kami dan doa-doa lainnya.'},
+    {keys:['alkitab','ayat','firman'],ans:'Gunakan tombol Alkitab pada website untuk membaca dan mencari ayat secara online melalui Alkitab SABDA.'},
+    {keys:['qris','persembahan','donasi'],ans:'Informasi QRIS persembahan tersedia di bagian Persembahan. Pastikan memeriksa nama penerima sebelum melakukan transaksi.'},
+    {keys:['youtube','video'],ans:'Kanal YouTube GMIH Eben Haezer Ternate tersedia melalui tombol YouTube Gereja untuk dokumentasi ibadah dan kegiatan.'},
+    {keys:['facebook','instagram','sosial','media sosial'],ans:'Facebook, Instagram, dan YouTube gereja tersedia pada bagian tautan sosial di website.'},
+    {keys:['pendeta','pastor','pdt','yofter','adewenti'],ans:'Profil pelayan pendeta yang ditampilkan di website adalah Pdt. Yofter N. Taliwunan, S.Si Teol. dan Pdt. Adewenti Min Radja, M.Th.'},
+    {keys:['tema','visi','misi','missioner'],ans:'Tema utama jemaat yang ditampilkan di website: “Menjadi Gereja yang Utuh, Mandiri dan Misioner”.'},
+    {keys:['rakerta','remaja'],ans:'Website mencatat informasi “Segera hadir: Rakerta Remaja”. Untuk tanggal dan detail terbaru, silakan cek bagian kegiatan atau hubungi sekretariat.'}
+  ];
+  function answer(q){const t=q.toLowerCase();const hit=qa.find(x=>x.keys.some(k=>t.includes(k)));if(hit)return hit.ans;if(t.includes('shalom')||t.includes('halo')||t.includes('hai'))return 'Shalom! Tuhan memberkati. Silakan tanyakan tentang pelayanan, ibadah, doa, Alkitab, kegiatan, kontak, atau informasi jemaat.';return 'Saya belum menemukan jawaban yang tepat di basis informasi website. Untuk informasi resmi dan terbaru, silakan hubungi Sekretariat GMIH Eben Haezer Ternate di 0813 6988 9893.'}
+  const widget=document.getElementById('aiWidget'), fab=document.getElementById('aiFab'), opener=document.getElementById('openAi'), closer=document.getElementById('closeAi'), form=document.getElementById('aiForm'), input=document.getElementById('aiInput'), messages=document.getElementById('aiMessages');
+  function openAI(){widget?.classList.add('open');widget?.setAttribute('aria-hidden','false');setTimeout(()=>input?.focus(),100)} function closeAI(){widget?.classList.remove('open');widget?.setAttribute('aria-hidden','true')}
+  fab?.addEventListener('click',openAI);opener?.addEventListener('click',openAI);closer?.addEventListener('click',closeAI);
+  function send(q){if(!q.trim())return;const u=document.createElement('div');u.className='ai-msg user';u.textContent=q;messages.appendChild(u);const b=document.createElement('div');b.className='ai-msg bot';b.textContent=answer(q);messages.appendChild(b);messages.scrollTop=messages.scrollHeight;}
+  form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
+})();

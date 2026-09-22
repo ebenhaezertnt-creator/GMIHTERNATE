@@ -1,25 +1,27 @@
-# GMIH Eben Haezer Ternate — Website GitHub Pages
+# GMIH Eben Haezer Ternate — versi Enhanced
 
-Versi dashboard modern dengan foto dan logo utama **ditanam langsung (embedded) ke `index.html`** agar tidak hilang ketika folder aset tidak ikut termuat.
+Website ini mempertahankan seluruh isi versi sebelumnya dan **menambahkan** fitur baru.
 
-## Fitur
-- Dashboard biru-putih responsif untuk HP/desktop.
-- Foto gedung, interior, kegiatan, logo GMIH, QRIS, dan foto pelayan pendeta tertanam di halaman utama.
-- Profil pelayanan **Pdt. Yofter N. Taliwunan, S.Si Teol.** dan **Pdt. Adewenti Min Radja, M.Th** dengan foto.
-- Renungan harian panjang yang ditulis ulang secara orisinal dan berganti berdasarkan tanggal perangkat.
-- Tautan pendalaman ke SABDA e-Santapan Harian dan e-Renungan Harian.
-- Alkitab online SABDA.
-- Doa Kristen / Doa Bapa Kami di `doa.html`.
-- QRIS resmi jemaat: NMID **ID2026504955850**. Selalu periksa nama penerima pada aplikasi pembayaran sebelum membayar.
-- Video YouTube dan galeri foto.
-- PWA / dapat dipasang sebagai aplikasi web di Android.
+## Fitur baru
+- Ebenhaezer AI: chatbot pengetahuan pelayanan yang berjalan lokal di browser, tanpa API key.
+- Ayat Hafalan Setiap Hari di beranda, berganti berdasarkan tanggal.
+- Musik instrumental bergaya himne original berbasis MIDI; browser mencoba autoplay dan menyediakan tombol play sebagai fallback jika autoplay diblokir.
+- Slideshow gambar rohani tentang Tuhan Yesus.
+- Service worker cache dinaikkan ke `v4-enhanced` agar versi baru tidak tertahan cache lama.
 
-## Upload ke GitHub Pages
-1. Ekstrak ZIP.
-2. Upload **semua isi folder ini** ke root repository `GMIHTERNATE`.
-3. Pastikan `index.html` berada langsung di root repository.
-4. Commit perubahan.
-5. Tunggu beberapa menit sampai GitHub Pages memperbarui situs.
+## Fitur lama dipertahankan
+- Renungan harian dan tautan SABDA.
+- Doa Kristen / Doa Bapa Kami (`doa.html`).
+- Alkitab SABDA.
+- Profil Pdt. Yofter N. Taliwunan, S.Si Teol. dan Pdt. Adewenti Min Radja, M.Th.
+- QRIS persembahan.
+- Galeri dan dokumentasi kegiatan.
+- YouTube, Facebook, Instagram.
+- PWA / service worker.
+- Semua foto/aset lama tetap disertakan.
 
-## Catatan renungan
-Konten renungan panjang di halaman dibuat orisinal untuk website jemaat. SABDA disediakan sebagai sumber pendalaman melalui tautan; materi e-RH tertentu memiliki ketentuan hak cipta dan tidak disalin penuh ke website.
+## Deploy GitHub Pages
+Upload **isi folder ini ke root branch `main`** repository GitHub Pages. Jangan membuat folder bersarang seperti `gmih-enhanced/index.html` jika Pages diarahkan ke root.
+
+## Catatan chatbot
+Karena GitHub Pages adalah hosting statis, chatbot di paket ini menggunakan basis pengetahuan lokal. Jangan menaruh API key OpenAI/layanan AI di `script.js`. Jika nanti ingin AI generatif sungguhan, gunakan backend/serverless endpoint yang menyimpan API key di server.
