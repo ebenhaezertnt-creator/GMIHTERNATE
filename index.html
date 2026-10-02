@@ -400,7 +400,96 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   }
   function openAI(){widget?.classList.add('open');widget?.setAttribute('aria-hidden','false');setTimeout(()=>input?.focus(),100)} function closeAI(){widget?.classList.remove('open');widget?.setAttribute('aria-hidden','true')}
   fab?.addEventListener('click',openAI);opener?.addEventListener('click',openAI);closer?.addEventListener('click',closeAI);
-  function send(q){if(!q.trim())return;const u=document.createElement('div');u.className='ai-msg user';u.textContent=q;messages.appendChild(u);const b=document.createElement('div');b.className='ai-msg bot';const a=answer(q);b.textContent=a;const urls=[...a.matchAll(/https?:\/\/[^\s]+/g)];urls.forEach(m=>{});if(a.includes('https://www.google.com/search?')){const url=a.match(/https?:\/\/[^\s]+/)[0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka pencarian web ↗</a>')}else if(urls.length){const url=urls[0][0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka sumber ↗</a>')}messages.appendChild(b);messages.scrollTop=messages.scrollHeight;}
+  // ===== Gemini AI Bridge =====
+const GEMINI_PROXY_URL='https://ebenhaezer-ai.ebenhaezertnt.workers.dev/chat';
+let geminiInteractionId=null;
+
+async function send(q){
+  if(!q.trim())return;
+
+  const u=document.createElement('div');
+  u.className='ai-msg user';
+  u.textContent=q;
+  messages.appendChild(u);
+  messages.scrollTop=messages.scrollHeight;
+
+  const b=document.createElement('div');
+  b.className='ai-msg bot';
+  b.textContent='Ebenhaezer AI sedang berpikir…';
+  messages.appendChild(b);
+  messages.scrollTop=messages.scrollHeight;
+
+  try{
+    const local=answer(q);
+
+    const generic=
+      local.startsWith('Saya belum menemukan jawaban yang cukup pasti') ||
+      local.startsWith('Untuk informasi eksternal terbaru');
+
+    const prompt=generic
+      ? q
+      : 'Pertanyaan pengguna: '+q+
+        '\n\nInformasi relevan dari website GMIH Ebenhaezer Ternate:\n'+
+        local+
+        '\n\nGunakan informasi tersebut bila relevan. Jangan mengarang informasi gereja.';
+
+    const res=await fetch(GEMINI_PROXY_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        question:prompt,
+        previous_interaction_id:geminiInteractionId
+      })
+    });
+
+    const data=await res.json().catch(()=>({}));
+
+    if(!res.ok){
+      throw new Error(data.error||'Gemini proxy error');
+    }
+
+    geminiInteractionId=data.interaction_id||geminiInteractionId;
+
+    b.textContent=String(
+      data.answer||'Maaf, Gemini belum memberikan jawaban.'
+    );
+
+  }catch(err){
+
+    console.warn(
+      'Gemini tidak tersedia, memakai basis pengetahuan lokal:',
+      err
+    );
+
+    geminiInteractionId=null;
+
+    const a=answer(q);
+    const urls=[...a.matchAll(/https?:\/\/[^\s]+/g)];
+
+    if(a.includes('https://www.google.com/search?')){
+      const url=a.match(/https?:\/\/[^\s]+/)[0];
+
+      b.innerHTML=a.replace(
+        url,
+        '<a href="'+url+'" target="_blank" rel="noopener">Buka pencarian web ↗</a>'
+      );
+
+    }else if(urls.length){
+
+      const url=urls[0][0];
+
+      b.innerHTML=a.replace(
+        url,
+        '<a href="'+url+'" target="_blank" rel="noopener">Buka sumber ↗</a>'
+      );
+
+    }else{
+      b.textContent=a;
+    }
+  }
+
+  messages.scrollTop=messages.scrollHeight;
+}if(!q.trim())return;const u=document.createElement('div');u.className='ai-msg user';u.textContent=q;messages.appendChild(u);const b=document.createElement('div');b.className='ai-msg bot';const a=answer(q);b.textContent=a;const urls=[...a.matchAll(/https?:\/\/[^\s]+/g)];urls.forEach(m=>{});if(a.includes('https://www.google.com/search?')){const url=a.match(/https?:\/\/[^\s]+/)[0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka pencarian web ↗</a>')}else if(urls.length){const url=urls[0][0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka sumber ↗</a>')}messages.appendChild(b);messages.scrollTop=messages.scrollHeight;}
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
 })();
 
