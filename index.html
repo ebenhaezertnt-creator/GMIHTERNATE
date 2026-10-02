@@ -430,65 +430,62 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   let geminiInteractionId=null;
 
   async function send(q){
-  q=String(q||'').trim();
-  if(!q)return;
+    if(!q.trim())return;
 
-  const u=document.createElement('div');
-  u.className='ai-msg user';
-  u.textContent=q;
-  messages.appendChild(u);
+    const u=document.createElement('div'); u.className='ai-msg user'; u.textContent=q;
+    messages.appendChild(u); messages.scrollTop=messages.scrollHeight;
+    const b=document.createElement('div'); b.className='ai-msg bot';
+    b.textContent='Ebenhaezer AI sedang mencari informasi…';
+    messages.appendChild(b); messages.scrollTop=messages.scrollHeight;
 
-  const b=document.createElement('div');
-  b.className='ai-msg bot';
-  b.textContent='Ebenhaezer AI sedang berpikir...';
-  messages.appendChild(b);
-  messages.scrollTop=messages.scrollHeight;
+    const isLatest=/\b(berita|kabar|informasi|update|terbaru|terkini|hari ini|sekarang|news|perkembangan)\b/i.test(q)
+      || /\b(2026)\b/i.test(q);
 
-  try{
-    const res=await fetch(GEMINI_PROXY_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Cache-Control':'no-cache'},
-      cache:'no-store',
-      body:JSON.stringify({
-        question:q,
-        previous_interaction_id:geminiInteractionId
-      })
-    });
+    try{
+      const local=answer(q);
+      const prompt=`Anda adalah Ebenhaezer AI, asisten resmi informasi untuk website GMIH Ebenhaezer Ternate.
 
-    const data=await res.json().catch(()=>({}));
+CAKUPAN UTAMA:
+1. GMIH Ebenhaezer Ternate: sejarah jemaat, alamat, kontak, pelayanan, jadwal ibadah, pendeta/ministri, dokumentasi, fasilitas, pengumuman, dan isi seluruh website.
+2. GMIH (Gereja Masehi Injili di Halmahera): sejarah, struktur, wilayah pelayanan, jemaat, pelayanan, sinode, hubungan ekumenis, dan informasi dari Sinode GMIH atau PGI.
+3. Kekristenan di Indonesia dan global: sejarah gereja, denominasi, organisasi gereja, pelayanan, liturgi, Alkitab, teologi dasar, tokoh, hari raya Kristen, pendidikan Kristen, dan kehidupan bergereja.
 
-    if(!res.ok){
-      throw new Error(data.error||'Ebenhaezer AI tidak dapat dihubungi.');
+ATURAN:
+- Untuk pertanyaan tentang berita, kabar, update, perkembangan, atau informasi TERBARU/TERKINI, WAJIB gunakan pencarian web dan jangan menjawab hanya dari pengetahuan lokal.
+- Untuk berita GMIH, cari khusus GMIH/Gereja Masehi Injili di Halmahera. Utamakan sumber resmi Sinode GMIH, PGI, pemerintah daerah, EMS, dan media tepercaya.
+- Untuk informasi resmi GMIH yang tidak bersifat terbaru, gunakan sumber Sinode GMIH dan PGI yang tersedia.
+- Bedakan fakta terbaru dari informasi lama. Sebutkan tanggal dan sumber bila tersedia.
+- Jangan mengarang. Jika hasil web tidak cukup, katakan dengan jelas.
+- Jawab Bahasa Indonesia dengan ramah, jelas, dan ringkas.
+
+PERTANYAAN PENGGUNA:
+${q}
+
+KONTEKS WEBSITE:
+${local}`;
+
+      const res=await fetch(GEMINI_PROXY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:prompt,previous_interaction_id:geminiInteractionId})});
+      const data=await res.json().catch(()=>({}));
+      if(!res.ok) throw new Error(data.error||'Ebenhaezer AI Worker tidak merespons');
+      geminiInteractionId=data.interaction_id||geminiInteractionId;
+      if(data.answer){
+        b.textContent=String(data.answer);
+      }else{
+        throw new Error('Worker tidak mengirim jawaban');
+      }
+    }catch(err){
+      console.warn('Ebenhaezer AI error:',err);
+      geminiInteractionId=null;
+      if(isLatest){
+        const webUrl='https://www.google.com/search?q='+encodeURIComponent('GMIH Gereja Masehi Injili di Halmahera berita terbaru 2026');
+        b.innerHTML='⚠️ Pencarian web Ebenhaezer AI sedang tidak tersedia. <a href="'+webUrl+'" target="_blank" rel="noopener">Buka pencarian web GMIH ↗</a>';
+      }else{
+        const a=answer(q); b.textContent=a;
+      }
     }
-
-    if(data.interaction_id){
-      geminiInteractionId=data.interaction_id;
-    }
-
-    b.textContent=data.answer||
-      'Maaf, Ebenhaezer AI belum memberikan jawaban.';
-
-    if(data.dynamic){
-      const badge=document.createElement('div');
-      badge.className='ai-source-badge';
-      badge.textContent='✦ Ebenhaezer AI • Pengetahuan dinamis';
-      b.appendChild(badge);
-    }
-
-  }catch(err){
-    console.warn('Cloudflare AI gagal:',err);
-
-    const a=answer(q);
-    b.textContent=a;
-
-    const badge=document.createElement('div');
-    badge.className='ai-source-badge fallback';
-    badge.textContent='Mode cadangan • Pengetahuan lokal website';
-    b.appendChild(badge);
+    messages.scrollTop=messages.scrollHeight;
   }
-
-  messages.scrollTop=messages.scrollHeight;
-}form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
+  form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
 })();
 
 </script><script>if('serviceWorker' in navigator){}</script>
