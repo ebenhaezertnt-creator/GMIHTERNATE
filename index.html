@@ -432,55 +432,40 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   async function send(q){
     if(!q.trim())return;
 
-    const u=document.createElement('div'); u.className='ai-msg user'; u.textContent=q;
-    messages.appendChild(u); messages.scrollTop=messages.scrollHeight;
-    const b=document.createElement('div'); b.className='ai-msg bot';
-    b.textContent='Ebenhaezer AI sedang mencari informasi…';
-    messages.appendChild(b); messages.scrollTop=messages.scrollHeight;
+    const u=document.createElement('div');
+    u.className='ai-msg user';
+    u.textContent=q;
+    messages.appendChild(u);
+    messages.scrollTop=messages.scrollHeight;
 
-    const isLatest=/\b(berita|kabar|informasi|update|terbaru|terkini|hari ini|sekarang|news|perkembangan)\b/i.test(q)
-      || /\b(2026)\b/i.test(q);
+    const b=document.createElement('div');
+    b.className='ai-msg bot';
+    b.textContent='Ebenhaezer AI sedang berpikir…';
+    messages.appendChild(b);
+    messages.scrollTop=messages.scrollHeight;
 
     try{
       const local=answer(q);
-      const prompt=`Anda adalah Ebenhaezer AI, asisten resmi informasi untuk website GMIH Ebenhaezer Ternate.
+      const promptContext=`KONTEKS WEBSITE GMIH EBENHAEZER TERNATE:\n${local}\n\nSUMBER RESMI YANG DAPAT DIPRIORITASKAN: Sinode GMIH (gmih.web.id), PGI (pgi.or.id), Alkitab/SABDA (alkitab.sabda.org), WCC (oikoumene.org), dan PC(USA) (pcusa.org).\n\nJika pertanyaan meminta berita/informasi terbaru, Worker WAJIB menggunakan pencarian web dan jangan menjawab dari pengetahuan lokal saja.`;
 
-CAKUPAN UTAMA:
-1. GMIH Ebenhaezer Ternate: sejarah jemaat, alamat, kontak, pelayanan, jadwal ibadah, pendeta/ministri, dokumentasi, fasilitas, pengumuman, dan isi seluruh website.
-2. GMIH (Gereja Masehi Injili di Halmahera): sejarah, struktur, wilayah pelayanan, jemaat, pelayanan, sinode, hubungan ekumenis, dan informasi dari Sinode GMIH atau PGI.
-3. Kekristenan di Indonesia dan global: sejarah gereja, denominasi, organisasi gereja, pelayanan, liturgi, Alkitab, teologi dasar, tokoh, hari raya Kristen, pendidikan Kristen, dan kehidupan bergereja.
-
-ATURAN:
-- Untuk pertanyaan tentang berita, kabar, update, perkembangan, atau informasi TERBARU/TERKINI, WAJIB gunakan pencarian web dan jangan menjawab hanya dari pengetahuan lokal.
-- Untuk berita GMIH, cari khusus GMIH/Gereja Masehi Injili di Halmahera. Utamakan sumber resmi Sinode GMIH, PGI, pemerintah daerah, EMS, dan media tepercaya.
-- Untuk informasi resmi GMIH yang tidak bersifat terbaru, gunakan sumber Sinode GMIH dan PGI yang tersedia.
-- Bedakan fakta terbaru dari informasi lama. Sebutkan tanggal dan sumber bila tersedia.
-- Jangan mengarang. Jika hasil web tidak cukup, katakan dengan jelas.
-- Jawab Bahasa Indonesia dengan ramah, jelas, dan ringkas.
-
-PERTANYAAN PENGGUNA:
-${q}
-
-KONTEKS WEBSITE:
-${local}`;
-
-      const res=await fetch(GEMINI_PROXY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:prompt,previous_interaction_id:geminiInteractionId})});
+      const res=await fetch(GEMINI_PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({question:q,context:promptContext,previous_interaction_id:geminiInteractionId})
+      });
       const data=await res.json().catch(()=>({}));
-      if(!res.ok) throw new Error(data.error||'Ebenhaezer AI Worker tidak merespons');
+      if(!res.ok) throw new Error(data.error||'Gemini proxy error');
       geminiInteractionId=data.interaction_id||geminiInteractionId;
-      if(data.answer){
-        b.textContent=String(data.answer);
-      }else{
-        throw new Error('Worker tidak mengirim jawaban');
-      }
+      b.textContent=String(data.answer||'Maaf, Gemini belum memberikan jawaban.');
     }catch(err){
-      console.warn('Ebenhaezer AI error:',err);
+      console.warn('Gemini tidak tersedia, memakai basis pengetahuan lokal:',err);
       geminiInteractionId=null;
-      if(isLatest){
-        const webUrl='https://www.google.com/search?q='+encodeURIComponent('GMIH Gereja Masehi Injili di Halmahera berita terbaru 2026');
-        b.innerHTML='⚠️ Pencarian web Ebenhaezer AI sedang tidak tersedia. <a href="'+webUrl+'" target="_blank" rel="noopener">Buka pencarian web GMIH ↗</a>';
+      const news=/\b(berita|berita terbaru|berita terkini|kabar terbaru|kabar terkini|informasi terbaru|informasi terkini|update|terbaru|terkini|hari ini|sekarang|news|perkembangan terbaru|perkembangan terkini)\b/i.test(q);
+      if(news){
+        const url=webSearchUrl(q);
+        b.innerHTML='Web sedang tidak dapat diakses dari chatbot saat ini. <a href="'+url+'" target="_blank" rel="noopener">Buka pencarian web GMIH ↗</a>';
       }else{
-        const a=answer(q); b.textContent=a;
+        b.textContent=answer(q);
       }
     }
     messages.scrollTop=messages.scrollHeight;
