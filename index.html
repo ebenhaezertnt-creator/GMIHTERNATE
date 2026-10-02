@@ -501,5 +501,46 @@ SUMBER RUJUKAN YANG TERSEDIA: Sinode GMIH (gmih.web.id), PGI (pgi.or.id), Alkita
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
 })();
 
-</script><script>if('serviceWorker' in navigator){}</script>
-<button id="installAppBtn" type="button" style="position:fixed;right:14px;bottom:14px;z-index:9999;border:0;border-radius:999px;padding:12px 18px;background:#0b4f91;color:#fff;font-weight:700;box-shadow:0 5px 18px rgba(0,0,0,.22);cursor:pointer;display:none">📲 Instal Aplikasi</button><script>let deferredInstallPrompt=null;const installBtn=document.getElementById('installAppBtn');window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;installBtn.style.display='block'});installBtn.addEventListener('click',async()=>{if(!deferredInstallPrompt)return;deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;installBtn.style.display='none'});window.addEventListener('appinstalled',()=>{installBtn.style.display='none';deferredInstallPrompt=null});if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}</script></body></html>
+</script><button id="installAppBtn" type="button" aria-label="Instal aplikasi GMIH Ebenhaezer"
+style="position:fixed;right:14px;bottom:14px;z-index:9999;border:0;border-radius:999px;
+padding:12px 18px;background:#0b4f91;color:#fff;font-weight:800;box-shadow:0 5px 18px rgba(0,0,0,.22);
+cursor:pointer;display:none">📲 Instal Aplikasi</button>
+<script>
+(function(){
+  let deferredInstallPrompt = null;
+  const btn = document.getElementById('installAppBtn');
+
+  function showInstall(){ if(btn) btn.style.display='block'; }
+  function hideInstall(){ if(btn) btn.style.display='none'; }
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    showInstall();
+  });
+
+  if(btn){
+    btn.addEventListener('click', async function(){
+      if(!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      try { await deferredInstallPrompt.userChoice; } catch(e) {}
+      deferredInstallPrompt = null;
+      hideInstall();
+    });
+  }
+
+  window.addEventListener('appinstalled', function(){
+    deferredInstallPrompt = null;
+    hideInstall();
+  });
+
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js', {scope:'./'})
+        .then(function(){ console.log('GMIH PWA service worker aktif'); })
+        .catch(function(err){ console.warn('PWA service worker gagal:', err); });
+    });
+  }
+})();
+</script>
+</body></html>
