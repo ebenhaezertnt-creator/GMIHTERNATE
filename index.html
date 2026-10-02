@@ -254,7 +254,7 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 </section>
 <!-- FITUR BARU: Ebenhaezer AI -->
 <section class="panel ai-intro" id="ebenhaezer-ai">
-<div class="ai-banner"><div class="ai-avatar">EH<span>AI</span></div><div><span class="eyebrow">EBENHAEZER AI</span><h2>Asisten pelayanan jemaat</h2><p>Tanyakan isi seluruh website. Ebenhaezer AI juga memiliki basis informasi GMIH dari sumber resmi Sinode GMIH dan PGI, serta tombol pencarian web untuk informasi yang benar-benar terbaru.</p></div><button class="btn" id="openAi" type="button">Buka Chatbot</button></div>
+<div class="ai-banner"><div class="ai-avatar">EH<span>AI</span></div><div><span class="eyebrow">EBENHAEZER AI</span><h2>Asisten gereja & kekristenan</h2><p>Tanyakan tentang GMIH Ebenhaezer Ternate, pelayanan jemaat, sejarah GMIH, Alkitab, dan berbagai hal tentang kekristenan di Indonesia. Untuk informasi terbaru, gunakan pencarian web.</p></div><button class="btn" id="openAi" type="button">Buka Chatbot</button></div>
 <div class="ai-source-links"><a href="https://gmih.web.id/" rel="noopener" target="_blank">Sinode GMIH ↗</a><a href="https://gmih.web.id/sejarah/" rel="noopener" target="_blank">Sejarah GMIH ↗</a><a href="https://www.pgi.or.id/synod/detail?id=14" rel="noopener" target="_blank">Profil GMIH – PGI ↗</a><a href="https://www.youtube.com/@gmihebenhaezerternate3440" rel="noopener" target="_blank">YouTube Jemaat ↗</a></div>
 </section>
 <section class="panel jesus-gallery" id="renungan-visual">
@@ -287,7 +287,7 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 <!-- Floating Ebenhaezer AI Chat -->
 <div aria-hidden="true" class="ai-widget" id="aiWidget">
 <div class="ai-head"><div><b>Ebenhaezer AI</b><small>Asisten pelayanan jemaat</small></div><button aria-label="Tutup chatbot" id="closeAi" type="button">×</button></div>
-<div class="ai-messages" id="aiMessages"><div class="ai-msg bot">Shalom! Saya Ebenhaezer AI. Saya bisa mencari isi halaman ini dan menjawab informasi GMIH dari basis pengetahuan eksternal yang sudah dicantumkan sumbernya. Untuk informasi real-time, gunakan tombol Cari Web.</div></div>
+<div class="ai-messages" id="aiMessages"><div class="ai-msg bot">Shalom! Saya Ebenhaezer AI. Saya dapat membantu tentang GMIH Ebenhaezer Ternate, pelayanan jemaat, sejarah GMIH, Alkitab, dan berbagai informasi kekristenan di Indonesia. Untuk informasi terbaru, saya akan mengutamakan sumber tepercaya dan pencarian web bila tersedia.</div></div>
 <div class="ai-suggestions"><button data-q="Apa saja pelayanan gereja?" type="button">Pelayanan</button><button data-q="Jadwal ibadah bagaimana?" type="button">Ibadah</button><button data-q="Bagaimana cara menghubungi gereja?" type="button">Kontak</button><button data-q="Berapa jumlah wilayah pelayanan GMIH?" type="button">GMIH</button><button data-q="Di mana saya bisa membaca Alkitab?" type="button">Alkitab</button><button data-q="Cari informasi terbaru tentang GMIH" type="button">Cari Web</button></div>
 <form class="ai-form" id="aiForm"><input aria-label="Pertanyaan untuk Ebenhaezer AI" autocomplete="off" id="aiInput" placeholder="Ketik pertanyaan..."/><button type="submit">Kirim</button></form>
 </div>
@@ -370,12 +370,36 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
     {keys:['sidang majelis sinode','sms iv','morotai'],ans:'PGI melaporkan Sidang Majelis Sinode IV GMIH di Morotai pada Oktober 2025 dan membahas semangat rekonsiliasi serta kemandirian gereja.'},
     {keys:['mpl pgi 2027','sidang mpl pgi 2027'],ans:'PGI melaporkan pada September 2026 bahwa Sidang MPL-PGI 2027 telah ditetapkan di Maluku Utara, dengan GMIH sebagai tuan rumah dan Kota Ternate direncanakan menjadi lokasi penyelenggaraan.'}
   ];
+  // Pengetahuan tambahan: Alkitab, sejarah gereja universal, Reformasi, dan tradisi Presbiterian/Reformed.
+  const christianKnowledge=[
+    {keys:['sejarah gereja sejak awal','sejarah gereja','gereja mula mula','gereja mula-mula','awal kekristenan'],ans:'Secara garis besar, sejarah gereja Kristen bermula dari pelayanan Yesus dan kesaksian para rasul, lalu komunitas Kristen berkembang setelah Pentakosta. Gereja mula-mula menyebar dari Yerusalem ke wilayah Mediterania dan kemudian ke berbagai bagian dunia. Dalam beberapa abad berikutnya berkembang tradisi gereja Timur dan Barat, lalu Reformasi Protestan pada abad ke-16 melahirkan berbagai tradisi gereja Protestan, termasuk tradisi Reformed dan Presbiterian. Sejarah gereja perlu dibaca dengan membedakan kesaksian Alkitab, tradisi gereja, dan kajian sejarah.',source:'WCC/PC(USA) – sejarah gereja'},
+    {keys:['isi alkitab','tentang alkitab','ringkasan alkitab','alkitab lengkap'],ans:'Saya dapat membantu menjelaskan isi Alkitab dari Kejadian sampai Wahyu: tema, tokoh, latar belakang, hubungan antar kitab, dan konteks ayat. Untuk membaca teks Alkitab lengkap dalam bahasa Indonesia, gunakan sumber Alkitab/SABDA yang tersedia pada menu Alkitab. Saya tidak menyalin seluruh terjemahan berhak cipta ke dalam chatbot.',source:'Alkitab/SABDA dan sumber ekumenis'},
+    {keys:['perjanjian lama','39 kitab','kitab perjanjian lama'],ans:'Dalam kanon Protestan, Perjanjian Lama terdiri dari 39 kitab. Isinya mencakup Taurat, sejarah Israel, sastra hikmat, dan kitab para nabi. Tradisi Katolik dan Ortodoks memiliki daftar kanon yang berbeda karena menerima kitab deuterokanonika tertentu.',source:'WCC – Dictionary of the Ecumenical Movement'},
+    {keys:['perjanjian baru','27 kitab','kitab perjanjian baru'],ans:'Dalam kanon Protestan, Perjanjian Baru terdiri dari 27 kitab: empat Injil, Kisah Para Rasul, surat-surat rasul, dan Wahyu. Kanon Perjanjian Baru berkembang melalui proses sejarah gereja; pada masa awal terdapat diskusi mengenai beberapa kitab.',source:'WCC – Dictionary of the Ecumenical Movement'},
+    {keys:['presbiterian','presbyterian','gereja presbiterian'],ans:'Presbiterianisme adalah tradisi gereja yang berakar pada Reformasi Protestan dan tradisi Reformed, dengan tata gereja yang menekankan kepemimpinan melalui para penatua (presbyters) dan majelis/persekutuan gerejawi. Tradisi ini berkembang kuat di Skotlandia melalui John Knox dan kemudian menyebar ke Inggris, Irlandia, Eropa, Amerika, Asia, Afrika, dan wilayah lain.',source:'PC(USA) – Presbyterian History'},
+    {keys:['sejarah presbiterian','asal presbiterian','john knox'],ans:'Sejarah Presbiterian terutama ditelusuri ke Reformasi abad ke-16. John Calvin memberi pengaruh penting pada teologi Reformed, sementara John Knox membawa dan mengembangkan tradisi Reformed di Skotlandia. Knox dan para reformator Skotlandia menghasilkan Scots Confession (1560) dan Book of Discipline. Westminster Confession dan Catechisms (1647) kemudian menjadi standar penting dalam banyak gereja Presbiterian.',source:'PC(USA) Historical Society'},
+    {keys:['calvin','john calvin','teologi reformed'],ans:'John Calvin (1509–1564) adalah salah satu tokoh utama Reformasi dan sangat berpengaruh pada tradisi Reformed. Karya dan pelayanan Calvin di Jenewa membantu membentuk pemikiran Reformed mengenai Kitab Suci, anugerah Allah, gereja, sakramen, dan tata gereja. Tidak semua gereja Reformed identik dalam setiap ajaran atau praktik.',source:'PC(USA) Historical Society'},
+    {keys:['tata gereja presbiterian','presbiteri','penatua','elder'],ans:'Dalam tata gereja Presbiterian, kepemimpinan gereja dijalankan melalui penatua dan majelis/assembly yang saling terhubung. Istilah presbiterian berasal dari presbuteros, istilah Yunani Perjanjian Baru yang berarti penatua. Detail struktur berbeda menurut denominasi dan negara.',source:'PC(USA) Presbyterian Mission Agency'},
+    {keys:['reformasi protestan','reformasi gereja','1517'],ans:'Reformasi Protestan abad ke-16 merupakan gerakan pembaruan besar dalam Kekristenan Barat. Martin Luther memulai gerakan Reformasi di Jerman pada 1517, sementara tradisi Reformed berkembang melalui tokoh seperti Zwingli dan Calvin. Reformasi kemudian berakar di Skotlandia melalui John Knox dan berkembang menjadi tradisi Presbiterian.',source:'PC(USA) Church History'},
+    {keys:['westminster','westminster confession','pengakuan iman westminster'],ans:'Westminster Confession of Faith dan Catechisms disusun pada abad ke-17 dan menjadi standar pengakuan iman yang sangat berpengaruh dalam banyak gereja Presbiterian/Reformed. Penggunaan dan statusnya berbeda-beda menurut denominasi.',source:'PC(USA) Presbyterian History'},
+    {keys:['gereja global','kekristenan global','gereja dunia'],ans:'Kekristenan global terdiri dari banyak keluarga gereja dan tradisi, antara lain Ortodoks Timur, Katolik, Anglikan, Lutheran, Reformed/Presbiterian, Metodis, Baptis, Pentakosta/Karismatik, dan tradisi lainnya. Setiap keluarga memiliki sejarah, tata gereja, liturgi, dan penekanan teologis yang dapat berbeda.',source:'WCC dan sumber sejarah gereja'},
+    {keys:['kekristenan indonesia','sejarah gereja indonesia','gereja di indonesia'],ans:'Kekristenan di Indonesia berkembang melalui berbagai jalur sejarah, termasuk kontak awal dengan tradisi Kristen Timur, misi Katolik dan Protestan pada periode berikutnya, serta perkembangan gereja-gereja lokal dan organisasi ekumenis. Di era modern, berbagai sinode dan persekutuan gereja bekerja dalam konteks Indonesia yang majemuk. Untuk data denominasi tertentu, rujuk sumber sinode atau PGI.',source:'PGI/WCC dan sumber sinode'},
+    {keys:['pgi','persekutuan gereja gereja di indonesia','persekutuan gereja-gereja di indonesia'],ans:'PGI adalah Persekutuan Gereja-Gereja di Indonesia. WCC mencatat PGI didirikan pada 1950 dan bertujuan mewujudkan persekutuan gereja-gereja di Indonesia. Struktur dan keanggotaan dapat berubah, sehingga informasi terkini sebaiknya dirujuk ke PGI.',source:'WCC – Communion of Churches in Indonesia'},
+    {keys:['wcc','dewan gereja dunia','world council of churches'],ans:'World Council of Churches (WCC) adalah persekutuan gereja-gereja dunia yang bekerja untuk kesatuan, kesaksian bersama, dan kerja sama ekumenis. GMIH mencantumkan WCC sebagai salah satu jejaring/mitranya.',source:'Sinode GMIH/WCC'},
+    {keys:['wcrc','world communion of reformed churches','persekutuan gereja reformasi dunia'],ans:'World Communion of Reformed Churches (WCRC) merupakan persekutuan global gereja-gereja dari tradisi Reformed, termasuk banyak gereja Reformed dan Presbiterian. Sinode GMIH mencantumkan WCRC sebagai salah satu jejaringnya.',source:'Sinode GMIH'},
+    {keys:['sakramen','baptisan','perjamuan kudus'],ans:'Dalam banyak tradisi Protestan, Baptisan dan Perjamuan Kudus dipahami sebagai sakramen/ordinansi penting. Makna, jumlah sakramen, dan tata pelaksanaannya berbeda antartradisi gereja. Untuk pandangan GMIH, rujuk Tata Gereja dan dokumen resmi GMIH.',source:'WCC dan dokumen denominasi'},
+    {keys:['doa bapa kami','bapa kami'],ans:'Doa Bapa Kami terdapat dalam Matius 6:9–13 dan Lukas 11:2–4. Chatbot dapat menjelaskan struktur, tema, dan konteks doanya serta mengarahkan pengguna ke Alkitab untuk teks lengkap.',source:'Alkitab – Matius 6 dan Lukas 11'}
+  ];
+
   const external=[
     {title:'Sinode GMIH',url:'https://gmih.web.id/',text:'Situs resmi Sinode GMIH. Menampilkan 191.285 jiwa, 49 wilayah pelayanan, 491 jemaat, 544 pendeta aktif, serta jejaring WCC, CCA, PGI dan WCRC.'},
     {title:'Sejarah Sinode GMIH',url:'https://gmih.web.id/sejarah/',text:'Sejarah GMIH, pendirian di Tobelo, cakupan pelayanan, dan arah strategis Utuh-Mandiri-Misioner.'},
     {title:'Profil GMIH di PGI',url:'https://www.pgi.or.id/synod/detail?id=14',text:'Profil resmi PGI: tanggal berdiri 6 September 1949, anggota PGI 25 Mei 1950, dan susunan pengurus yang tercantum pada profil PGI.'},
     {title:'Sidang Majelis Sinode IV GMIH - PGI',url:'https://pgi.or.id/news/warta-pgi/sidang-majelis-sinode-iv-gmih-teguhkan-semangat-rekonsiliasi-dan-kemandirian-gereja-160',text:'Berita PGI tentang Sidang Majelis Sinode IV GMIH di Morotai, Oktober 2025.'},
-    {title:'MPL-PGI 2027 di Maluku Utara',url:'https://pgi.or.id/index.php/news/warta-pgi/ketua-umum-pgi-lantik-wagub-maluku-utara-sebagai-ketua-panitia-lokal-sidang-mpl-pgi-2027-465',text:'Berita PGI September 2026 tentang penetapan Maluku Utara sebagai tuan rumah Sidang MPL-PGI 2027.'}
+    {title:'MPL-PGI 2027 di Maluku Utara',url:'https://pgi.or.id/index.php/news/warta-pgi/ketua-umum-pgi-lantik-wagub-maluku-utara-sebagai-ketua-panitia-lokal-sidang-mpl-pgi-2027-465',text:'Berita PGI September 2026 tentang penetapan Maluku Utara sebagai tuan rumah Sidang MPL-PGI 2027.'},
+    {title:'PC(USA) – Presbyterian History',url:'https://pcusa.org/about-pcusa/who-we-are/history',text:'Sejarah Presbiterian, akar Reformed, perkembangan global, dan tata gereja presbiterian.'},
+    {title:'PC(USA) – Foundations of the Faith',url:'https://pcusa.org/historical-society/exhibits/foundations-faith',text:'Reformasi, John Calvin, John Knox, Scots Confession dan perkembangan tradisi Reformed/Presbiterian.'},
+    {title:'WCC – Communion of Churches in Indonesia',url:'https://oikoumene.org/organization/communion-of-churches-in-indonesia',text:'Profil PGI dan persekutuan gereja di Indonesia.'}
   ];
   // Index semua teks yang tampak di halaman sehingga pertanyaan tentang isi web tidak bergantung pada daftar kata kunci saja.
   function pageSections(){return [...document.querySelectorAll('main section,header,footer')].map((el,i)=>({id:i,text:(el.innerText||'').replace(/\s+/g,' ').trim()})).filter(x=>x.text.length>20)}
@@ -394,6 +418,8 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
     if(t.includes('shalom')||t.includes('halo')||t.includes('hai'))return 'Shalom! Tuhan memberkati. Saya dapat menjawab isi website ini dan informasi dasar GMIH dari sumber resmi yang sudah dicantumkan.';
     const hit=qa.find(x=>x.keys.some(k=>t.includes(k)));
     if(hit)return hit.ans;
+    const khit=christianKnowledge.find(x=>x.keys.some(k=>t.includes(k)));
+    if(khit)return khit.ans+'\nSumber: '+khit.source;
     const ext=findExternal(t); if(ext)return ext.title+': '+ext.text+'\nSumber: '+ext.url;
     const sec=findPage(t); if(sec)return 'Dari isi website: '+sec.text.slice(0,700)+(sec.text.length>700?'…':'');
     return 'Saya belum menemukan jawaban yang cukup pasti. Coba sebutkan topik seperti jadwal, pelayanan, pendeta, galeri, kontak, Alkitab, sejarah GMIH, wilayah pelayanan GMIH, atau berita terbaru. Untuk pencarian eksternal langsung, ketik “Cari Web + pertanyaan”.';
@@ -423,9 +449,30 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
       const generic=
         local.startsWith('Saya belum menemukan jawaban yang cukup pasti') ||
         local.startsWith('Untuk informasi eksternal terbaru');
-      const prompt=generic ? q : 'Pertanyaan pengguna: '+q+
-        '\n\nInformasi relevan dari website GMIH Ebenhaezer Ternate:\n'+local+
-        '\n\nGunakan informasi tersebut bila relevan. Jangan mengarang informasi gereja.';
+      const prompt=`Anda adalah Ebenhaezer AI, asisten resmi informasi untuk website GMIH Ebenhaezer Ternate.
+
+CAKUPAN UTAMA:
+1. GMIH Ebenhaezer Ternate: sejarah jemaat, alamat, kontak, pelayanan, jadwal ibadah, pendeta/ministri, dokumentasi, fasilitas, pengumuman, dan isi seluruh website.
+2. GMIH (Gereja Masehi Injili di Halmahera): sejarah, struktur, wilayah pelayanan, jemaat, pelayanan, sinode, hubungan ekumenis, dan informasi dari Sinode GMIH atau PGI.
+3. Kekristenan di Indonesia: sejarah gereja, denominasi, organisasi gereja, pelayanan, liturgi, Alkitab, teologi dasar, tokoh, hari raya Kristen, pendidikan Kristen, dan kehidupan bergereja.
+4. Alkitab dan kekristenan umum: jelaskan ayat, konteks, tema, doa, iman Kristen, dan istilah Kristen secara informatif. Untuk teks Alkitab lengkap, arahkan ke sumber Alkitab yang sesuai.
+
+ATURAN JAWABAN:
+- Utamakan informasi yang ada di website GMIH Ebenhaezer Ternate.
+- Untuk GMIH, utamakan sumber resmi Sinode GMIH dan PGI.
+- Untuk informasi Kristen Indonesia, gunakan sumber gereja/organisasi tepercaya dan Alkitab/SABDA bila relevan.
+- Bedakan fakta, tradisi/interpretasi teologis, dan informasi yang belum terverifikasi.
+- Jangan mengarang nama, jabatan, jadwal, sejarah, angka, atau kegiatan gereja. Jika tidak yakin, katakan bahwa informasi perlu diverifikasi.
+- Jika pertanyaan meminta informasi terbaru, gunakan pencarian web/sumber terbaru bila tersedia dan sebutkan sumbernya.
+- Jawab dalam Bahasa Indonesia dengan ramah, jelas, dan ringkas tetapi cukup lengkap.
+
+PERTANYAAN PENGGUNA:
+${q}
+
+KONTEKS DARI WEBSITE:
+${local}
+
+SUMBER RUJUKAN YANG TERSEDIA: Sinode GMIH (gmih.web.id), PGI (pgi.or.id), Alkitab/SABDA (alkitab.sabda.org), WCC (oikoumene.org), dan PC(USA) Historical Society/Presbyterian Mission Agency (pcusa.org). Untuk sejarah Presbiterian/Reformed global, gunakan sumber PC(USA) sebagai salah satu rujukan dan jelaskan bila sejarah/tradisi berbeda antar denominasi. Jangan mengarang isi sumber.`;
 
       const res=await fetch(GEMINI_PROXY_URL,{
         method:'POST',
