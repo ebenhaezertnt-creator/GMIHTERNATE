@@ -400,7 +400,7 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   }
   function openAI(){widget?.classList.add('open');widget?.setAttribute('aria-hidden','false');setTimeout(()=>input?.focus(),100)} function closeAI(){widget?.classList.remove('open');widget?.setAttribute('aria-hidden','true')}
   fab?.addEventListener('click',openAI);opener?.addEventListener('click',openAI);closer?.addEventListener('click',closeAI);
-  // ===== Gemini AI Bridge =====
+  function send(q){// ===== Gemini AI Bridge =====
 const GEMINI_PROXY_URL='https://ebenhaezer-ai.ebenhaezertnt.workers.dev/chat';
 let geminiInteractionId=null;
 
@@ -489,8 +489,6 @@ async function send(q){
   }
 
   messages.scrollTop=messages.scrollHeight;
-}if(!q.trim())return;const u=document.createElement('div');u.className='ai-msg user';u.textContent=q;messages.appendChild(u);const b=document.createElement('div');b.className='ai-msg bot';const a=answer(q);b.textContent=a;const urls=[...a.matchAll(/https?:\/\/[^\s]+/g)];urls.forEach(m=>{});if(a.includes('https://www.google.com/search?')){const url=a.match(/https?:\/\/[^\s]+/)[0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka pencarian web ↗</a>')}else if(urls.length){const url=urls[0][0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka sumber ↗</a>')}messages.appendChild(b);messages.scrollTop=messages.scrollHeight;}
-  form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
 })();
 
 </script><script>if('serviceWorker' in navigator){}</script>
