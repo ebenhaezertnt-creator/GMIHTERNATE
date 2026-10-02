@@ -430,75 +430,65 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   let geminiInteractionId=null;
 
   async function send(q){
-    if(!q.trim())return;
+  q=String(q||'').trim();
+  if(!q)return;
 
-    const u=document.createElement('div');
-    u.className='ai-msg user';
-    u.textContent=q;
-    messages.appendChild(u);
-    messages.scrollTop=messages.scrollHeight;
+  const u=document.createElement('div');
+  u.className='ai-msg user';
+  u.textContent=q;
+  messages.appendChild(u);
 
-    const b=document.createElement('div');
-    b.className='ai-msg bot';
-    b.textContent='Ebenhaezer AI sedang berpikir…';
-    messages.appendChild(b);
-    messages.scrollTop=messages.scrollHeight;
+  const b=document.createElement('div');
+  b.className='ai-msg bot';
+  b.textContent='Ebenhaezer AI sedang berpikir...';
+  messages.appendChild(b);
+  messages.scrollTop=messages.scrollHeight;
 
-    try{
-      const local=answer(q);
-      const generic=
-        local.startsWith('Saya belum menemukan jawaban yang cukup pasti') ||
-        local.startsWith('Untuk informasi eksternal terbaru');
-      const prompt=`Anda adalah Ebenhaezer AI, asisten resmi informasi untuk website GMIH Ebenhaezer Ternate.
+  try{
+    const res=await fetch(GEMINI_PROXY_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Cache-Control':'no-cache'},
+      cache:'no-store',
+      body:JSON.stringify({
+        question:q,
+        previous_interaction_id:geminiInteractionId
+      })
+    });
 
-CAKUPAN UTAMA:
-1. GMIH Ebenhaezer Ternate: sejarah jemaat, alamat, kontak, pelayanan, jadwal ibadah, pendeta/ministri, dokumentasi, fasilitas, pengumuman, dan isi seluruh website.
-2. GMIH (Gereja Masehi Injili di Halmahera): sejarah, struktur, wilayah pelayanan, jemaat, pelayanan, sinode, hubungan ekumenis, dan informasi dari Sinode GMIH atau PGI.
-3. Kekristenan di Indonesia: sejarah gereja, denominasi, organisasi gereja, pelayanan, liturgi, Alkitab, teologi dasar, tokoh, hari raya Kristen, pendidikan Kristen, dan kehidupan bergereja.
-4. Alkitab dan kekristenan umum: jelaskan ayat, konteks, tema, doa, iman Kristen, dan istilah Kristen secara informatif. Untuk teks Alkitab lengkap, arahkan ke sumber Alkitab yang sesuai.
+    const data=await res.json().catch(()=>({}));
 
-ATURAN JAWABAN:
-- Utamakan informasi yang ada di website GMIH Ebenhaezer Ternate.
-- Untuk GMIH, utamakan sumber resmi Sinode GMIH dan PGI.
-- Untuk informasi Kristen Indonesia, gunakan sumber gereja/organisasi tepercaya dan Alkitab/SABDA bila relevan.
-- Bedakan fakta, tradisi/interpretasi teologis, dan informasi yang belum terverifikasi.
-- Jangan mengarang nama, jabatan, jadwal, sejarah, angka, atau kegiatan gereja. Jika tidak yakin, katakan bahwa informasi perlu diverifikasi.
-- Jika pertanyaan meminta informasi terbaru, gunakan pencarian web/sumber terbaru bila tersedia dan sebutkan sumbernya.
-- Jawab dalam Bahasa Indonesia dengan ramah, jelas, dan ringkas tetapi cukup lengkap.
-
-PERTANYAAN PENGGUNA:
-${q}
-
-KONTEKS DARI WEBSITE:
-${local}
-
-SUMBER RUJUKAN YANG TERSEDIA: Sinode GMIH (gmih.web.id), PGI (pgi.or.id), Alkitab/SABDA (alkitab.sabda.org), WCC (oikoumene.org), dan PC(USA) Historical Society/Presbyterian Mission Agency (pcusa.org). Untuk sejarah Presbiterian/Reformed global, gunakan sumber PC(USA) sebagai salah satu rujukan dan jelaskan bila sejarah/tradisi berbeda antar denominasi. Jangan mengarang isi sumber.`;
-
-      const res=await fetch(GEMINI_PROXY_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({question:prompt,previous_interaction_id:geminiInteractionId})
-      });
-      const data=await res.json().catch(()=>({}));
-      if(!res.ok) throw new Error(data.error||'Gemini proxy error');
-      geminiInteractionId=data.interaction_id||geminiInteractionId;
-      b.textContent=String(data.answer||'Maaf, Gemini belum memberikan jawaban.');
-    }catch(err){
-      console.warn('Gemini tidak tersedia, memakai basis pengetahuan lokal:',err);
-      geminiInteractionId=null;
-      const a=answer(q);
-      const urls=[...a.matchAll(/https?:\/\/[^\s]+/g)];
-      if(a.includes('https://www.google.com/search?')){
-        const url=a.match(/https?:\/\/[^\s]+/)[0];
-        b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka pencarian web ↗</a>');
-      }else if(urls.length){
-        const url=urls[0][0];
-        b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka sumber ↗</a>');
-      }else b.textContent=a;
+    if(!res.ok){
+      throw new Error(data.error||'Ebenhaezer AI tidak dapat dihubungi.');
     }
-    messages.scrollTop=messages.scrollHeight;
+
+    if(data.interaction_id){
+      geminiInteractionId=data.interaction_id;
+    }
+
+    b.textContent=data.answer||
+      'Maaf, Ebenhaezer AI belum memberikan jawaban.';
+
+    if(data.dynamic){
+      const badge=document.createElement('div');
+      badge.className='ai-source-badge';
+      badge.textContent='✦ Ebenhaezer AI • Pengetahuan dinamis';
+      b.appendChild(badge);
+    }
+
+  }catch(err){
+    console.warn('Cloudflare AI gagal:',err);
+
+    const a=answer(q);
+    b.textContent=a;
+
+    const badge=document.createElement('div');
+    badge.className='ai-source-badge fallback';
+    badge.textContent='Mode cadangan • Pengetahuan lokal website';
+    b.appendChild(badge);
   }
-  form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
+
+  messages.scrollTop=messages.scrollHeight;
+}form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
 })();
 
 </script><script>if('serviceWorker' in navigator){}</script>
