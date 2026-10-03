@@ -575,6 +575,33 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
 <script>if('serviceWorker' in navigator){}</script>
 
 
+<script>
+document.addEventListener("gmih-supabase-ready",function(e){
+ const d=e.detail||{};
+ const daily=d.daily||[];
+ const verse=daily.find(x=>x.kind==="ayat_hafalan");
+ const dev=d.daily.find(x=>x.kind==="renungan");
+ if(verse){
+  document.querySelectorAll("[data-memory-verse],.memory-verse-card p").forEach(el=>{
+   if(el.matches("[data-memory-verse]")||el.tagName==="P") el.textContent=verse.body;
+  });
+  document.querySelectorAll("[data-memory-ref],.memory-verse-card b").forEach(el=>{
+   if(verse.title)el.textContent=verse.title;
+  });
+ }
+ if(dev){
+  document.querySelectorAll("[data-devotional-title]").forEach(el=>el.textContent=dev.title||"Renungan Hari Ini");
+  document.querySelectorAll("[data-devotional-body]").forEach(el=>el.textContent=dev.body);
+ }
+ const schedules=d.schedules||[];
+ if(schedules.length){
+  document.querySelectorAll("[data-schedules]").forEach(box=>{
+   box.innerHTML=schedules.map(x=>'<div class="schedule-live"><b>'+escapeHtml(x.title)+'</b><span>'+escapeHtml(x.day_label)+' • '+escapeHtml(x.time_label||"Jam belum diatur")+'</span></div>').join("");
+  });
+ }
+});
+function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+</script>
 </body></html>
 <script>
 (function(){
