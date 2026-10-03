@@ -223,6 +223,38 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 </style>
 
 <style>.top-memory{margin:0}.top-memory .panel-head{margin-bottom:10px}.top-memory .memory-verse-card{margin:0}.top-memory .memory-verse-card p{font-size:15px;line-height:1.55}</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2"></script>
+<script>
+(function(){
+ const SB_URL="https://pbwfdstapekaogbljpgz.supabase.co";
+ const SB_KEY="sb_publishable_5zy2difxPe8dAEz7Hnz18Q_uKGw8Lu-";
+ const client=window.supabase?.createClient(SB_URL,SB_KEY);
+ if(!client)return;
+ async function load(){
+  try{
+   const [{data:s},{data:l},{data:w},{data:m},{data:b},{data:p},{data:c},{data:d}]=await Promise.all([
+    client.from("church_settings").select("*").eq("id",1).maybeSingle(),
+    client.from("layout_settings").select("*").eq("id",1).maybeSingle(),
+    client.from("worship_schedules").select("*").eq("active",true).order("sort_order"),
+    client.from("ministries").select("*").eq("active",true).order("sort_order"),
+    client.from("banners").select("*").eq("active",true).order("sort_order"),
+    client.from("photos").select("*").eq("active",true).order("sort_order"),
+    client.from("contacts").select("*").eq("active",true).order("sort_order"),
+    client.from("daily_content").select("*").eq("active",true).order("content_date",{ascending:false}).limit(10)
+   ]);
+   if(s){
+    document.title=s.church_name||document.title;
+    document.querySelectorAll("[data-church-name]").forEach(e=>e.textContent=s.church_name);
+    document.querySelectorAll("[data-church-tagline]").forEach(e=>e.textContent=s.tagline||"");
+    document.querySelectorAll("[data-church-address]").forEach(e=>e.textContent=s.address||"");
+   }
+   window.GMIH_SUPABASE={settings:s,layout:l,schedules:w||[],ministries:m||[],banners:b||[],photos:p||[],contacts:c||[],daily:d||[]};
+   document.dispatchEvent(new CustomEvent("gmih-supabase-ready",{detail:window.GMIH_SUPABASE}));
+  }catch(e){console.warn("Supabase GMIH:",e)}
+ }
+ load();
+})();
+</script>
 </head>
 <body>
 <header class="topbar"><div class="container topbar-in"><div>Gereja Masehi Injili di Halmahera</div><div>Ternate · Maluku Utara</div></div></header>
