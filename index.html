@@ -496,31 +496,37 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
 })();
 </script>
 
-<style id="install-platform-style">
-#install-platform-panel{position:fixed;right:14px;bottom:14px;z-index:99999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-#install-platform-panel button{border:0;border-radius:999px;padding:12px 15px;background:#0b4f91;color:#fff;font-weight:800;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
-#install-platform-panel button.ios{background:#111}
-@media(max-width:600px){#install-platform-panel{right:10px;bottom:10px;left:10px}.install-platform-panel button{flex:1}}
+<style id="install-universal-style">
+#install-universal{position:fixed;right:16px;bottom:16px;z-index:99999;border:0;border-radius:999px;padding:13px 19px;background:#0b4f91;color:#fff;font-weight:800;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
+#install-universal:hover{transform:translateY(-1px)}
+@media(max-width:600px){#install-universal{right:12px;bottom:12px;padding:12px 15px;font-size:13px}}
 </style>
-<div id="install-platform-panel" aria-label="Instal aplikasi">
-  <button id="install-android" type="button">📲 Instal Android</button>
-  <button id="install-ios" class="ios" type="button">🍎 Instal iPhone/iPad</button>
-</div>
+<button id="install-universal" type="button" aria-label="Instal GMIH Eben Haezer">📲 Instal GMIH Eben Haezer</button>
 <script>
 (function(){
+  const btn=document.getElementById('install-universal');
   let deferredPrompt=null;
-  const android=document.getElementById('install-android');
-  const ios=document.getElementById('install-ios');
   if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
-  android?.addEventListener('click',async()=>{
-    if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;return;}
-    alert('Android: buka situs ini di Google Chrome, lalu pilih menu ⋮ → Instal aplikasi / Tambahkan ke layar utama.');
+  btn?.addEventListener('click',async()=>{
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      try{await deferredPrompt.userChoice;}catch(e){}
+      deferredPrompt=null;
+      return;
+    }
+    if(window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true){
+      btn.style.display='none';
+      return;
+    }
+    const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    if(isIOS){
+      alert('iPhone/iPad: buka di Safari → Bagikan (□↑) → Tambahkan ke Layar Utama → Tambah.');
+    }else{
+      alert('Browser belum menampilkan dialog instal otomatis. Buka menu browser (⋮) lalu pilih “Instal aplikasi” atau “Tambahkan ke layar utama”.');
+    }
   });
-  ios?.addEventListener('click',()=>{
-    alert('iPhone/iPad: buka situs ini menggunakan Safari → tekan tombol Bagikan (□↑) → pilih “Tambahkan ke Layar Utama” → Tambah.');
-  });
-  window.addEventListener('appinstalled',()=>{document.getElementById('install-platform-panel')?.remove();});
+  window.addEventListener('appinstalled',()=>{btn?.remove();deferredPrompt=null;});
 })();
 </script>
 </body></html>
