@@ -255,7 +255,7 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 <!-- FITUR BARU: Ebenhaezer AI -->
 <section class="panel ai-intro" id="ebenhaezer-ai">
 <div class="ai-banner"><div class="ai-avatar">EH<span>AI</span></div><div><span class="eyebrow">EBENHAEZER AI</span><h2>Asisten gereja & kekristenan</h2><p>Tanyakan tentang GMIH Ebenhaezer Ternate, pelayanan jemaat, sejarah GMIH, Alkitab, dan berbagai hal tentang kekristenan di Indonesia. Untuk informasi terbaru, gunakan pencarian web.</p></div><button class="btn" id="openAi" type="button">Buka Chatbot</button></div>
-<div class="ai-source-links"><a class="btn" href="https://gmih.web.id/" rel="noopener" target="_blank">✝️ Sinode GMIH ↗</a><a class="btn" href="https://gmih.web.id/sejarah/" rel="noopener" target="_blank">📖 Sejarah GMIH ↗</a><a class="btn" href="https://www.pgi.or.id/synod/detail?id=14" rel="noopener" target="_blank">Profil GMIH – PGI ↗</a><a class="btn" href="https://www.youtube.com/@gmihebenhaezerternate3440" rel="noopener" target="_blank">YouTube Jemaat ↗</a></div>
+<div class="ai-source-links"><a class="btn" href="https://gmih.web.id/" rel="noopener" target="_blank">✝️ Sinode GMIH ↗</a><a class="btn" href="https://www.pgi.or.id/synod/detail?id=14" rel="noopener" target="_blank">🏛️ Profil GMIH – PGI ↗</a><a class="btn" href="https://www.youtube.com/@gmihebenhaezerternate3440" rel="noopener" target="_blank">▶️ YouTube Jemaat ↗</a><a class="btn" href="#jadwal">📅 Jadwal Ibadah ↗</a></div>
 </section>
 <section class="panel jesus-gallery" id="renungan-visual">
 <div class="section-heading">
@@ -496,37 +496,5 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
 })();
 </script>
 
-<style id="install-universal-style">
-#install-universal{position:fixed;right:16px;bottom:16px;z-index:99999;border:0;border-radius:999px;padding:13px 19px;background:#0b4f91;color:#fff;font-weight:800;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
-#install-universal:hover{transform:translateY(-1px)}
-@media(max-width:600px){#install-universal{right:12px;bottom:12px;padding:12px 15px;font-size:13px}}
-</style>
-<button id="install-universal" type="button" aria-label="Instal GMIH Eben Haezer">📲 Instal GMIH Eben Haezer</button>
-<script>
-(function(){
-  const btn=document.getElementById('install-universal');
-  let deferredPrompt=null;
-  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
-  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
-  btn?.addEventListener('click',async()=>{
-    if(deferredPrompt){
-      deferredPrompt.prompt();
-      try{await deferredPrompt.userChoice;}catch(e){}
-      deferredPrompt=null;
-      return;
-    }
-    if(window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true){
-      btn.style.display='none';
-      return;
-    }
-    const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
-    if(isIOS){
-      alert('iPhone/iPad: buka di Safari → Bagikan (□↑) → Tambahkan ke Layar Utama → Tambah.');
-    }else{
-      alert('Browser belum menampilkan dialog instal otomatis. Buka menu browser (⋮) lalu pilih “Instal aplikasi” atau “Tambahkan ke layar utama”.');
-    }
-  });
-  window.addEventListener('appinstalled',()=>{btn?.remove();deferredPrompt=null;});
-})();
-</script>
+<style id="install-ad-style">#install-ad{width:min(560px,calc(100% - 24px));margin:18px auto 8px;padding:12px 14px;border-radius:16px;background:linear-gradient(135deg,#0b4f91,#0877c9);color:#fff;box-shadow:0 8px 24px rgba(11,79,145,.22);display:flex;align-items:center;gap:12px;position:relative;z-index:5}#install-ad .install-ad-copy{flex:1;min-width:0}#install-ad .install-ad-label{font-size:9px;letter-spacing:1.2px;opacity:.75;font-weight:800}#install-ad b{display:block;font-size:13px;line-height:1.25;margin-top:2px}#install-ad small{display:block;font-size:10px;opacity:.82;margin-top:2px}#install-ad button{border:0;border-radius:999px;padding:10px 14px;background:#fff;color:#0b4f91;font-weight:900;font-size:11px;cursor:pointer;white-space:nowrap}@media(max-width:600px){#install-ad{padding:10px 11px;gap:8px}#install-ad button{padding:9px 11px;font-size:10px}#install-ad b{font-size:12px}}</style><div id="install-ad" role="complementary" aria-label="Instal aplikasi GMIH Eben Haezer"><div class="install-ad-copy"><div class="install-ad-label">PROMO • APLIKASI WEB</div><b>📲 Instal GMIH Eben Haezer</b><small>Akses lebih cepat dari layar utama Android atau PC.</small></div><button id="install-ad-button" type="button">INSTAL</button></div><script>(function(){const ad=document.getElementById('install-ad'),btn=document.getElementById('install-ad-button');let deferredPrompt=null;if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});btn?.addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();try{await deferredPrompt.userChoice;}catch(e){}deferredPrompt=null;return;}if(window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true){ad?.remove();return;}const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);alert(isIOS?'iPhone/iPad: buka di Safari → Bagikan (□↑) → Tambahkan ke Layar Utama → Tambah.':'Browser belum menampilkan dialog instal otomatis. Buka menu browser (⋮) lalu pilih “Instal aplikasi” atau “Tambahkan ke layar utama”.');});window.addEventListener('appinstalled',()=>ad?.remove());})();</script>
 </body></html>
