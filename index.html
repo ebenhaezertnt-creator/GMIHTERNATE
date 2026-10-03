@@ -255,7 +255,7 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 <!-- FITUR BARU: Ebenhaezer AI -->
 <section class="panel ai-intro" id="ebenhaezer-ai">
 <div class="ai-banner"><div class="ai-avatar">EH<span>AI</span></div><div><span class="eyebrow">EBENHAEZER AI</span><h2>Asisten gereja & kekristenan</h2><p>Tanyakan tentang GMIH Ebenhaezer Ternate, pelayanan jemaat, sejarah GMIH, Alkitab, dan berbagai hal tentang kekristenan di Indonesia. Untuk informasi terbaru, gunakan pencarian web.</p></div><button class="btn" id="openAi" type="button">Buka Chatbot</button></div>
-<div class="ai-source-links"><a href="https://gmih.web.id/" rel="noopener" target="_blank">Sinode GMIH ↗</a><a href="https://gmih.web.id/sejarah/" rel="noopener" target="_blank">Sejarah GMIH ↗</a><a href="https://www.pgi.or.id/synod/detail?id=14" rel="noopener" target="_blank">Profil GMIH – PGI ↗</a><a href="https://www.youtube.com/@gmihebenhaezerternate3440" rel="noopener" target="_blank">YouTube Jemaat ↗</a></div>
+<div class="ai-source-links"><a class="btn" href="https://gmih.web.id/" rel="noopener" target="_blank">✝️ Sinode GMIH ↗</a><a class="btn" href="https://gmih.web.id/sejarah/" rel="noopener" target="_blank">📖 Sejarah GMIH ↗</a><a class="btn" href="https://www.pgi.or.id/synod/detail?id=14" rel="noopener" target="_blank">Profil GMIH – PGI ↗</a><a class="btn" href="https://www.youtube.com/@gmihebenhaezerternate3440" rel="noopener" target="_blank">YouTube Jemaat ↗</a></div>
 </section>
 <section class="panel jesus-gallery" id="renungan-visual">
 <div class="section-heading">
@@ -493,6 +493,34 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
     alert('Untuk memasang aplikasi, buka menu browser (⋮) lalu pilih “Instal aplikasi” atau “Tambahkan ke layar utama”.');
   });
   window.addEventListener('appinstalled',()=>{btn.style.display='none';deferredPrompt=null;});
+})();
+</script>
+
+<style id="install-platform-style">
+#install-platform-panel{position:fixed;right:14px;bottom:14px;z-index:99999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+#install-platform-panel button{border:0;border-radius:999px;padding:12px 15px;background:#0b4f91;color:#fff;font-weight:800;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
+#install-platform-panel button.ios{background:#111}
+@media(max-width:600px){#install-platform-panel{right:10px;bottom:10px;left:10px}.install-platform-panel button{flex:1}}
+</style>
+<div id="install-platform-panel" aria-label="Instal aplikasi">
+  <button id="install-android" type="button">📲 Instal Android</button>
+  <button id="install-ios" class="ios" type="button">🍎 Instal iPhone/iPad</button>
+</div>
+<script>
+(function(){
+  let deferredPrompt=null;
+  const android=document.getElementById('install-android');
+  const ios=document.getElementById('install-ios');
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
+  android?.addEventListener('click',async()=>{
+    if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;return;}
+    alert('Android: buka situs ini di Google Chrome, lalu pilih menu ⋮ → Instal aplikasi / Tambahkan ke layar utama.');
+  });
+  ios?.addEventListener('click',()=>{
+    alert('iPhone/iPad: buka situs ini menggunakan Safari → tekan tombol Bagikan (□↑) → pilih “Tambahkan ke Layar Utama” → Tambah.');
+  });
+  window.addEventListener('appinstalled',()=>{document.getElementById('install-platform-panel')?.remove();});
 })();
 </script>
 </body></html>
