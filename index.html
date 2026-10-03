@@ -145,7 +145,28 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 .donation-top{margin-top:14px;margin-bottom:14px}
 .donation-top + .shortcuts{margin-top:0}
 @media(max-width:700px){.donation-body{grid-template-columns:1fr}.qris-wrap img{max-width:230px}.donation-top{margin-top:10px;margin-bottom:10px}}
-.top-memory{display:block!important}.memory-verse-card{display:flex;align-items:flex-start;gap:14px}.memory-verse-panel{display:block!important}</style>
+.top-memory{display:block!important}.memory-verse-card{display:flex;align-items:flex-start;gap:14px}.memory-verse-panel{display:block!important}
+/* ===== Desktop contact/layout fix ===== */
+@media(min-width:901px){
+  .container{width:min(1500px,calc(100% - 56px))}
+  .nav-in{height:82px}
+  .navlinks{gap:28px}
+  .content-grid{grid-template-columns:minmax(0,1.72fr) minmax(390px,.98fr);gap:24px}
+  .content-grid>aside{min-width:0}
+  .contact{padding:28px 30px}
+  .contact h2{font-size:24px;line-height:1.25;letter-spacing:-.5px;margin:8px 0 18px}
+  .contact p{margin:16px 0}
+  .contact p>a{font-size:16px;white-space:nowrap}
+  .contact-address span{font-size:14px;line-height:1.65}
+  .post-qris-contact-install{min-width:0}
+}
+@media(min-width:1200px){
+  .content-grid{grid-template-columns:minmax(0,1.8fr) minmax(430px,.9fr)}
+  .contact{padding:30px 32px}
+  .contact h2{font-size:26px}
+}
+
+</style>
 <style>
 /* Galeri & dokumentasi foto terbaru */
 .gallery-new{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
