@@ -518,7 +518,29 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
 })();
 
-</script><script>if('serviceWorker' in navigator){}</script>
+</script><script>
+(async function(){
+  try{
+    const r=await fetch('https://ebenhaezer-media.ebenhaezertnt.workers.dev/photos',{cache:'no-store'});
+    if(!r.ok)return;
+    const photos=await r.json();
+    if(!Array.isArray(photos)||!photos.length)return;
+    const galleries=document.querySelectorAll('.gallery');
+    galleries.forEach(g=>{
+      g.innerHTML='';
+      photos.forEach((p,i)=>{
+        if(!p.src)return;
+        const img=document.createElement('img');
+        img.src=p.src;
+        img.alt=p.title||'Dokumentasi GMIH Eben Haezer Ternate';
+        img.loading=i<2?'eager':'lazy';
+        g.appendChild(img);
+      });
+    });
+  }catch(e){console.warn('Galeri online belum tersedia',e);}
+})();
+</script>
+<script>if('serviceWorker' in navigator){}</script>
 
 
 </body></html>
