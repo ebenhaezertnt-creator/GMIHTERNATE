@@ -474,4 +474,25 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
 })();
 
 </script><script>if('serviceWorker' in navigator){}</script>
+
+<style id="install-app-style">
+#install-app-button{position:fixed;right:18px;bottom:18px;z-index:99999;border:0;border-radius:999px;padding:13px 18px;background:#0b4f91;color:#fff;font-weight:800;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
+#install-app-button:hover{transform:translateY(-1px)}
+@media(max-width:600px){#install-app-button{right:12px;bottom:12px;padding:12px 15px}}
+</style>
+<button id="install-app-button" type="button" aria-label="Instal Aplikasi">📲 Instal Aplikasi</button>
+<script>
+(function(){
+  const btn=document.getElementById('install-app-button');
+  let deferredPrompt=null;
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
+  btn?.addEventListener('click',async()=>{
+    if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;return;}
+    if(window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true){btn.style.display='none';return;}
+    alert('Untuk memasang aplikasi, buka menu browser (⋮) lalu pilih “Instal aplikasi” atau “Tambahkan ke layar utama”.');
+  });
+  window.addEventListener('appinstalled',()=>{btn.style.display='none';deferredPrompt=null;});
+})();
+</script>
 </body></html>
