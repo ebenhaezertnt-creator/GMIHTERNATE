@@ -130,3 +130,37 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   function send(q){if(!q.trim())return;const u=document.createElement('div');u.className='ai-msg user';u.textContent=q;messages.appendChild(u);const b=document.createElement('div');b.className='ai-msg bot';const a=answer(q);b.textContent=a;const urls=[...a.matchAll(/https?:\/\/[^\s]+/g)];urls.forEach(m=>{});if(a.includes('https://www.google.com/search?')){const url=a.match(/https?:\/\/[^\s]+/)[0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka pencarian web ↗</a>')}else if(urls.length){const url=urls[0][0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka sumber ↗</a>')}messages.appendChild(b);messages.scrollTop=messages.scrollHeight;}
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
 })();
+
+/* ===== Supabase live photos ===== */
+(function(){
+ function renderLivePhotos(state){
+  const photos=(state?.photos||[]).filter(p=>p.active!==false && p.image_url);
+  if(!photos.length)return;
+  const gallery=document.querySelector(".gallery-new");
+  if(!gallery)return;
+  gallery.innerHTML="";
+  photos.forEach((p,i)=>{
+   const card=document.createElement("article");
+   card.className="gallery-card";
+   const img=document.createElement("img");
+   img.src=p.image_url;
+   img.alt=p.title||"Dokumentasi GMIH Eben Haezer Ternate";
+   img.loading=i<3?"eager":"lazy";
+   img.onerror=()=>card.remove();
+   card.appendChild(img);
+   if(p.title){
+    const cap=document.createElement("div");
+    cap.className="gallery-caption";
+    cap.textContent=p.title;
+    card.appendChild(cap);
+   }
+   gallery.appendChild(card);
+  });
+ }
+ function wait(){
+  if(window.GMIH_SUPABASE){renderLivePhotos(window.GMIH_SUPABASE);return;}
+  setTimeout(wait,300);
+ }
+ wait();
+ document.addEventListener("gmih-supabase-ready",e=>renderLivePhotos(e.detail||{}));
+})();
