@@ -298,6 +298,50 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
   .content-grid>div>section,.content-grid>aside>section{margin-bottom:10px!important}
   .gallery-new,.news-new,.jesus-grid{gap:8px!important}
 }
+</style><style id="dense-layout">
+/* ===== LAYOUT PADAT / TANPA SPACE KOSONG ===== */
+:root{--dense-gap:12px;--dense-pad:14px}
+main{padding-top:8px!important;padding-bottom:12px!important}
+.container{margin-top:0!important;margin-bottom:0!important}
+.content-grid{gap:var(--dense-gap)!important;align-items:start!important}
+.content-grid>div,.content-grid>aside{min-width:0}
+section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--dense-gap)!important}
+.panel{padding:var(--dense-pad)!important}
+.panel-head{margin-bottom:10px!important}
+.panel-head h2,.panel-head h3{margin:0!important}
+.hero,.hero-section{margin-bottom:var(--dense-gap)!important}
+.shortcuts{margin-top:0!important;margin-bottom:var(--dense-gap)!important}
+.gallery-new,.news-new,.jesus-grid,.schedule-grid,.cards-grid,.ministry-grid,.right-photo-grid{gap:10px!important}
+.gallery-card,.news-card,.jesus-card,.schedule-card,.pastor-card,.quick a,.memory-verse-card{margin:0!important}
+.gallery-card{padding:7px!important}
+.gallery-card img{margin:0!important}
+.right-photo-grid{grid-template-columns:1fr!important}
+.right-photo{aspect-ratio:16/9!important}
+.bible-card{padding:12px 14px!important;margin-top:0!important}
+.quick{padding:12px!important}
+.quick-grid{gap:8px!important}
+.hero .container,.hero-section .container{padding-top:18px!important;padding-bottom:18px!important}
+@media(min-width:1001px){
+ .container{width:min(1500px,calc(100% - 36px))!important}
+ main{max-width:1540px!important}
+ .content-grid{gap:12px!important}
+ .content-grid>div>section{margin-bottom:12px!important}
+ .content-grid>aside>section,.content-grid>aside>.quick{margin-bottom:12px!important}
+ .gallery-new{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important}
+ .news-new{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}
+ .jesus-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}
+ .schedule-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}
+ .hero,.hero-section{min-height:430px!important}
+ .panel{padding:14px!important}
+}
+@media(min-width:1400px){
+ .gallery-new{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+}
+@media(max-width:1000px){
+ .container{padding-left:12px!important;padding-right:12px!important}
+ .content-grid{gap:10px!important}
+ .panel{padding:12px!important}
+}
 </style></head>
 <body>
 <header class="topbar"><div class="container topbar-in"><div>Gereja Masehi Injili di Halmahera</div><div>Ternate · Maluku Utara</div></div></header>
