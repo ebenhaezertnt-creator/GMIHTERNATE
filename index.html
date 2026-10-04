@@ -602,12 +602,6 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
         img.decoding="async";
         img.onerror=()=>card.remove();
         card.appendChild(img);
-        if(p.title){
-          const cap=document.createElement("div");
-          cap.className="gallery-caption";
-          cap.textContent=p.title;
-          card.appendChild(cap);
-        }
         g.appendChild(card);
       });
     });
