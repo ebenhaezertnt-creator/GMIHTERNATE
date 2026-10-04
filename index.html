@@ -914,7 +914,52 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
     setText('📲 Instal');
   });
 
+  function showInstallGuide(){
+    const old=document.getElementById('gmihInstallGuide');
+    if(old){old.remove();return;}
+    const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isAndroid=/android/i.test(navigator.userAgent);
+    const guide=document.createElement('div');
+    guide.id='gmihInstallGuide';
+    guide.style.cssText='position:fixed;inset:0;z-index:100000;background:rgba(3,25,52,.55);display:flex;align-items:center;justify-content:center;padding:18px;font-family:Inter,system-ui,sans-serif';
+    guide.innerHTML=`
+      <div style="width:min(430px,100%);background:#fff;border-radius:20px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25);color:#12345a">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <div><div style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:#0b5aa9">GMIH EBEN HAEZER</div><h2 style="margin:5px 0 0;color:#073d78;font-size:22px">Instal Aplikasi</h2></div>
+          <button type="button" data-close-install style="border:0;background:#eef5fb;border-radius:50%;width:36px;height:36px;font-size:20px;cursor:pointer">×</button>
+        </div>
+        <p style="font-size:13px;color:#5d7188;margin:16px 0">Tambahkan website GMIH Eben Haezer ke layar utama agar mudah dibuka seperti aplikasi.</p>
+        <button type="button" data-native-install style="width:100%;border:0;border-radius:12px;padding:13px 16px;background:#0b4f91;color:#fff;font-weight:800;cursor:pointer">📲 Pasang Sekarang</button>
+        <div style="margin-top:14px;padding:14px;border:1px solid #dce8f4;border-radius:12px;background:#f7fbff;font-size:12px;line-height:1.65">
+          <b>${isIOS?'iPhone / iPad':'Android / Chrome'}</b><br>
+          ${isIOS
+            ? 'Tekan <b>Bagikan</b> (□↑), lalu pilih <b>Tambahkan ke Layar Utama</b>.'
+            : 'Jika pemasangan otomatis belum muncul, buka menu browser <b>⋮</b> lalu pilih <b>Instal aplikasi</b> atau <b>Tambahkan ke layar utama</b>.'}
+        </div>
+      </div>`;
+    document.body.appendChild(guide);
+    guide.querySelector('[data-close-install]')?.addEventListener('click',()=>guide.remove());
+    guide.addEventListener('click',e=>{if(e.target===guide)guide.remove()});
+    guide.querySelector('[data-native-install]')?.addEventListener('click',async()=>{
+      if(deferredPrompt){
+        deferredPrompt.prompt();
+        const result=await deferredPrompt.userChoice.catch(()=>null);
+        deferredPrompt=null;
+        if(result?.outcome==='accepted'){guide.remove();setText('✓ Terpasang');}
+      }else{
+        guide.remove();
+        if(isIOS){
+          alert('Di iPhone/iPad: tekan Bagikan (□↑) → Tambahkan ke Layar Utama.');
+        }else{
+          alert('Buka menu browser ⋮ → Instal aplikasi / Tambahkan ke layar utama.');
+        }
+      }
+    });
+  }
+
   async function installApp(){
+    const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+    if(standalone){setInstalled();return;}
     if(deferredPrompt){
       deferredPrompt.prompt();
       const result=await deferredPrompt.userChoice.catch(()=>null);
@@ -922,15 +967,7 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
       if(result?.outcome==='accepted') setText('✓ Terpasang');
       return;
     }
-    // iPhone/iPad tidak menyediakan beforeinstallprompt; arahkan ke menu instal bawaan Safari.
-    const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
-    const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
-    if(standalone){setInstalled();return;}
-    if(isIOS){
-      alert('Untuk memasang GMIH Eben Haezer di iPhone/iPad: buka menu Bagikan (□↑), lalu pilih “Tambahkan ke Layar Utama”.');
-    }else{
-      alert('Jika tombol instal belum memunculkan pemasangan, buka menu browser ⋮ lalu pilih “Instal aplikasi” atau “Tambahkan ke layar utama”. Setelah halaman dimuat ulang, tombol ini akan bekerja otomatis bila browser mendukung PWA.');
-    }
+    showInstallGuide();
   }
 
   document.addEventListener('click',function(e){
