@@ -111,23 +111,63 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   function findPage(q){const ts=tokens(q);if(!ts.length)return null;let best=null,bestScore=0;for(const sec of pageSections()){const t=sec.text.toLowerCase();let score=0;for(const x of ts)if(t.includes(x))score+=x.length>=6?2:1;if(score>bestScore){bestScore=score;best=sec}}return bestScore>=2?best:null}
   function findExternal(q){const ts=tokens(q);let best=null,bestScore=0;for(const x of external){const hay=(x.title+' '+x.text).toLowerCase();let score=0;for(const w of ts)if(hay.includes(w))score+=w.length>=6?2:1;if(score>bestScore){bestScore=score;best=x}}return bestScore>=2?best:null}
   function webSearchUrl(q){return 'https://www.google.com/search?q='+encodeURIComponent('GMIH Gereja Masehi Injili di Halmahera '+q)}
-  function answer(q){
+  // ===== Ebenhaezer AI ONLINE =====
+  const GEMINI_PROXY_URL='https://ebenhaezer-ai.ebenhaezertnt.workers.dev/chat';
+  let geminiInteractionId=null;
+  function localAnswer(q){
     const t=q.toLowerCase().trim();
     if(!t)return 'Silakan tulis pertanyaan Anda.';
     if(t.includes('cari web')||t.includes('terbaru')||t.includes('hari ini')||t.includes('berita terbaru')){
       const url=webSearchUrl(q.replace(/cari web|terbaru|hari ini|berita terbaru/gi,''));
-      return 'Untuk informasi eksternal terbaru, gunakan pencarian web berikut: '+url+'\n\nUntuk informasi resmi GMIH, saya menggunakan basis Sinode GMIH dan PGI yang sudah dimuat di website.';
+      return 'Untuk informasi eksternal terbaru, gunakan pencarian web berikut: '+url+'\\n\\nUntuk informasi resmi GMIH, saya menggunakan basis Sinode GMIH dan PGI yang sudah dimuat di website.';
     }
-    if(t.includes('shalom')||t.includes('halo')||t.includes('hai'))return 'Shalom! Tuhan memberkati. Saya dapat menjawab isi website ini dan informasi dasar GMIH dari sumber resmi yang sudah dicantumkan.';
+    if(t.includes('shalom')||t.includes('halo')||t.includes('hai'))return 'Shalom! Tuhan memberkati. Saya dapat membantu tentang GMIH, gereja, Alkitab, pelayanan dan isi website.';
     const hit=qa.find(x=>x.keys.some(k=>t.includes(k)));
     if(hit)return hit.ans;
-    const ext=findExternal(t); if(ext)return ext.title+': '+ext.text+'\nSumber: '+ext.url;
+    const ext=findExternal(t); if(ext)return ext.title+': '+ext.text+'\\nSumber: '+ext.url;
     const sec=findPage(t); if(sec)return 'Dari isi website: '+sec.text.slice(0,700)+(sec.text.length>700?'…':'');
-    return 'Saya belum menemukan jawaban yang cukup pasti. Coba sebutkan topik seperti jadwal, pelayanan, pendeta, galeri, kontak, Alkitab, sejarah GMIH, wilayah pelayanan GMIH, atau berita terbaru. Untuk pencarian eksternal langsung, ketik “Cari Web + pertanyaan”.';
+    return 'Saya belum menemukan jawaban yang cukup pasti. Saya akan mencoba mencari jawaban melalui Ebenhaezer AI.';
+  }
+  async function onlineAnswer(q){
+    try{
+      const res=await fetch(GEMINI_PROXY_URL,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({
+          message:q,
+          prompt:q,
+          question:q,
+          interactionId:geminiInteractionId,
+          context:'Anda adalah Ebenhaezer AI untuk GMIH Eben Haezer Ternate. Jawab dalam bahasa Indonesia. Gunakan pengetahuan website, GMIH, kekristenan, Alkitab, sejarah gereja dan gereja Presbiterian. Jika tidak yakin, katakan dengan jujur.'
+        })
+      });
+      if(!res.ok)throw new Error('AI HTTP '+res.status);
+      const data=await res.json();
+      geminiInteractionId=data.interactionId||data.interaction_id||data.id||geminiInteractionId;
+      const answer=data.answer||data.response||data.text||data.message||data.output?.text||data.output?.content;
+      if(typeof answer==='string'&&answer.trim())return answer.trim();
+      throw new Error('Respons AI kosong');
+    }catch(err){
+      console.warn('Ebenhaezer AI online gagal, memakai jawaban lokal:',err);
+      return localAnswer(q);
+    }
   }
   function openAI(){widget?.classList.add('open');widget?.setAttribute('aria-hidden','false');setTimeout(()=>input?.focus(),100)} function closeAI(){widget?.classList.remove('open');widget?.setAttribute('aria-hidden','true')}
   fab?.addEventListener('click',openAI);opener?.addEventListener('click',openAI);closer?.addEventListener('click',closeAI);
-  function send(q){if(!q.trim())return;const u=document.createElement('div');u.className='ai-msg user';u.textContent=q;messages.appendChild(u);const b=document.createElement('div');b.className='ai-msg bot';const a=answer(q);b.textContent=a;const urls=[...a.matchAll(/https?:\/\/[^\s]+/g)];urls.forEach(m=>{});if(a.includes('https://www.google.com/search?')){const url=a.match(/https?:\/\/[^\s]+/)[0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka pencarian web ↗</a>')}else if(urls.length){const url=urls[0][0];b.innerHTML=a.replace(url,'<a href="'+url+'" target="_blank" rel="noopener">Buka sumber ↗</a>')}messages.appendChild(b);messages.scrollTop=messages.scrollHeight;}
+  async function send(q){
+    if(!q.trim())return;
+    const u=document.createElement('div');u.className='ai-msg user';u.textContent=q;messages.appendChild(u);
+    const b=document.createElement('div');b.className='ai-msg bot';b.textContent='Ebenhaezer AI sedang berpikir…';messages.appendChild(b);messages.scrollTop=messages.scrollHeight;
+    const a=await onlineAnswer(q);
+    b.textContent=a;
+    const urls=[...a.matchAll(/https?:\\/\\/[^\\s]+/g)];
+    if(urls.length){
+      const url=urls[0][0].replace(/[),.]+$/,'');
+      b.textContent=a.replace(url,'');
+      const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener';link.textContent='Buka sumber ↗';b.appendChild(document.createTextNode(' '));b.appendChild(link);
+    }
+    messages.scrollTop=messages.scrollHeight;
+  }
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
 })();
 
