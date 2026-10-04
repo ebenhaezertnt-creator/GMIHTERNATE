@@ -845,15 +845,15 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
 </script>
 
 <style id="gmih-audio-style">
-#gmihAudioControl{position:fixed;right:18px;bottom:18px;z-index:9999;display:flex;align-items:center;gap:8px;background:rgba(6,54,108,.94);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 12px;box-shadow:0 8px 24px rgba(0,0,0,.18);font:700 12px Inter,system-ui,sans-serif}
-#gmihAudioControl button{border:0;background:#fff;color:#0b4f91;width:32px;height:32px;border-radius:50%;font-size:15px;cursor:pointer}
+#gmihAudioControl{position:fixed;right:18px;bottom:18px;z-index:9997;display:flex;align-items:center;gap:7px;background:rgba(6,54,108,.9);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 9px;box-shadow:0 6px 18px rgba(0,0,0,.15);font:600 11px system-ui,sans-serif}
+#gmihAudioControl button{border:0;background:#fff;color:#0b4f91;width:30px;height:30px;border-radius:50%;font-size:14px;cursor:pointer}
 #gmihAudioControl span{white-space:nowrap}
-@media(max-width:600px){#gmihAudioControl{right:10px;bottom:10px}}
+@media(max-width:600px){#gmihAudioControl{right:8px;bottom:8px}}
 </style>
 <audio id="gmihBackgroundMusic" preload="auto" loop playsinline src="Peaceful%20Rest.mp3"></audio>
 <div id="gmihAudioControl" aria-label="Kontrol musik instrumental">
   <button id="gmihAudioToggle" type="button" aria-label="Putar musik">▶</button>
-  <span id="gmihAudioLabel">Musik Instrumental</span>
+  <span id="gmihAudioLabel">Musik</span>
 </div>
 <script>
 (function(){
@@ -861,31 +861,33 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
   const btn=document.getElementById("gmihAudioToggle");
   const label=document.getElementById("gmihAudioLabel");
   if(!audio||!btn)return;
-  let started=false;
-  function playingUI(){
-    btn.textContent="❚❚";
-    btn.setAttribute("aria-label","Jeda musik");
-    label.textContent="Musik Instrumental";
-    started=true;
+
+  async function startMusic(){
+    try{
+      audio.muted=false;
+      await audio.play();
+      btn.textContent="❚❚";
+      btn.setAttribute("aria-label","Jeda musik");
+      label.textContent="Musik";
+    }catch(e){
+      label.textContent="▶ Musik";
+    }
   }
-  function pausedUI(){
-    btn.textContent="▶";
-    btn.setAttribute("aria-label","Putar musik");
-  }
-  async function tryPlay(){
-    try{await audio.play();playingUI();}catch(e){pausedUI();label.textContent="Sentuh ▶ untuk musik";}
-  }
-  btn.addEventListener("click",async function(){
-    if(audio.paused){await tryPlay();}else{audio.pause();pausedUI();}
+  btn.addEventListener("click",async function(e){
+    e.stopPropagation();
+    if(audio.paused) await startMusic();
+    else {audio.pause();btn.textContent="▶";label.textContent="▶ Musik";}
   });
-  ["pointerdown","touchstart","click","keydown"].forEach(ev=>{
-    document.addEventListener(ev,function once(){
-      if(!started && audio.paused) tryPlay();
-    },{once:true,passive:true});
+
+  /* Browser/iPhone biasanya menolak autoplay bersuara. 
+     Coba ulang saat interaksi pertama pengguna, tanpa menutupi chatbot. */
+  const unlock=()=>{ if(audio.paused) startMusic(); };
+  ["pointerdown","touchend","keydown"].forEach(ev=>{
+    document.addEventListener(ev,unlock,{once:true,passive:true});
   });
-  audio.addEventListener("play",playingUI);
-  audio.addEventListener("pause",pausedUI);
-  tryPlay();
+
+  /* Jangan menampilkan kontrol besar atau menghalangi elemen situs. */
+  startMusic();
 })();
 </script>
 
