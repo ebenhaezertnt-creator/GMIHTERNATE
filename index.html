@@ -674,6 +674,47 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
 })();
 </script>
 <script src="script.js?v=20261004-4"></script>
+<script>
+/* ===== BACK OFFICE LIVE LAYOUT ENGINE ===== */
+(function(){
+ const API="https://kkisfurtvdmgvzkprznz.supabase.co/rest/v1/layout_settings?id=eq.1&select=layout_config,desktop_first,show_qris,show_memory_verse,show_devotional";
+ const KEY="sb_publishable_SnYsi_QvUWLEWEJx5vEmnQ_cTEK-tSM";
+ const defaults={sections:[
+  {key:"hero",visible:true,order:10},{key:"donasi",visible:true,order:20},{key:"shortcuts",visible:true,order:30},
+  {key:"tentang",visible:true,order:40},{key:"pelayanan",visible:true,order:50},{key:"renungan",visible:true,order:60},
+  {key:"video",visible:true,order:70},{key:"galeri-foto-kanan",visible:true,order:80},{key:"quick",visible:true,order:90},
+  {key:"jadwal-ibadah",visible:true,order:100},{key:"renungan-visual",visible:true,order:110},{key:"scenic",visible:true,order:120}
+ ],desktop:{containerWidth:1500,contentColumns:2,sidebarWidth:320,gap:24,sectionGap:20},mobile:{containerPadding:16,gap:14},style:{cardRadius:18,heroHeight:560,galleryColumns:4,imageRatio:"16/10"}};
+ const sel={hero:".hero.container",donasi:"#donasi",shortcuts:".shortcuts",tentang:"#tentang",pelayanan:"#pelayanan",renungan:"#renungan",video:"#video","galeri-foto-kanan":"#galeri-foto-kanan",quick:".quick","jadwal-ibadah":"#jadwal-ibadah","renungan-visual":"#renungan-visual",scenic:".scenic-banner"};
+ function merge(raw){const c=raw&&typeof raw==="object"?raw:{};return {sections:Array.isArray(c.sections)&&c.sections.length?c.sections:defaults.sections,desktop:{...defaults.desktop,...(c.desktop||{})},mobile:{...defaults.mobile,...(c.mobile||{})},style:{...defaults.style,...(c.style||{})}}}
+ function apply(cfg){
+  const root=document.documentElement;
+  root.style.setProperty("--bo-container-width",(cfg.desktop.containerWidth||1500)+"px");
+  root.style.setProperty("--bo-content-gap",(cfg.desktop.gap||24)+"px");
+  root.style.setProperty("--bo-section-gap",(cfg.desktop.sectionGap||20)+"px");
+  root.style.setProperty("--bo-sidebar-width",(cfg.desktop.sidebarWidth||320)+"px");
+  root.style.setProperty("--bo-radius",(cfg.style.cardRadius||18)+"px");
+  root.style.setProperty("--bo-hero-height",(cfg.style.heroHeight||560)+"px");
+  root.style.setProperty("--bo-mobile-pad",(cfg.mobile.containerPadding||16)+"px");
+  root.style.setProperty("--bo-mobile-gap",(cfg.mobile.gap||14)+"px");
+  const st=document.createElement("style");st.id="bo-layout-runtime";
+  st.textContent="@media(min-width:1001px){.container{width:min(var(--bo-container-width),calc(100% - 64px))!important}main{max-width:var(--bo-container-width)!important}.content-grid{gap:var(--bo-content-gap)!important;grid-template-columns:minmax(0,1fr) var(--bo-sidebar-width)!important}.content-grid>div>section{margin-bottom:var(--bo-section-gap)!important}.hero,.hero-section{min-height:var(--bo-hero-height)!important}.gallery-new{grid-template-columns:repeat("+Math.max(2,Math.min(6,Number(cfg.style.galleryColumns)||4))+",minmax(0,1fr))!important}}.panel,.bible-card,.quick,.gallery-card,.pastor-card,.schedule-card,.memory-verse-card{border-radius:var(--bo-radius)!important}.gallery-card img,.right-photo img{aspect-ratio:"+(cfg.style.imageRatio||"16/10")+"}@media(max-width:1000px){.container{padding-left:var(--bo-mobile-pad)!important;padding-right:var(--bo-mobile-pad)!important}.content-grid{gap:var(--bo-mobile-gap)!important}}";
+  document.getElementById("bo-layout-runtime")?.remove();document.head.appendChild(st);
+  const entries=cfg.sections.map(x=>({...x})).sort((a,b)=>(a.order||0)-(b.order||0);
+  const topKeys=new Set(["hero","donasi","shortcuts","jadwal-ibadah","renungan-visual","scenic"]);
+  const top=[];entries.forEach(x=>{const el=document.querySelector(sel[x.key]);if(!el)return;el.dataset.boLayoutKey=x.key;el.style.display=x.visible===false?"none":"";if(topKeys.has(x.key))top.push({x,el})});
+  const main=document.querySelector("main");
+  if(main)top.filter(v=>v.el.parentElement===main).sort((a,b)=>(a.x.order||0)-(b.x.order||0)).forEach(v=>main.appendChild(v.el));
+  const inner=entries.filter(x=>["tentang","pelayanan","renungan","video","galeri-foto-kanan"].includes(x.key));
+  const innerParent=document.querySelector(".content-grid>div");
+  if(innerParent)inner.sort((a,b)=>(a.order||0)-(b.order||0)).forEach(x=>{const el=document.querySelector(sel[x.key]);if(el&&el.parentElement===innerParent)innerParent.appendChild(el)});
+  const aside=document.querySelector(".content-grid>aside");
+  if(aside){const q=entries.find(x=>x.key==="quick");const el=document.querySelector(sel.quick);if(q&&el&&el.parentElement===aside)aside.appendChild(el)}
+ }
+ async function load(){try{const r=await fetch(API,{cache:"no-store",headers:{apikey:KEY,Authorization:"Bearer "+KEY}});if(!r.ok)throw new Error("HTTP "+r.status);const rows=await r.json();apply(merge(rows?.[0]?.layout_config))}catch(e){console.warn("Back Office layout:",e);apply(defaults)}}
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",load,{once:true});else load();window.addEventListener("pageshow",load);
+})();
+</script>
 </body></html>
 <script>
 (function(){
