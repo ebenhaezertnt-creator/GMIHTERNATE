@@ -843,4 +843,50 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",load,{once:true});else load();window.addEventListener("pageshow",load);
 })();
 </script>
+
+<style id="gmih-audio-style">
+#gmihAudioControl{position:fixed;right:18px;bottom:18px;z-index:9999;display:flex;align-items:center;gap:8px;background:rgba(6,54,108,.94);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 12px;box-shadow:0 8px 24px rgba(0,0,0,.18);font:700 12px Inter,system-ui,sans-serif}
+#gmihAudioControl button{border:0;background:#fff;color:#0b4f91;width:32px;height:32px;border-radius:50%;font-size:15px;cursor:pointer}
+#gmihAudioControl span{white-space:nowrap}
+@media(max-width:600px){#gmihAudioControl{right:10px;bottom:10px}}
+</style>
+<audio id="gmihBackgroundMusic" preload="auto" loop playsinline src="Peaceful%20Rest.mp3"></audio>
+<div id="gmihAudioControl" aria-label="Kontrol musik instrumental">
+  <button id="gmihAudioToggle" type="button" aria-label="Putar musik">▶</button>
+  <span id="gmihAudioLabel">Musik Instrumental</span>
+</div>
+<script>
+(function(){
+  const audio=document.getElementById("gmihBackgroundMusic");
+  const btn=document.getElementById("gmihAudioToggle");
+  const label=document.getElementById("gmihAudioLabel");
+  if(!audio||!btn)return;
+  let started=false;
+  function playingUI(){
+    btn.textContent="❚❚";
+    btn.setAttribute("aria-label","Jeda musik");
+    label.textContent="Musik Instrumental";
+    started=true;
+  }
+  function pausedUI(){
+    btn.textContent="▶";
+    btn.setAttribute("aria-label","Putar musik");
+  }
+  async function tryPlay(){
+    try{await audio.play();playingUI();}catch(e){pausedUI();label.textContent="Sentuh ▶ untuk musik";}
+  }
+  btn.addEventListener("click",async function(){
+    if(audio.paused){await tryPlay();}else{audio.pause();pausedUI();}
+  });
+  ["pointerdown","touchstart","click","keydown"].forEach(ev=>{
+    document.addEventListener(ev,function once(){
+      if(!started && audio.paused) tryPlay();
+    },{once:true,passive:true});
+  });
+  audio.addEventListener("play",playingUI);
+  audio.addEventListener("pause",pausedUI);
+  tryPlay();
+})();
+</script>
+
 </body></html>
