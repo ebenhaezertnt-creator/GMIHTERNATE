@@ -594,9 +594,9 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
   const API="https://kkisfurtvdmgvzkprznz.supabase.co/rest/v1/photos?select=id,title,category,image_url,active&active=eq.true&image_url=not.is.null&image_url=neq.&order=id.desc";
   const KEY="sb_publishable_SnYsi_QvUWLEWEJx5vEmnQ_cTEK-tSM";
   function render(photos){
-    const galleries=document.querySelectorAll(".gallery-new");
-    if(!galleries.length || !Array.isArray(photos)) return;
-    galleries.forEach(g=>{
+    if(!Array.isArray(photos)) return;
+
+    document.querySelectorAll(".gallery-new").forEach(g=>{
       if(!photos.length) return;
       g.innerHTML="";
       photos.forEach((p,i)=>{
@@ -611,6 +611,24 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
         img.onerror=()=>card.remove();
         card.appendChild(img);
         g.appendChild(card);
+      });
+    });
+
+    document.querySelectorAll(".right-photo-grid").forEach(g=>{
+      if(!photos.length) return;
+      g.innerHTML="";
+      photos.forEach((p,i)=>{
+        if(!p.image_url) return;
+        const wrap=document.createElement("div");
+        wrap.className="right-photo";
+        const img=document.createElement("img");
+        img.src=p.image_url;
+        img.alt="";
+        img.loading=i<3?"eager":"lazy";
+        img.decoding="async";
+        img.onerror=()=>wrap.remove();
+        wrap.appendChild(img);
+        g.appendChild(wrap);
       });
     });
   }
