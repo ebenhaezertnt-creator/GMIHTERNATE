@@ -2,7 +2,7 @@
 
 <html lang="id">
 <head>
-<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta charset="utf-8"/><meta content="width=1180, initial-scale=1" name="viewport">
 <title>GMIH Eben Haezer Ternate</title>
 <meta content="Portal Jemaat GMIH Eben Haezer Ternate — ibadah, doa, renungan, Alkitab, galeri dan informasi pelayanan gereja." name="description"/>
 <link href="manifest.webmanifest" rel="manifest"/><meta content="#0b4f91" name="theme-color"/>
@@ -276,7 +276,30 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
  load();
 })();
 </script>
-</head>
+<style>
+/* ===== PUBLIC SITE DESKTOP FIX ===== */
+@media(min-width:1001px){
+ body{min-width:1180px}
+ .container{width:min(1500px,calc(100% - 64px))}
+ .navlinks{display:flex!important}
+ .menu-btn{display:none!important}
+ .hero{grid-template-columns:2fr 1fr}
+ .content-grid{grid-template-columns:2fr 1fr}
+ .shortcuts{grid-template-columns:repeat(8,1fr)}
+ .video-grid{grid-template-columns:repeat(4,1fr)}
+ .pastor-grid{grid-template-columns:repeat(2,1fr)}
+ .donation-body{grid-template-columns:1.05fr .95fr}
+ .schedule-grid{grid-template-columns:repeat(4,1fr)}
+ .source-gallery-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .gallery-new{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ .news-new{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .prayer-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:1400px){
+ .container{width:min(1560px,calc(100% - 80px))}
+ .gallery-new{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+}
+</style></head>
 <body>
 <header class="topbar"><div class="container topbar-in"><div>Gereja Masehi Injili di Halmahera</div><div>Ternate · Maluku Utara</div></div></header>
 <nav class="nav"><div class="container nav-in">
