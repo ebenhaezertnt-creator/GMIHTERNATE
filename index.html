@@ -342,6 +342,72 @@ section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--den
  .content-grid{gap:10px!important}
  .panel{padding:12px!important}
 }
+</style>
+<style id="compact-dense-layout">
+@media(min-width:1001px){
+  /* Padatkan seluruh area konten dan biarkan kartu mengisi ruang kosong */
+  .content-grid{
+    display:grid!important;
+    grid-template-columns:minmax(0,2fr) minmax(300px,1fr)!important;
+    gap:14px!important;
+    align-items:start!important;
+    grid-auto-flow:row dense!important;
+    margin-top:14px!important;
+  }
+  .content-grid>div,
+  .content-grid>aside{
+    display:contents!important;
+  }
+  .content-grid>div>section,
+  .content-grid>aside>section,
+  .content-grid>.panel,
+  .content-grid>aside>.panel,
+  .content-grid>.quick{
+    margin:0!important;
+  }
+  .content-grid #jadwal-ibadah,
+  .content-grid #renungan-visual,
+  .content-grid .scenic-banner{
+    grid-column:1 / -1!important;
+  }
+  .content-grid #galeri-foto-kanan{
+    grid-column:2!important;
+    grid-row:auto!important;
+  }
+  .content-grid .quick{
+    grid-column:2!important;
+    grid-row:auto!important;
+  }
+  .content-grid #video{
+    grid-column:1!important;
+  }
+  .content-grid #renungan,
+  .content-grid #tentang,
+  .content-grid #pelayanan{
+    grid-column:1!important;
+  }
+  .panel{
+    padding:16px!important;
+  }
+  .panel-head{margin-bottom:4px!important}
+  .panel h2{font-size:21px!important;margin:3px 0 7px!important}
+  .panel p{margin:5px 0!important}
+  .video-grid{gap:7px!important}
+  .right-photo-grid{gap:8px!important}
+  .right-photo{border-radius:10px!important}
+  .quick a{padding:11px 14px!important}
+  .cards{gap:8px!important}
+  .cards div{padding:11px!important}
+  .content-grid>section,
+  .content-grid .panel,
+  .content-grid .quick{
+    box-shadow:0 4px 14px rgba(12,62,111,.045)!important;
+  }
+}
+@media(min-width:1400px){
+  .content-grid{grid-template-columns:minmax(0,2.15fr) minmax(320px,1fr)!important;gap:12px!important}
+  .panel{padding:15px!important}
+}
 </style></head>
 <body>
 <header class="topbar"><div class="container topbar-in"><div>Gereja Masehi Injili di Halmahera</div><div>Ternate · Maluku Utara</div></div></header>
