@@ -892,4 +892,56 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
 })();
 </script>
 
+
+<script>
+<!-- GMIH PWA INSTALL ENGINE v2026-10-05 -->
+(function(){
+  let deferredPrompt=null;
+  const buttons=()=>Array.from(document.querySelectorAll('#installAppHeader,.install-inline-card button,[data-install-app]'));
+  const setText=(text)=>buttons().forEach(b=>{b.textContent=text;});
+  const setInstalled=()=>{setText('✓ Sudah Terpasang');buttons().forEach(b=>{b.disabled=true;b.style.opacity='.7';b.style.cursor='default';});};
+
+  // Daftarkan Service Worker agar situs memenuhi syarat PWA di HTTPS/GitHub Pages.
+  if('serviceWorker' in navigator){
+    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(err=>console.warn('PWA Service Worker:',err)));
+  }
+
+  // Chrome/Edge/Android akan mengirim event ini ketika PWA memenuhi syarat instalasi.
+  window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();
+    deferredPrompt=e;
+    buttons().forEach(b=>{b.disabled=false;b.title='Instal GMIH Eben Haezer Ternate';});
+    setText('📲 Instal');
+  });
+
+  async function installApp(){
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      const result=await deferredPrompt.userChoice.catch(()=>null);
+      deferredPrompt=null;
+      if(result?.outcome==='accepted') setText('✓ Terpasang');
+      return;
+    }
+    // iPhone/iPad tidak menyediakan beforeinstallprompt; arahkan ke menu instal bawaan Safari.
+    const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+    if(standalone){setInstalled();return;}
+    if(isIOS){
+      alert('Untuk memasang GMIH Eben Haezer di iPhone/iPad: buka menu Bagikan (□↑), lalu pilih “Tambahkan ke Layar Utama”.');
+    }else{
+      alert('Jika tombol instal belum memunculkan pemasangan, buka menu browser ⋮ lalu pilih “Instal aplikasi” atau “Tambahkan ke layar utama”. Setelah halaman dimuat ulang, tombol ini akan bekerja otomatis bila browser mendukung PWA.');
+    }
+  }
+
+  document.addEventListener('click',function(e){
+    const b=e.target.closest?.('#installAppHeader,.install-inline-card button,[data-install-app]');
+    if(!b)return;
+    e.preventDefault();
+    installApp();
+  });
+
+  window.addEventListener('appinstalled',function(){deferredPrompt=null;setInstalled();});
+  if(window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true) setInstalled();
+})();
+</script>
 </body></html>
