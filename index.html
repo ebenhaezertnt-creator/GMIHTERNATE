@@ -272,7 +272,33 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 .bible-top .btn{white-space:nowrap}
 @media(max-width:900px){.right-photo-grid{grid-template-columns:1fr}}
 </style>
-</head>
+<style id="compact-layout-fix">
+@media(min-width:1001px){
+  .container{width:min(1540px,calc(100% - 40px))!important}
+  main{max-width:1540px!important}
+  .content-grid{gap:14px!important}
+  .content-grid>div>section,.content-grid>aside>section{margin-bottom:12px!important}
+  section.panel{padding:18px!important}
+  .panel-head{margin-bottom:10px!important}
+  .hero,.hero-section{min-height:470px!important}
+  .hero .container{padding-top:18px!important;padding-bottom:18px!important}
+  .shortcuts{gap:8px!important;margin:10px 0!important}
+  .gallery-new,.news-new,.jesus-grid{gap:10px!important}
+  .gallery-card,.news-card,.jesus-card,.pastor-card,.schedule-card{padding:9px!important}
+  .gallery-card img,.right-photo img{aspect-ratio:16/9!important}
+  .right-photo-grid{gap:8px!important}
+  .quick{padding:12px!important}
+  .bible-card{padding:12px!important;margin:10px 0!important}
+  .memory-verse-card{padding:14px!important}
+}
+@media(max-width:1000px){
+  .container{padding-left:12px!important;padding-right:12px!important}
+  section.panel{padding:14px!important}
+  .content-grid{gap:10px!important}
+  .content-grid>div>section,.content-grid>aside>section{margin-bottom:10px!important}
+  .gallery-new,.news-new,.jesus-grid{gap:8px!important}
+}
+</style></head>
 <body>
 <header class="topbar"><div class="container topbar-in"><div>Gereja Masehi Injili di Halmahera</div><div>Ternate · Maluku Utara</div></div></header>
 <nav class="nav"><div class="container nav-in">
