@@ -222,7 +222,28 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 }
 </style>
 
-<style>.top-memory{margin:0}.top-memory .panel-head{margin-bottom:10px}.top-memory .memory-verse-card{margin:0}.top-memory .memory-verse-card p{font-size:15px;line-height:1.55}</style>
+<style>.top-memory{margin:0}.top-memory .panel-head{margin-bottom:10px}.top-memory .memory-verse-card{margin:0}.top-memory .memory-verse-card p{font-size:15px;line-height:1.55}
+/* ===== DESKTOP SITE MODE ===== */
+@media(min-width:1001px){
+ html{min-width:1100px}
+ body{min-width:1100px}
+ .container{width:min(1500px,calc(100% - 64px))}
+ .nav-in{height:82px;gap:32px}
+ .navlinks{gap:28px}
+ main{max-width:1600px;margin:0 auto}
+ .hero,.hero-section{min-height:560px}
+ .gallery-new{grid-template-columns:repeat(4,minmax(0,1fr)) !important;gap:18px}
+ .news-new{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .jesus-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .gallery-card img{aspect-ratio:16/9}
+ section{scroll-margin-top:95px}
+}
+@media(min-width:1400px){
+ .container{width:min(1560px,calc(100% - 80px))}
+ .gallery-new{grid-template-columns:repeat(5,minmax(0,1fr)) !important}
+ .news-new{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2"></script>
 <script>
 (function(){
