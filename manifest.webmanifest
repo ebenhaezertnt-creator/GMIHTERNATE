@@ -1,1 +1,45 @@
-{"name":"GMIH Eben Haezer Ternate","short_name":"GMIH Ternate","start_url":"./","scope":"./","display":"standalone","background_color":"#f5f9fd","theme_color":"#0b4f91","icons":[{"src":"assets/logo-gereja.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"assets/logo-gereja.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}],"id":"./","display_override":["window-controls-overlay","standalone"],"orientation":"portrait","lang":"id","dir":"ltr"}
+{
+  "name": "GMIH Eben Haezer Ternate",
+  "short_name": "GMIH Eben Haezer",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f9fd",
+  "theme_color": "#0b4f91",
+  "icons": [
+    {
+      "src": "./assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "./index.html",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "orientation": "portrait",
+  "lang": "id",
+  "dir": "ltr",
+  "shortcuts": [
+    {
+      "name": "Buka GMIH Eben Haezer",
+      "short_name": "GMIH",
+      "url": "./index.html",
+      "icons": [
+        {
+          "src": "./assets/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
