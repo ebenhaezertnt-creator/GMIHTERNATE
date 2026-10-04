@@ -700,7 +700,7 @@ function escapeHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","
   const st=document.createElement("style");st.id="bo-layout-runtime";
   st.textContent="@media(min-width:1001px){.container{width:min(var(--bo-container-width),calc(100% - 64px))!important}main{max-width:var(--bo-container-width)!important}.content-grid{gap:var(--bo-content-gap)!important;grid-template-columns:minmax(0,1fr) var(--bo-sidebar-width)!important}.content-grid>div>section{margin-bottom:var(--bo-section-gap)!important}.hero,.hero-section{min-height:var(--bo-hero-height)!important}.gallery-new{grid-template-columns:repeat("+Math.max(2,Math.min(6,Number(cfg.style.galleryColumns)||4))+",minmax(0,1fr))!important}}.panel,.bible-card,.quick,.gallery-card,.pastor-card,.schedule-card,.memory-verse-card{border-radius:var(--bo-radius)!important}.gallery-card img,.right-photo img{aspect-ratio:"+(cfg.style.imageRatio||"16/10")+"}@media(max-width:1000px){.container{padding-left:var(--bo-mobile-pad)!important;padding-right:var(--bo-mobile-pad)!important}.content-grid{gap:var(--bo-mobile-gap)!important}}";
   document.getElementById("bo-layout-runtime")?.remove();document.head.appendChild(st);
-  const entries=cfg.sections.map(x=>({...x})).sort((a,b)=>(a.order||0)-(b.order||0);
+  const entries=cfg.sections.map(x=>({...x})).sort((a,b)=>(a.order||0)-(b.order||0));
   const topKeys=new Set(["hero","donasi","shortcuts","jadwal-ibadah","renungan-visual","scenic"]);
   const top=[];entries.forEach(x=>{const el=document.querySelector(sel[x.key]);if(!el)return;el.dataset.boLayoutKey=x.key;el.style.display=x.visible===false?"none":"";if(topKeys.has(x.key))top.push({x,el})});
   const main=document.querySelector("main");
