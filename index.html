@@ -344,69 +344,54 @@ section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--den
 }
 </style>
 <style id="compact-dense-layout">
+/* ===== COMPACT DESKTOP: tanpa ruang kosong berlebihan ===== */
 @media(min-width:1001px){
-  /* Padatkan seluruh area konten dan biarkan kartu mengisi ruang kosong */
   .content-grid{
     display:grid!important;
     grid-template-columns:minmax(0,2fr) minmax(300px,1fr)!important;
-    gap:14px!important;
+    gap:12px!important;
     align-items:start!important;
-    grid-auto-flow:row dense!important;
-    margin-top:14px!important;
+    margin-top:12px!important;
   }
   .content-grid>div,
   .content-grid>aside{
-    display:contents!important;
+    display:grid!important;
+    gap:12px!important;
+    align-content:start!important;
+    min-width:0!important;
   }
   .content-grid>div>section,
   .content-grid>aside>section,
-  .content-grid>.panel,
-  .content-grid>aside>.panel,
-  .content-grid>.quick{
+  .content-grid>aside>.quick{
     margin:0!important;
+    min-width:0!important;
   }
-  .content-grid #jadwal-ibadah,
-  .content-grid #renungan-visual,
-  .content-grid .scenic-banner{
-    grid-column:1 / -1!important;
-  }
-  .content-grid #galeri-foto-kanan{
-    grid-column:2!important;
-    grid-row:auto!important;
-  }
-  .content-grid .quick{
-    grid-column:2!important;
-    grid-row:auto!important;
-  }
-  .content-grid #video{
-    grid-column:1!important;
-  }
-  .content-grid #renungan,
-  .content-grid #tentang,
-  .content-grid #pelayanan{
-    grid-column:1!important;
-  }
-  .panel{
-    padding:16px!important;
-  }
+  .panel{padding:12px!important}
   .panel-head{margin-bottom:4px!important}
-  .panel h2{font-size:21px!important;margin:3px 0 7px!important}
-  .panel p{margin:5px 0!important}
-  .video-grid{gap:7px!important}
-  .right-photo-grid{gap:8px!important}
-  .right-photo{border-radius:10px!important}
-  .quick a{padding:11px 14px!important}
-  .cards{gap:8px!important}
-  .cards div{padding:11px!important}
-  .content-grid>section,
-  .content-grid .panel,
-  .content-grid .quick{
-    box-shadow:0 4px 14px rgba(12,62,111,.045)!important;
-  }
+  .panel h2{font-size:20px!important;line-height:1.15!important;margin:2px 0 5px!important}
+  .panel p{margin:4px 0!important;line-height:1.4!important}
+  .video-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}
+  .video b{font-size:10px!important;margin-top:4px!important;line-height:1.2!important}
+  .channel-video{min-height:100px!important;padding:12px!important}
+  .right-photo-grid{grid-template-columns:1fr!important;gap:6px!important}
+  .right-photo{aspect-ratio:16/7!important;border-radius:8px!important}
+  .quick a{padding:8px 11px!important;line-height:1.15!important}
+  .quick b{font-size:13px!important}
+  .quick span{font-size:10px!important}
+  .cards{gap:7px!important}
+  .cards div{padding:9px!important}
+  .schedule-grid{gap:7px!important}
+  .schedule-card{padding:9px!important}
+  .jesus-grid{gap:7px!important}
+  .jesus-card{padding:7px!important}
+  .jesus-card img{aspect-ratio:16/10!important}
+  .gallery-new{gap:7px!important}
+  .gallery-card{padding:6px!important}
+  .gallery-card img{aspect-ratio:16/9!important}
 }
 @media(min-width:1400px){
-  .content-grid{grid-template-columns:minmax(0,2.15fr) minmax(320px,1fr)!important;gap:12px!important}
-  .panel{padding:15px!important}
+  .content-grid{grid-template-columns:minmax(0,2.15fr) minmax(320px,1fr)!important;gap:10px!important}
+  .content-grid>div,.content-grid>aside{gap:10px!important}
 }
 </style></head>
 <body>
