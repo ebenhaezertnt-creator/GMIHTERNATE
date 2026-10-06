@@ -404,7 +404,14 @@ section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--den
 /* Hapus panel tautan cepat lama bila masih tersisa dari cache/layout lama */
 .quick{display:none!important}
 </style><style>.communion-headline{margin:14px 0;overflow:hidden;border-radius:18px;box-shadow:0 10px 28px rgba(12,62,111,.12);background:#071a35}.communion-headline img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}@media(max-width:700px){.communion-headline{margin:10px 0;border-radius:14px}}</style>
-<style id="gmih-main-slider-style">
+<style id="gmih-main-slider-force">
+.gmih-main-slider{display:block!important;min-height:210px!important}
+.gmih-main-slides{display:block!important;min-height:210px!important}
+.gmih-main-slide{display:block!important;pointer-events:none}
+.gmih-main-slide.is-active{display:block!important;opacity:1!important;visibility:visible!important}
+.gmih-main-slide:not(.is-active){display:none!important;opacity:0!important;visibility:hidden!important}
+.gmih-main-slide img{display:block!important;width:100%!important;height:100%!important;min-height:210px!important;object-fit:cover!important}
+</style><style id="gmih-main-slider-style">
 .gmih-main-slider{position:relative;width:100%;overflow:hidden;border-radius:16px;background:#073d78;box-shadow:0 10px 30px rgba(12,62,111,.08)}
 .gmih-main-slides{position:relative;width:100%;aspect-ratio:16/8;min-height:260px}
 .gmih-main-slide{position:absolute;inset:0;margin:0;opacity:0;visibility:hidden;transition:opacity .55s ease;display:flex;align-items:center;justify-content:center}
@@ -487,7 +494,7 @@ section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--den
         <figcaption>Perjamuan Kudus — GMIH Ebenhaezer Ternate</figcaption>
       </figure>
       <figure class="gmih-main-slide">
-        <img src="assets/e6867f48-226d-418f-92ec-fd6d99f15f6e.jpeg" alt="RAKERTA V Remaja Sinode GMIH Tahun 2026">
+        <img src="assets/e6867f48-226d-418f-92ec-fd6d99f15f6e.jpeg?v=20261006" alt="RAKERTA V Remaja Sinode GMIH Tahun 2026">
         <figcaption>RAKERTA V Remaja Sinode GMIH — 03–04 November 2026</figcaption>
       </figure>
     </div>
