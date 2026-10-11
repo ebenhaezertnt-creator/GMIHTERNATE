@@ -427,8 +427,10 @@ section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--den
 </style>
 <script>
 (function(){
-  const API='https://kkisfurtvdmgvzkprznz.supabase.co/rest/v1/banners?select=id,title,kind,image_url,active&kind=eq.slideshow&active=eq.true&image_url=not.is.null&image_url=neq.&order=id.asc';
+  const API='https://kkisfurtvdmgvzkprznz.supabase.co/rest/v1/banners?select=id,title,kind,image_url,active&kind=eq.slideshow&active=eq.true&order=id.asc';
   const KEY='sb_publishable_SnYsi_QvUWLEWEJx5vEmnQ_cTEK-tSM';
+  // Pertahankan slide RAKERTA V sebagai slide tetap/fallback.
+  const RAKERTA={id:'rakerta-v',title:'RAKERTA V Remaja Sinode GMIH — 03–04 November 2026',image_url:'assets/e6867f48-226d-418f-92ec-fd6d99f15f6e.jpeg?v=20261006',active:true};
   function init(){
     const slider=document.querySelector('.gmih-main-slider');
     if(!slider||slider.dataset.ready)return;
@@ -476,10 +478,13 @@ section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--den
       try{
         const res=await fetch(API,{cache:'no-store',headers:{apikey:KEY,Authorization:'Bearer '+KEY}});
         if(!res.ok)throw new Error('HTTP '+res.status);
-        render(await res.json());
+        const items=await res.json();
+        // Slide dari Back Office ditampilkan bersama slide RAKERTA yang tetap dipertahankan.
+        render([...(Array.isArray(items)?items:[]).filter(x=>x&&x.image_url),RAKERTA]);
       }catch(e){
         console.warn('Slideshow Back Office:',e);
-        stage.innerHTML='<div style="display:flex;align-items:center;justify-content:center;min-height:210px;padding:24px;color:#fff;text-align:center">Slideshow belum dapat dimuat. Periksa koneksi internet.</div>';
+        // Jika API Supabase gagal, RAKERTA tetap tampil agar slideshow tidak kosong/error.
+        render([RAKERTA]);
       }
     }
     load();
