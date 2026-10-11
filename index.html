@@ -157,6 +157,16 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 .donation-top + .shortcuts{margin-top:0}
 @media(max-width:700px){.donation-body{grid-template-columns:1fr}.qris-wrap img{max-width:230px}.donation-top{margin-top:10px;margin-bottom:10px}}
 .top-memory{display:block!important}.memory-verse-card{display:flex;align-items:flex-start;gap:14px}.memory-verse-panel{display:block!important}
+/* Foto banner gereja memenuhi seluruh area banner */
+.hero-main{position:relative;width:100%;height:380px;min-width:0;overflow:hidden;padding:0!important}
+.hero-main>img{
+  position:absolute!important;inset:0!important;display:block!important;
+  width:100%!important;height:100%!important;max-width:none!important;
+  margin:0!important;object-fit:cover!important;object-position:center center!important;
+}
+.hero-main:after{display:none!important}
+@media(max-width:700px){.hero-main{height:260px}}
+
 /* Perkecil teks pada panel Ayat Hafalan */
 .memory-verse-card p{font-size:15px!important;line-height:1.45!important}
 .memory-verse-card b{font-size:12px!important}
