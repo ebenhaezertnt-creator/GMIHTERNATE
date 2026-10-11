@@ -157,6 +157,24 @@ footer{margin-top:0!important;background:#05386f!important;padding:18px 0!import
 .donation-top + .shortcuts{margin-top:0}
 @media(max-width:700px){.donation-body{grid-template-columns:1fr}.qris-wrap img{max-width:230px}.donation-top{margin-top:10px;margin-bottom:10px}}
 .top-memory{display:block!important}.memory-verse-card{display:flex;align-items:flex-start;gap:14px}.memory-verse-panel{display:block!important}
+/* Sejajarkan panel Ayat Hafalan dengan banner foto gereja */
+@media(min-width:701px){
+  .hero{align-items:stretch}
+  .hero-main{height:380px}
+  .hero>.side-stack{height:380px;min-height:380px}
+  .hero>.side-stack>.top-memory{
+    height:100%;box-sizing:border-box;display:flex!important;flex-direction:column;
+    justify-content:center;padding:22px
+  }
+  .hero>.side-stack>.top-memory>.memory-verse-card{flex:1;align-content:center}
+}
+@media(max-width:700px){
+  .hero{grid-template-columns:1fr}
+  .hero-main{height:260px}
+  .hero>.side-stack{height:auto;min-height:0}
+  .hero>.side-stack>.top-memory{height:auto}
+}
+
 /* ===== Desktop contact/layout fix ===== */
 @media(min-width:901px){
   .container{width:min(1500px,calc(100% - 56px))}
