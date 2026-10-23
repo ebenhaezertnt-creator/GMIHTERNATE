@@ -125,7 +125,7 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
     const hit=qa.find(x=>x.keys.some(k=>t.includes(k)));
     if(hit)return hit.ans;
     const ext=findExternal(t); if(ext)return ext.title+': '+ext.text+'\\nSumber: '+ext.url;
-    const sec=findPage(t); if(sec)return 'Dari isi website: '+sec.text.slice(0,700)+(sec.text.length>700?'…':'');
+    const sec=findPage(t); if(sec && tokens(t).length<=4 && !/kesepian|psikologi|perasaan|iman kristen|mengapa manusia|kesehatan mental/.test(t))return 'Dari isi website: '+sec.text.slice(0,700)+(sec.text.length>700?'…':'');
     return 'Saya belum menemukan jawaban yang cukup pasti. Saya akan mencoba mencari jawaban melalui Ebenhaezer AI.';
   }
   async function onlineAnswer(q){
@@ -149,7 +149,7 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
       throw new Error('Respons AI kosong');
     }catch(err){
       console.warn('Ebenhaezer AI online gagal, memakai jawaban lokal:',err);
-      return localAnswer(q);
+      const local=localAnswer(q); if(local.startsWith('Dari isi website:') || local.startsWith('Saya belum menemukan jawaban yang cukup pasti.')) return 'Maaf, layanan AI sedang tidak dapat dihubungi. Pertanyaan Anda belum berhasil diproses. Silakan coba lagi sebentar; saya tidak akan mengganti jawaban dengan menu website.'; return local;
     }
   }
   function openAI(){widget?.classList.add('open');widget?.setAttribute('aria-hidden','false');setTimeout(()=>input?.focus(),100)} function closeAI(){widget?.classList.remove('open');widget?.setAttribute('aria-hidden','true')}
