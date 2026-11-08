@@ -524,7 +524,7 @@ section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--den
         if(!res.ok)throw new Error('HTTP '+res.status);
         const items=await res.json();
         // Tampilkan hanya banner aktif yang dikelola melalui Back Office.
-        render((Array.isArray(items)?items:[]).filter(x=>x&&x.image_url&&x.active!==false));
+        render((Array.isArray(items)?items:[]).filter(x=>x&&x.image_url&&x.active!==false&&!/rakerta/i.test(String(x.title||'')+' '+String(x.image_url||''))));
       }catch(e){
         console.warn('Slideshow Back Office:',e);
         // Jika API gagal, jangan menampilkan banner lama/fallback yang sudah dihapus.
