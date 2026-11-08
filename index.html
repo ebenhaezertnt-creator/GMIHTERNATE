@@ -475,8 +475,6 @@ section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--den
 (function(){
   const API='https://kkisfurtvdmgvzkprznz.supabase.co/rest/v1/banners?select=id,title,kind,image_url,active&kind=eq.slideshow&active=eq.true&order=id.asc';
   const KEY='sb_publishable_SnYsi_QvUWLEWEJx5vEmnQ_cTEK-tSM';
-  // Pertahankan slide RAKERTA V sebagai slide tetap/fallback.
-  const RAKERTA={id:'rakerta-v',title:'RAKERTA V Remaja Sinode GMIH — 03–04 November 2026',image_url:'assets/e6867f48-226d-418f-92ec-fd6d99f15f6e.jpeg?v=20261006',active:true};
   function init(){
     const slider=document.querySelector('.gmih-main-slider');
     if(!slider||slider.dataset.ready)return;
@@ -525,12 +523,12 @@ section,.panel,.quick,.bible-card{margin-top:0!important;margin-bottom:var(--den
         const res=await fetch(API,{cache:'no-store',headers:{apikey:KEY,Authorization:'Bearer '+KEY}});
         if(!res.ok)throw new Error('HTTP '+res.status);
         const items=await res.json();
-        // Slide dari Back Office ditampilkan bersama slide RAKERTA yang tetap dipertahankan.
-        render([...(Array.isArray(items)?items:[]).filter(x=>x&&x.image_url),RAKERTA]);
+        // Tampilkan hanya banner aktif yang dikelola melalui Back Office.
+        render((Array.isArray(items)?items:[]).filter(x=>x&&x.image_url&&x.active!==false));
       }catch(e){
         console.warn('Slideshow Back Office:',e);
-        // Jika API Supabase gagal, RAKERTA tetap tampil agar slideshow tidak kosong/error.
-        render([RAKERTA]);
+        // Jika API gagal, jangan menampilkan banner lama/fallback yang sudah dihapus.
+        render([]);
       }
     }
     load();
@@ -787,45 +785,62 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
   let geminiInteractionId=null;
 
   async function send(q){
-    if(!q.trim())return;
+    q=String(q||'').trim();
+    if(!q)return;
 
     const u=document.createElement('div');
     u.className='ai-msg user';
     u.textContent=q;
     messages.appendChild(u);
-    messages.scrollTop=messages.scrollHeight;
 
     const b=document.createElement('div');
     b.className='ai-msg bot';
-    b.textContent='Ebenhaezer AI sedang berpikir…';
+    b.textContent='Ebenhaezer AI sedang menyiapkan jawaban…';
     messages.appendChild(b);
     messages.scrollTop=messages.scrollHeight;
 
-    try{
-      const local=answer(q);
-      const promptContext=`KONTEKS WEBSITE GMIH EBENHAEZER TERNATE:\n${local}\n\nSUMBER RESMI YANG DAPAT DIPRIORITASKAN: Sinode GMIH (gmih.web.id), PGI (pgi.or.id), Alkitab/SABDA (alkitab.sabda.org), WCC (oikoumene.org), dan PC(USA) (pcusa.org).\n\nJika pertanyaan meminta berita/informasi terbaru, Worker WAJIB menggunakan pencarian web dan jangan menjawab dari pengetahuan lokal saja.`;
+    // Jawaban lokal untuk pertanyaan gereja yang sudah ada di basis pengetahuan ditampilkan langsung.
+    let local='';
+    try{ local=String(answer(q)||''); }catch(e){ local=''; }
+    const needsAI=!local ||
+      local.startsWith('Saya belum menemukan jawaban yang cukup pasti') ||
+      local.startsWith('Untuk informasi eksternal terbaru') ||
+      local.length<24;
 
+    if(!needsAI){
+      b.textContent=local;
+      messages.scrollTop=messages.scrollHeight;
+      return;
+    }
+
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),12000);
+    try{
+      const promptContext='Konteks website GMIH Ebenhaezer Ternate: '+(local||'Tidak ada jawaban lokal yang cocok.')+
+        '\\nUtamakan jawaban yang langsung, jelas, dan ringkas. Jangan mengarang informasi gereja.';
       const res=await fetch(GEMINI_PROXY_URL,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
+        signal:controller.signal,
         body:JSON.stringify({question:q,context:promptContext,previous_interaction_id:geminiInteractionId})
       });
       const data=await res.json().catch(()=>({}));
-      if(!res.ok) throw new Error(data.error||'Gemini proxy error');
+      if(!res.ok)throw new Error(data.error||'Gemini proxy error');
       geminiInteractionId=data.interaction_id||geminiInteractionId;
-      b.textContent=String(data.answer||'Maaf, Gemini belum memberikan jawaban.');
+      b.textContent=String(data.answer||local||'Maaf, saya belum memperoleh jawaban.');
     }catch(err){
-      console.warn('Gemini tidak tersedia, memakai basis pengetahuan lokal:',err);
+      console.warn('Ebenhaezer AI memakai jawaban cadangan:',err);
       geminiInteractionId=null;
-      const news=/\b(berita|berita terbaru|berita terkini|kabar terbaru|kabar terkini|informasi terbaru|informasi terkini|update|terbaru|terkini|hari ini|sekarang|news|perkembangan terbaru|perkembangan terkini)\b/i.test(q);
-      if(news){
-        const url=webSearchUrl(q);
-        b.innerHTML='Web sedang tidak dapat diakses dari chatbot saat ini. <a href="'+url+'" target="_blank" rel="noopener">Buka pencarian web GMIH ↗</a>';
+      if(local && !local.startsWith('Saya belum menemukan jawaban yang cukup pasti')){
+        b.textContent=local;
       }else{
-        b.textContent=answer(q);
+        const url=webSearchUrl(q);
+        b.innerHTML='Maaf, layanan AI sedang lambat atau tidak tersedia. <a href="'+url+'" target="_blank" rel="noopener">Cari informasi melalui web ↗</a>';
       }
+    }finally{
+      clearTimeout(timeout);
+      messages.scrollTop=messages.scrollHeight;
     }
-    messages.scrollTop=messages.scrollHeight;
   }
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';send(q)});document.querySelectorAll('.ai-suggestions button').forEach(b=>b.addEventListener('click',()=>send(b.dataset.q||'')));
 })();
