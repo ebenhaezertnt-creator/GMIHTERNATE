@@ -148,8 +148,8 @@ document.querySelector('.menu-btn')?.addEventListener('click',()=>document.query
       if(typeof answer==='string'&&answer.trim())return answer.trim();
       throw new Error('Respons AI kosong');
     }catch(err){
-      console.warn('Ebenhaezer AI online gagal, memakai jawaban lokal:',err);
-      const local=localAnswer(q); if(local.startsWith('Dari isi website:') || local.startsWith('Saya belum menemukan jawaban yang cukup pasti.')) return 'Maaf, layanan AI sedang tidak dapat dihubungi. Pertanyaan Anda belum berhasil diproses. Silakan coba lagi sebentar; saya tidak akan mengganti jawaban dengan menu website.'; return local;
+      console.error('Ebenhaezer AI request gagal:',err);
+      return 'Maaf, Ebenhaezer AI belum berhasil terhubung ke mesin AI. Jawaban otomatis/lokal tidak digunakan agar saya tidak memberikan informasi yang keliru. Silakan coba lagi beberapa saat. Jika masalah berlanjut, pengelola perlu memeriksa koneksi Worker dan kuota model AI.';
     }
   }
   function openAI(){widget?.classList.add('open');widget?.setAttribute('aria-hidden','false');setTimeout(()=>input?.focus(),100)} function closeAI(){widget?.classList.remove('open');widget?.setAttribute('aria-hidden','true')}
